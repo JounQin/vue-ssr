@@ -4,12 +4,17 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 export default new VueRouter({
-  mode: 'hash',
+  mode: 'history',
   routes: [
     {
       name: 'home',
       path: '/',
-      component: () => System.import('views/Home')
+      component: require('views/Home')
+    },
+    {
+      name: 'test',
+      path: '/test',
+      component: require('views/Test')
     }
   ]
 })

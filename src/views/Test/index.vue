@@ -1,14 +1,13 @@
 <template>
   <div>
     {{ text }}
-    <router-link to="/test">Go to test</router-link>
   </div>
 </template>
 <script>
   export default {
     data() {
       return {
-        text: 'My Text'
+        text: 'test!'
       }
     }
   }

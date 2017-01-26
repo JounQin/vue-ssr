@@ -1,12 +1,3 @@
-import Vue from 'vue'
+import {app} from './app'
 
-import router from 'router'
-
-import App from 'views/App'
-
-// eslint-disable-next-line no-new
-new Vue({
-  el: '#app',
-  router,
-  ...App
-})
+app.$mount('#app')
