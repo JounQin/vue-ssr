@@ -30,9 +30,7 @@ const clientConfig = {
       ...globals,
       __SERVER__: false
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendors'
-    }),
+    new webpack.optimize.CommonsChunkPlugin('vendors'),
     new HtmlWebpackPlugin({
       templateContent: pug.renderFile(paths.src('index.pug'), {
         pretty: !minimize,
