@@ -31,8 +31,7 @@ const clientConfig = {
       __SERVER__: false
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendors',
-      chunks: 'vendors'
+      name: 'vendors'
     }),
     new HtmlWebpackPlugin({
       templateContent: pug.renderFile(paths.src('index.pug'), {
