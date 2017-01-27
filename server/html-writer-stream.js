@@ -1,21 +1,20 @@
 import stream from 'stream'
 
 export default class HtmlWriterStream extends stream.Transform {
-  constructor(options = {}) {
-    super(options)
-    Object.assign(this, options, {
-      started: false
-    })
+  started = false
+
+  constructor(options) {
+    super()
+    Object.assign(this, options)
   }
 
-  head(data) {
+  head() {
     this.push(this.header)
-    this.push(data.toString())
     this.started = true
   }
 
   body(data) {
-    this.push(data.toString())
+    this.push(data)
   }
 
   foot() {
@@ -24,8 +23,8 @@ export default class HtmlWriterStream extends stream.Transform {
   }
 
   _transform(chunk, encoding, done) {
-    const data = chunk.toString()
-    this.started ? this.body(data) : this.head(data)
+    this.started || this.head(chunk)
+    this.body(chunk)
     done()
   }
 
