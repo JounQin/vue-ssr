@@ -1,7 +1,7 @@
 import webpack from 'webpack'
 import _debug from 'debug'
 
-import config, {globals, paths, vendors} from '../config'
+import config, {alias, globals, paths} from '../config'
 
 const debug = _debug('hi:webpack:base')
 
@@ -18,14 +18,11 @@ const webpackConfig = {
     modules: [paths.src(), PACKAGES, NODE_MODULES],
     extensions: ['.vue', '.js', '.styl'],
     enforceExtension: false,
-    enforceModuleExtension: false
+    enforceModuleExtension: false,
+    alias
   },
   resolveLoader: {
     modules: [PACKAGES, NODE_MODULES]
-  },
-  entry: {
-    app: [paths.src('entry-client')],
-    vendors
   },
   output: {
     path: paths.dist(),
@@ -38,7 +35,7 @@ const webpackConfig = {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel-loader',
+        use: 'babel-loader?cacheDirectory',
         exclude: /\bnode_modules\b/
       },
       {
@@ -52,7 +49,6 @@ const webpackConfig = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin(globals),
     new webpack.LoaderOptionsPlugin({
       minimize
     })
@@ -62,18 +58,19 @@ const webpackConfig = {
 const sourceMap = !!devTool
 
 if (minimize) {
-  debug(`Enable plugins for ${NODE_ENV} (OccurenceOrder, Dedupe & UglifyJS).`)
+  debug(`Enable plugins for ${NODE_ENV} (UglifyJS).`)
 
-  webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
-    mangle: !sourceMap,
-    compress: {
-      unused: true,
-      dead_code: true,
-      warnings: false
-    },
-    comments: false,
-    sourceMap
-  }))
+  webpackConfig.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: !sourceMap,
+      compress: {
+        unused: true,
+        dead_code: true,
+        warnings: false
+      },
+      comments: false,
+      sourceMap
+    }))
 }
 
 export default webpackConfig

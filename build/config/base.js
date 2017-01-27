@@ -1,19 +1,13 @@
 import path from 'path'
 
 const NODE_ENV = process.env.NODE_ENV || 'development'
-const VUE_ENV = process.env.VUE_ENV || 'client'
 
 export const globals = {
   NODE_ENV,
-  VUE_ENV,
-  'process.env': {
-    NODE_ENV: JSON.stringify(NODE_ENV),
-    VUE_ENV: JSON.stringify(VUE_ENV)
-  },
+  'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
   __DEV__: NODE_ENV === 'development',
   __TEST__: NODE_ENV === 'test',
-  __PROD__: NODE_ENV === 'production',
-  __SERVER__: VUE_ENV === 'server'
+  __PROD__: NODE_ENV === 'production'
 }
 
 export const paths = (() => {
@@ -29,6 +23,10 @@ export const paths = (() => {
 })()
 
 export const pkg = require(paths.base('package.json'))
+
+export const alias = {
+  vue: 'vue/dist/vue.common'
+}
 
 export const vendors = [
   'vue',

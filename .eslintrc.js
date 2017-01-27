@@ -13,7 +13,8 @@ module.exports = {
   },
   globals: {
     __DEV__: false,
-    __PROD__: false
+    __PROD__: false,
+    __SERVER__: false
   },
   parserOptions: {
     ecmaVersion: 6,

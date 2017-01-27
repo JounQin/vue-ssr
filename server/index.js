@@ -19,15 +19,13 @@ const app = new Koa()
 let indexHTML
 let renderer
 
-function createRenderer(bundle) {
-  // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-  return require('vue-server-renderer').createBundleRenderer(bundle, {
-    cache: lruCache({
-      max: 1000,
-      maxAge: 1000 * 60 * 15
-    })
+// https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
+const createRenderer = bundle => require('vue-server-renderer').createBundleRenderer(bundle, {
+  cache: lruCache({
+    max: 1000,
+    maxAge: 1000 * 60 * 15
   })
-}
+})
 
 function parseIndex(template) {
   const contentMarker = '<!--APP-->'
@@ -65,12 +63,8 @@ app.use(router.routes())
 
 if (globals.__DEV__) {
   dev(app, {
-    bundleUpdated: bundle => {
-      renderer = createRenderer(bundle)
-    },
-    indexUpdated: index => {
-      indexHTML = parseIndex(index)
-    }
+    bundleUpdated: bundle => (renderer = createRenderer(bundle)),
+    indexUpdated: index => (indexHTML = parseIndex(index))
   })
 } else {
   renderer = createRenderer(fs.readFileSync(paths.dist('server-bundle.js'), 'utf-8'))

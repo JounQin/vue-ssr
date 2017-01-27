@@ -9,12 +9,12 @@ export default new VueRouter({
     {
       name: 'home',
       path: '/',
-      component: require('views/Home')
+      component: __SERVER__ ? require('views/Home') : () => System.import('views/Home')
     },
     {
       name: 'test',
       path: '/test',
-      component: require('views/Test')
+      component: __SERVER__ ? require('views/Test') : () => System.import('views/Test')
     }
   ]
 })
