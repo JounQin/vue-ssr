@@ -3,9 +3,11 @@ import fs from 'fs'
 import Koa from 'koa'
 import logger from 'koa-logger'
 import Router from 'koa-router'
+import serve from 'koa-static'
 import lruCache from 'lru-cache'
 import _debug from 'debug'
 import HtmlWriterStream from './html-writer-stream'
+import intercept from './intercept'
 
 import config, {globals, paths} from '../build/config'
 import dev from './dev-tools'
@@ -47,9 +49,7 @@ router.get('*', async(ctx, next) => {
     return res.end('waiting for compilation... refresh in a moment.')
   }
 
-  const {url} = req
-
-  if (url.endsWith('.js') || url.endsWith('__webpack_hmr')) return await next()
+  if (intercept(ctx, {logger: debug})) return await next()
 
   const context = {url: req.url}
   const renderStream = renderer.renderToStream(context)
@@ -57,7 +57,7 @@ router.get('*', async(ctx, next) => {
   ctx.body = renderStream.pipe(htmlWriter)
 
   res.setHeader('Content-Type', 'text/html')
-  res.setHeader('Server', `koa/${require('koa/package.json').version};` +
+  res.setHeader('Server', `koa/${require('koa/package.json').version}; ` +
       `vue-server-renderer/${require('vue-server-renderer/package.json').version}`)
 }
 )
@@ -75,9 +75,11 @@ if (globals.__DEV__) {
     }
   })
 } else {
-  renderer = createRenderer(fs.readFileSync(paths.dist('server-bundle.js', 'utf-8')))
+  renderer = createRenderer(fs.readFileSync(paths.dist('server-bundle.js'), 'utf-8'))
   indexHTML = parseIndex(fs.readFileSync(paths.dist('index.html'), 'utf-8'))
 }
+
+app.use(serve('dist'))
 
 const {serverHost, serverPort} = config
 

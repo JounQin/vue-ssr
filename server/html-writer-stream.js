@@ -10,7 +10,7 @@ export default class HtmlWriterStream extends stream.Transform {
 
   head(data) {
     this.push(this.header)
-    this.push(data)
+    this.push(data.toString())
     this.started = true
   }
 
