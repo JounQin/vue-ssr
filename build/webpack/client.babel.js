@@ -32,7 +32,7 @@ const clientConfig = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendors',
-      chunks: ['vendors']
+      chunks: 'vendors'
     }),
     new HtmlWebpackPlugin({
       templateContent: pug.renderFile(paths.src('index.pug'), {
