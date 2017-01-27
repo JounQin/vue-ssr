@@ -12,8 +12,8 @@
     "start": "cross-env NODE_ENV=production yarn server",
     "build": "cross-env DEBUG=hi:* yarn build:client && yarn build:server",
     "build:prod": "cross-env NODE_ENV=production yarn build",
-    "build:client": "rimraf dist && webpack --config build/webpack/client.babel.js",
-    "build:server": "cross-env VUE_ENV=server webpack --config build/webpack/server.babel.js",
+    "build:client": "rimraf dist && webpack --config build/webpack/client.babel.js --hide-modules --progress",
+    "build:server": "cross-env VUE_ENV=server webpack --config build/webpack/server.babel.js --hide-modules --progress",
     "lint": "yarn lint:es",
     "lint:fix": "yarn lint:es -- --fix",
     "lint:es": "eslint --ext .js .vue --max-warnings 10 ."

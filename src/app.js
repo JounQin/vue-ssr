@@ -1,10 +1,10 @@
 import Vue from 'vue'
 
-import router from 'router'
+import router$ from 'router'
+
+export const router = router$
 
 import App from 'views/App'
-
-export const router$ = router
 
 // eslint-disable-next-line no-new
 export const app = new Vue({

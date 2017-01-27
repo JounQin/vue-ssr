@@ -1,11 +1,11 @@
-import {app, router$} from './app'
+import {app, router} from './app'
 
 export default context => {
   const start = __DEV__ && Date.now()
 
   // set router's location
-  router$.push(context.url)
-  const matchedComponents = router$.getMatchedComponents()
+  router.push(context.url)
+  const matchedComponents = router.getMatchedComponents()
 
   // no matched routes
   if (!matchedComponents.length) {

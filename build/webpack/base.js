@@ -10,7 +10,7 @@ const NODE_MODULES = 'node_modules'
 
 const filename = `[name].[${config.hashType}].js`
 
-const {devTool, minify} = config
+const {devTool, minimize} = config
 const {NODE_ENV} = globals
 
 const webpackConfig = {
@@ -54,14 +54,14 @@ const webpackConfig = {
   plugins: [
     new webpack.DefinePlugin(globals),
     new webpack.LoaderOptionsPlugin({
-      minimize: minify
+      minimize
     })
   ]
 }
 
 const sourceMap = !!devTool
 
-if (minify) {
+if (minimize) {
   debug(`Enable plugins for ${NODE_ENV} (OccurenceOrder, Dedupe & UglifyJS).`)
 
   webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({

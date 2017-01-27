@@ -42,7 +42,7 @@ export default {
   devTool: 'source-map',
   publicPath: '',
   hashType: 'hash',
-  minify: false,
+  minimize: false,
   quiet: false,
   stats: {
     colors: true,
