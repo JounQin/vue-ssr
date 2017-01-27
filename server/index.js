@@ -53,14 +53,12 @@ router.get('*', async(ctx, next) => {
 
   const context = {url: req.url}
   const renderStream = renderer.renderToStream(context)
-  const htmlWriter = new HtmlWriterStream(indexHTML)
-  ctx.body = renderStream.pipe(htmlWriter)
+  ctx.body = renderStream.pipe(new HtmlWriterStream(indexHTML))
 
   res.setHeader('Content-Type', 'text/html')
   res.setHeader('Server', `koa/${require('koa/package.json').version}; ` +
-      `vue-server-renderer/${require('vue-server-renderer/package.json').version}`)
-}
-)
+    `vue-server-renderer/${require('vue-server-renderer/package.json').version}`)
+})
 
 app.use(router.routes())
   .use(router.allowedMethods())

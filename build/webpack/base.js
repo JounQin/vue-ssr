@@ -1,11 +1,17 @@
 import webpack from 'webpack'
+import _debug from 'debug'
 
 import config, {globals, paths, vendors} from '../config'
+
+const debug = _debug('hi:webpack:base')
 
 const PACKAGES = paths.base('packages')
 const NODE_MODULES = 'node_modules'
 
 const filename = `[name].[${config.hashType}].js`
+
+const {devTool, minify} = config
+const {NODE_ENV} = globals
 
 const webpackConfig = {
   resolve: {
@@ -27,7 +33,7 @@ const webpackConfig = {
     filename,
     chunkFilename: filename
   },
-  devtool: config.devTool,
+  devtool: devTool,
   module: {
     rules: [
       {
@@ -41,16 +47,33 @@ const webpackConfig = {
       },
       {
         test: /\.vue$/,
-        use: {
-          loader: 'vue-loader',
-          options: {}
-        }
+        use: 'vue-loader'
       }
     ]
   },
   plugins: [
-    new webpack.DefinePlugin(globals)
+    new webpack.DefinePlugin(globals),
+    new webpack.LoaderOptionsPlugin({
+      minimize: minify
+    })
   ]
+}
+
+const sourceMap = !!devTool
+
+if (minify) {
+  debug(`Enable plugins for ${NODE_ENV} (OccurenceOrder, Dedupe & UglifyJS).`)
+
+  webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
+    mangle: !sourceMap,
+    compress: {
+      unused: true,
+      dead_code: true,
+      warnings: false
+    },
+    comments: false,
+    sourceMap
+  }))
 }
 
 export default webpackConfig

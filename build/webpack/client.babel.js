@@ -5,6 +5,8 @@ import _debug from 'debug'
 
 import config, {globals, paths, pkg} from '../config'
 
+const {minify} = config
+
 const {__DEV__, NODE_ENV, VUE_ENV} = globals
 
 const debug = _debug('hi:webpack:client')
@@ -25,9 +27,16 @@ clientConfig.plugins.push(
   }),
   new HtmlWebpackPlugin({
     templateContent: pug.renderFile(paths.src('index.pug'), {
-      pretty: !config.minify,
+      pretty: !minify,
       title: `${pkg.name} - ${pkg.description}`
-    })
+    }),
+    favicon: paths.src('static/favicon.ico'),
+    hash: false,
+    inject: true,
+    minify: {
+      collapseWhitespace: minify,
+      minifyJS: minify
+    }
   }))
 
 if (__DEV__) {
