@@ -6,11 +6,14 @@ import Router from 'koa-router'
 import serve from 'koa-static'
 import lruCache from 'lru-cache'
 import _debug from 'debug'
+
 import HtmlWriterStream from './html-writer-stream'
 import intercept from './intercept'
 
 import config, {globals, paths} from '../build/config'
 import dev from './dev-tools'
+
+const {__DEV__} = globals
 
 const debug = _debug('hi:server')
 
@@ -47,7 +50,7 @@ router.get('*', async(ctx, next) => {
     return res.end('waiting for compilation... refresh in a moment.')
   }
 
-  if (intercept(ctx, {logger: debug})) return await next()
+  if (intercept(ctx, {logger: __DEV__ && debug})) return await next()
 
   const context = {url: req.url}
   const renderStream = renderer.renderToStream(context)
@@ -61,7 +64,7 @@ router.get('*', async(ctx, next) => {
 app.use(router.routes())
   .use(router.allowedMethods())
 
-if (globals.__DEV__) {
+if (__DEV__) {
   dev(app, {
     bundleUpdated: bundle => (renderer = createRenderer(bundle)),
     indexUpdated: index => (indexHTML = parseIndex(index))
@@ -69,9 +72,9 @@ if (globals.__DEV__) {
 } else {
   renderer = createRenderer(fs.readFileSync(paths.dist('server-bundle.js'), 'utf-8'))
   indexHTML = parseIndex(fs.readFileSync(paths.dist('index.html'), 'utf-8'))
-}
 
-app.use(serve('dist'))
+  app.use(serve('dist'))
+}
 
 const {serverHost, serverPort} = config
 

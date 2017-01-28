@@ -1847,12 +1847,12 @@ extglob@^0.3.1:
   dependencies:
     is-extglob "^1.0.0"
 
-extract-text-webpack-plugin@^2.0.0-rc.0:
-  version "2.0.0-rc.0"
-  resolved "http://registry.npm.taobao.org/extract-text-webpack-plugin/download/extract-text-webpack-plugin-2.0.0-rc.0.tgz#502c7a662efb2285cfe0ffaad640e3d5b248a69b"
+extract-text-webpack-plugin@^2.0.0-rc.1:
+  version "2.0.0-rc.1"
+  resolved "http://registry.npm.taobao.org/extract-text-webpack-plugin/download/extract-text-webpack-plugin-2.0.0-rc.1.tgz#4d31550bdb3fd747008efa31d2150422128a3703"
   dependencies:
     async "^2.1.2"
-    loader-utils "^0.2.3"
+    loader-utils "^0.2.16"
     webpack-sources "^0.1.0"
 
 extsprintf@1.0.2:
@@ -1881,9 +1881,9 @@ file-entry-cache@^2.0.0:
     flat-cache "^1.2.1"
     object-assign "^4.0.1"
 
-file-loader@^0.9.0:
-  version "0.9.0"
-  resolved "http://registry.npm.taobao.org/file-loader/download/file-loader-0.9.0.tgz#1d2daddd424ce6d1b07cfe3f79731bed3617ab42"
+file-loader@^0.10.0:
+  version "0.10.0"
+  resolved "http://registry.npm.taobao.org/file-loader/download/file-loader-0.10.0.tgz#bbe6db7474ac92c7f54fdc197cf547e98b6b8e12"
   dependencies:
     loader-utils "~0.2.5"
 
@@ -2681,7 +2681,7 @@ loader-runner@^2.2.0:
   version "2.3.0"
   resolved "http://registry.npm.taobao.org/loader-runner/download/loader-runner-2.3.0.tgz#f482aea82d543e07921700d5a46ef26fdac6b8a2"
 
-loader-utils@0.2.x, loader-utils@^0.2.10, loader-utils@^0.2.11, loader-utils@^0.2.16, loader-utils@^0.2.3, loader-utils@^0.2.7, loader-utils@^0.2.9, loader-utils@~0.2.2, loader-utils@~0.2.5:
+loader-utils@0.2.x, loader-utils@^0.2.10, loader-utils@^0.2.11, loader-utils@^0.2.16, loader-utils@^0.2.7, loader-utils@^0.2.9, loader-utils@~0.2.2, loader-utils@~0.2.5:
   version "0.2.16"
   resolved "http://registry.npm.taobao.org/loader-utils/download/loader-utils-0.2.16.tgz#f08632066ed8282835dff88dfb52704765adee6d"
   dependencies:
@@ -2978,7 +2978,7 @@ oauth-sign@~0.8.1:
   version "0.8.2"
   resolved "http://registry.npm.taobao.org/oauth-sign/download/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
-object-assign@^4.0.0, object-assign@^4.0.1, object-assign@^4.1.0:
+object-assign@^4.0.1, object-assign@^4.1.0:
   version "4.1.1"
   resolved "http://registry.npm.taobao.org/object-assign/download/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
@@ -4332,16 +4332,15 @@ vue-hot-reload-api@^2.0.1:
   version "2.0.8"
   resolved "http://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.0.8.tgz#b3ba6a9a443d561b14f2785c8ea056618cb2faa3"
 
-vue-loader@^10.1.0:
-  version "10.1.0"
-  resolved "http://registry.npm.taobao.org/vue-loader/download/vue-loader-10.1.0.tgz#bc95ca8f605d674a407ad24783e7a907e0e01eaf"
+vue-loader@^10.1.2:
+  version "10.1.2"
+  resolved "http://registry.npm.taobao.org/vue-loader/download/vue-loader-10.1.2.tgz#4da0859254b6f4c481880c95d22f1988ca6d2b8b"
   dependencies:
     consolidate "^0.14.0"
     hash-sum "^1.0.2"
     js-beautify "^1.6.3"
     loader-utils "^0.2.10"
     lru-cache "^4.0.1"
-    object-assign "^4.0.0"
     postcss "^5.0.10"
     postcss-selector-parser "^2.0.0"
     source-map "^0.5.6"
