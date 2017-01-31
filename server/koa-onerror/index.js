@@ -4,6 +4,8 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 
+const isPlainObject = require('lodash/isPlainObject')
+
 const env = process.env.NODE_ENV || 'development';
 const isDev = env === 'development';
 const templatePath = isDev
@@ -34,15 +36,12 @@ module.exports = function onerror(app, options) {
     // wrap non-error object
     if (!(err instanceof Error)) {
       const originalError = err
+      const isObject = isPlainObject(err)
       let errMsg = 'non-error thrown: '
-      try {
-        errMsg += JSON.stringify(err);
-      } catch (e) {
-        errMsg += err
-      }
+      errMsg += isObject ? JSON.stringify(err) : new Error(err)
       err = new Error(errMsg);
+      isObject && Object.assign(err, originalError)
       err.originalError = originalError
-      typeof originalError === 'object' && Object.assign(err, originalError)
     }
 
     // delegate
