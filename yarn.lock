@@ -4336,9 +4336,9 @@ vue-hot-reload-api@^2.0.1:
   version "2.0.8"
   resolved "http://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.0.8.tgz#b3ba6a9a443d561b14f2785c8ea056618cb2faa3"
 
-vue-loader@^10.1.2:
-  version "10.1.2"
-  resolved "http://registry.npm.taobao.org/vue-loader/download/vue-loader-10.1.2.tgz#4da0859254b6f4c481880c95d22f1988ca6d2b8b"
+vue-loader@^10.2.0:
+  version "10.2.0"
+  resolved "http://registry.npm.taobao.org/vue-loader/download/vue-loader-10.2.0.tgz#6287b24d02fe68c6b7523820e4ef636ff07d6f2b"
   dependencies:
     consolidate "^0.14.0"
     hash-sum "^1.0.2"
@@ -4349,7 +4349,7 @@ vue-loader@^10.1.2:
     postcss-selector-parser "^2.0.0"
     source-map "^0.5.6"
     vue-hot-reload-api "^2.0.1"
-    vue-style-loader "^1.0.0"
+    vue-style-loader "^2.0.0"
     vue-template-es2015-compiler "^1.2.2"
 
 vue-router@^2.2.0:
@@ -4362,12 +4362,6 @@ vue-server-renderer@^2.1.10:
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"
-
-vue-style-loader@^1.0.0:
-  version "1.0.0"
-  resolved "http://registry.npm.taobao.org/vue-style-loader/download/vue-style-loader-1.0.0.tgz#abeb7bd0f46313083741244d3079d4f14449e049"
-  dependencies:
-    loader-utils "^0.2.7"
 
 vue-style-loader@^2.0.0:
   version "2.0.0"
