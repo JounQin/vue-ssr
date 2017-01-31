@@ -52,9 +52,7 @@ router.get('*', async(ctx, next) => {
 
   if (intercept(ctx, {logger: __DEV__ && debug})) return await next()
 
-  const context = {url: req.url}
-  const renderStream = renderer.renderToStream(context)
-  ctx.body = renderStream.pipe(new HtmlWriterStream(indexHTML))
+  ctx.body = renderer.renderToStream(req).pipe(new HtmlWriterStream(indexHTML))
 
   res.setHeader('Content-Type', 'text/html')
   res.setHeader('Server', `koa/${require('koa/package.json').version}; ` +
