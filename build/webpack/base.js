@@ -3,6 +3,8 @@ import _debug from 'debug'
 
 import config, {alias, globals, paths} from '../config'
 
+import {commonLoaders, vueLoaders, localIdentName, nodeModules} from './utils'
+
 const debug = _debug('hi:webpack:base')
 
 const PACKAGES = paths.base('packages')
@@ -12,6 +14,8 @@ const filename = `[name].[${config.hashType}].js`
 
 const {devTool, minimize} = config
 const {NODE_ENV} = globals
+
+const sourceMap = !!devTool
 
 const webpackConfig = {
   resolve: {
@@ -33,18 +37,22 @@ const webpackConfig = {
   devtool: devTool,
   module: {
     rules: [
+      ...commonLoaders(),
       {
         test: /\.js$/,
         use: 'babel-loader?cacheDirectory',
-        exclude: /\bnode_modules\b/
-      },
-      {
-        test: /\.styl/,
-        use: ['style-loader', 'css-loader', 'stylus-loader']
+        exclude: nodeModules
       },
       {
         test: /\.vue$/,
-        use: 'vue-loader'
+        loader: 'vue-loader',
+        options: {
+          loaders: vueLoaders(),
+          cssModules: {
+            camelCase: true,
+            localIdentName
+          }
+        }
       }
     ]
   },
@@ -54,8 +62,6 @@ const webpackConfig = {
     })
   ]
 }
-
-const sourceMap = !!devTool
 
 if (minimize) {
   debug(`Enable plugins for ${NODE_ENV} (UglifyJS).`)

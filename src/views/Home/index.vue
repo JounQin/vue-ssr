@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="$style && $style.home">
     {{ text }}
     <router-link to="/test">Go to test</router-link>
   </div>
@@ -13,3 +13,8 @@
     }
   }
 </script>
+<style module>
+  .home {
+    color: red;
+  }
+</style>

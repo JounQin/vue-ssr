@@ -41,6 +41,7 @@ export default {
   publicPath: '',
   hashType: 'hash',
   minimize: false,
+  browsers: ['> 1% in CN'],
   quiet: false,
   stats: {
     colors: true,
