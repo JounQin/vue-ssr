@@ -35,7 +35,7 @@ export const vendors = [
 ]
 
 export default {
-  serverHost: 'local.1stg.me',
+  serverHost: 'localhost',
   serverPort: 3000,
   devTool: 'source-map',
   publicPath: '',

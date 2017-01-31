@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style && $style.home">
+  <div :class="$style.home">
     {{ text }}
     <router-link to="/test">Go to test</router-link>
   </div>

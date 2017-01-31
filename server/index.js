@@ -4,6 +4,7 @@ import Koa from 'koa'
 import logger from 'koa-logger'
 import Router from 'koa-router'
 import serve from 'koa-static'
+import onerror from './koa-onerror'
 import lruCache from 'lru-cache'
 import _debug from 'debug'
 
@@ -18,6 +19,19 @@ const {__DEV__} = globals
 const debug = _debug('hi:server')
 
 const app = new Koa()
+
+onerror(app)
+
+app.on('error', ({status, originalError}, ctx) => {
+  switch (status) {
+    case 404:
+      ctx.status = status
+      ctx.res.end('Page Not Found')
+      break
+    default:
+      console.error(originalError)
+  }
+})
 
 let indexHTML
 let renderer
@@ -52,7 +66,7 @@ router.get('*', async(ctx, next) => {
 
   if (intercept(ctx, {logger: __DEV__ && debug})) return await next()
 
-  ctx.body = renderer.renderToStream(req).pipe(new HtmlWriterStream(indexHTML))
+  ctx.body = renderer.renderToStream(req).on('error', ctx.onerror).pipe(new HtmlWriterStream(indexHTML))
 
   res.setHeader('Content-Type', 'text/html')
   res.setHeader('Server', `koa/${require('koa/package.json').version}; ` +

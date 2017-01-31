@@ -8,7 +8,7 @@ export default ({url}) => {
   const matchedComponents = router.getMatchedComponents()
 
   // no matched routes
-  if (!matchedComponents.length) return Promise.reject({status: '404'})
+  if (!matchedComponents.length) return Promise.reject({status: 404})
 
   return Promise.all(matchedComponents.map(component => component.preFetch && component.preFetch()))
     .then(() => {
