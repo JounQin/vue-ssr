@@ -4,7 +4,7 @@ import Koa from 'koa'
 import logger from 'koa-logger'
 import Router from 'koa-router'
 import serve from 'koa-static'
-import onerror from './koa-onerror'
+import onerror from '../packages/koa-onerror'
 import lruCache from 'lru-cache'
 import HTMLStream from 'vue-ssr-html-stream'
 import _debug from 'debug'
@@ -30,16 +30,16 @@ app.on('error', (err, ctx) => {
       ctx.status = status
       ctx.res.end('404 | Page Not Found')
       break
-    default:
-      debug(originalError || err)
   }
+
+  debug(originalError || err)
 })
 
 let template
 let renderer
 
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-const createRenderer = bundle => require('vue-server-renderer').createBundleRenderer(bundle, {
+const createRenderer = bundle => require('../packages/vue-server-renderer').createBundleRenderer(bundle, {
   cache: lruCache({
     max: 1000,
     maxAge: 1000 * 60 * 15
@@ -70,7 +70,7 @@ const router = new Router()
 router.get('*', async(ctx, next) => {
   const {req, res} = ctx
 
-  if (!renderer) return res.end('waiting for compilation... refresh in a moment.')
+  if (!renderer || !template) return res.end('waiting for compilation... refresh in a moment.')
 
   if (intercept(ctx, {logger: __DEV__ && debug})) return await next()
 
@@ -83,7 +83,7 @@ router.get('*', async(ctx, next) => {
   res.setHeader('Server', `koa/${require('koa/package.json').version}; ` +
     `vue-server-renderer/${require('vue-server-renderer/package.json').version}`)
 
-  res.body = renderer.renderToStream(context)
+  ctx.body = renderer.renderToStream(context)
     .on('error', ctx.onerror)
     .pipe(htmlStream)
     .on('error', ctx.onerror)

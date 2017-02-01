@@ -5,7 +5,9 @@ import _debug from 'debug'
 
 import config, {globals, paths, pkg, vendors} from '../config'
 
-const {minimize} = config
+const {devTool, minimize} = config
+
+const sourceMap = !!devTool
 
 const {__DEV__, NODE_ENV} = globals
 
@@ -45,6 +47,22 @@ const clientConfig = {
       }
     })
   ]
+}
+
+if (minimize) {
+  debug(`Enable plugins for ${NODE_ENV} (UglifyJS).`)
+
+  clientConfig.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: !sourceMap,
+      compress: {
+        unused: true,
+        dead_code: true,
+        warnings: false
+      },
+      comments: false,
+      sourceMap
+    }))
 }
 
 if (__DEV__) {
