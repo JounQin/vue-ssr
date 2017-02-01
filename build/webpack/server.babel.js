@@ -1,4 +1,5 @@
 import webpack from 'webpack'
+import VueSSRPlugin from 'vue-ssr-webpack-plugin'
 import _debug from 'debug'
 
 import {globals, paths} from '../config'
@@ -29,6 +30,7 @@ export default {
       ...globals,
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
       __SERVER__: true
-    })
+    }),
+    new VueSSRPlugin()
   ]
 }

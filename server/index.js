@@ -6,9 +6,9 @@ import Router from 'koa-router'
 import serve from 'koa-static'
 import onerror from './koa-onerror'
 import lruCache from 'lru-cache'
+import HTMLStream from 'vue-ssr-html-stream'
 import _debug from 'debug'
 
-import HtmlWriterStream from './html-writer-stream'
 import intercept from './intercept'
 
 import config, {globals, paths} from '../build/config'
@@ -22,18 +22,20 @@ const app = new Koa()
 
 onerror(app)
 
-app.on('error', ({status, originalError}, ctx) => {
+app.on('error', (err, ctx) => {
+  const {status, originalError} = err
+
   switch (status) {
     case 404:
       ctx.status = status
-      ctx.res.end('Page Not Found')
+      ctx.res.end('404 | Page Not Found')
       break
     default:
-      console.error(originalError)
+      debug(originalError || err)
   }
 })
 
-let indexHTML
+let template
 let renderer
 
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
@@ -44,12 +46,20 @@ const createRenderer = bundle => require('vue-server-renderer').createBundleRend
   })
 })
 
-function parseIndex(template) {
+function parseTemplate(template) {
   const contentMarker = '<!--APP-->'
-  const index = template.indexOf(contentMarker)
+  let i = template.indexOf('</head>')
+  const j = template.indexOf(contentMarker)
+  if (i < 0) {
+    i = template.indexOf('<body>')
+    if (i < 0) {
+      i = j
+    }
+  }
   return {
-    header: template.slice(0, index),
-    footer: template.slice(index + contentMarker.length)
+    head: template.slice(0, i),
+    neck: template.slice(i, j),
+    tail: template.slice(j + contentMarker.length)
   }
 }
 
@@ -60,31 +70,36 @@ const router = new Router()
 router.get('*', async(ctx, next) => {
   const {req, res} = ctx
 
-  if (!renderer) {
-    return res.end('waiting for compilation... refresh in a moment.')
-  }
+  if (!renderer) return res.end('waiting for compilation... refresh in a moment.')
 
   if (intercept(ctx, {logger: __DEV__ && debug})) return await next()
 
-  ctx.body = renderer.renderToStream(req).on('error', ctx.onerror).pipe(new HtmlWriterStream(indexHTML))
+  const start = Date.now()
+
+  const context = {url: req.url}
+  const htmlStream = new HTMLStream({template, context})
 
   res.setHeader('Content-Type', 'text/html')
   res.setHeader('Server', `koa/${require('koa/package.json').version}; ` +
     `vue-server-renderer/${require('vue-server-renderer/package.json').version}`)
+
+  res.body = renderer.renderToStream(context)
+    .on('error', ctx.onerror)
+    .pipe(htmlStream)
+    .on('error', ctx.onerror)
+    .on('end', () => console.log(`whole request: ${Date.now() - start}ms`))
 })
 
-app.use(router.routes())
-  .use(router.allowedMethods())
+app.use(router.routes()).use(router.allowedMethods())
 
 if (__DEV__) {
   dev(app, {
     bundleUpdated: bundle => (renderer = createRenderer(bundle)),
-    indexUpdated: index => (indexHTML = parseIndex(index))
+    templateUpdated: temp => (template = parseTemplate(temp))
   })
 } else {
-  renderer = createRenderer(fs.readFileSync(paths.dist('server-bundle.js'), 'utf-8'))
-  indexHTML = parseIndex(fs.readFileSync(paths.dist('index.html'), 'utf-8'))
-
+  renderer = createRenderer(require(paths.dist('vue-ssr-bundle.json'), 'utf-8'))
+  template = parseTemplate(fs.readFileSync(paths.dist('index.html'), 'utf-8'))
   app.use(serve('dist'))
 }
 

@@ -3,16 +3,22 @@ import {app, router} from './app'
 export default ({url}) => {
   const start = __DEV__ && Date.now()
 
-  // set router's location
-  router.push(url)
-  const matchedComponents = router.getMatchedComponents()
+  return new Promise((resolve, reject) => {
+    // set router's location
+    router.push(url)
 
-  // no matched routes
-  if (!matchedComponents.length) return Promise.reject({status: 404})
+    router.onReady(() => {
+      const matchedComponents = router.getMatchedComponents()
 
-  return Promise.all(matchedComponents.map(component => component.preFetch && component.preFetch()))
-    .then(() => {
-      __DEV__ && console.log(`data pre-fetch: ${Date.now() - start}ms`)
-      return app
+      // no matched routes
+      if (!matchedComponents.length) return reject({status: 404})
+
+      Promise.all(matchedComponents.map(component => component.preFetch && component.preFetch()))
+        .then(() => {
+          __DEV__ && console.log(`data pre-fetch: ${Date.now() - start}ms`)
+          resolve(app)
+        })
+        .catch(reject)
     })
+  })
 }

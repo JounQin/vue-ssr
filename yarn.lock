@@ -4363,6 +4363,16 @@ vue-server-renderer@^2.1.10:
     de-indent "^1.0.2"
     he "^1.1.0"
 
+vue-ssr-html-stream@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/vue-ssr-html-stream/download/vue-ssr-html-stream-1.0.0.tgz#b6b5d18bfcb0068806da6e3fbb2ff183bcd0f359"
+  dependencies:
+    serialize-javascript "^1.3.0"
+
+vue-ssr-webpack-plugin@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/vue-ssr-webpack-plugin/download/vue-ssr-webpack-plugin-1.0.0.tgz#00b35a6b7d23689c65c1af838ef416b0a772b8f5"
+
 vue-style-loader@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/vue-style-loader/download/vue-style-loader-2.0.0.tgz#1a3bb55239ac541ee3af0301d66f16fc86786543"

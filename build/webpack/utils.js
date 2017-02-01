@@ -71,12 +71,11 @@ export const commonLoaders = () => {
       test: regExp,
       use: generateLoaders(cssLoader, value),
       include: nodeModules
-    },
-      {
-        test: regExp,
-        use: generateLoaders(cssModuleLoader, value),
-        exclude: nodeModules
-      })
+    }, {
+      test: regExp,
+      use: generateLoaders(cssModuleLoader, value),
+      exclude: nodeModules
+    })
   }
 
   return loaders
