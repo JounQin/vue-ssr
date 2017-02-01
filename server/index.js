@@ -46,23 +46,6 @@ const createRenderer = bundle => require('../packages/vue-server-renderer').crea
   })
 })
 
-function parseTemplate(template) {
-  const contentMarker = '<!--APP-->'
-  let i = template.indexOf('</head>')
-  const j = template.indexOf(contentMarker)
-  if (i < 0) {
-    i = template.indexOf('<body>')
-    if (i < 0) {
-      i = j
-    }
-  }
-  return {
-    head: template.slice(0, i),
-    neck: template.slice(i, j),
-    tail: template.slice(j + contentMarker.length)
-  }
-}
-
 app.use(logger())
 
 const router = new Router()
@@ -77,7 +60,7 @@ router.get('*', async(ctx, next) => {
   const start = Date.now()
 
   const context = {url: req.url}
-  const htmlStream = new HTMLStream({template, context})
+  const htmlStream = new HTMLStream({template, context, contentMarker: '<!--APP-->'})
 
   res.setHeader('Content-Type', 'text/html')
   res.setHeader('Server', `koa/${require('koa/package.json').version}; ` +
@@ -95,11 +78,11 @@ app.use(router.routes()).use(router.allowedMethods())
 if (__DEV__) {
   dev(app, {
     bundleUpdated: bundle => (renderer = createRenderer(bundle)),
-    templateUpdated: temp => (template = parseTemplate(temp))
+    templateUpdated: temp => (template = temp)
   })
 } else {
   renderer = createRenderer(require(paths.dist('vue-ssr-bundle.json'), 'utf-8'))
-  template = parseTemplate(fs.readFileSync(paths.dist('index.html'), 'utf-8'))
+  template = fs.readFileSync(paths.dist('index.html'), 'utf-8')
   app.use(serve('dist'))
 }
 
