@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
 import pug from 'pug'
 import _debug from 'debug'
 
@@ -73,6 +74,15 @@ if (__DEV__) {
     new webpack.NoEmitOnErrorsPlugin())
 } else {
   debug(`Extract styles of app and bootstrap for ${NODE_ENV}.`)
+
+  debug(`Enable plugins for ${NODE_ENV} (SWPrecache).`)
+  clientConfig.plugins.push(
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'vue-ssr',
+      filename: 'service-worker.js',
+      dontCacheBustUrlsMatching: /./,
+      staticFileGlobsIgnorePatterns: [/index\.html$/, /\.map$/]
+    }))
 }
 
 export default clientConfig

@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import webpack from 'webpack'
 
 import config, {alias, paths} from '../config'
