@@ -1,6 +1,7 @@
 import fs from 'fs'
 
 import Koa from 'koa'
+import compress from 'koa-compress'
 import logger from 'koa-logger'
 import Router from 'koa-router'
 import serve from 'koa-static'
@@ -46,6 +47,7 @@ const createRenderer = bundle => require('../packages/vue-server-renderer').crea
   })
 })
 
+app.use(compress())
 app.use(logger())
 
 const router = new Router()
