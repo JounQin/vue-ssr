@@ -60,7 +60,7 @@ router.get('*', async(ctx, next) => {
   const start = Date.now()
 
   const context = {url: req.url}
-  const htmlStream = new HTMLStream({template, context, contentMarker: '<!--APP-->'})
+  const htmlStream = new HTMLStream({template, context, contentPlaceholder: '<!--APP-->'})
 
   res.setHeader('Content-Type', 'text/html')
   res.setHeader('Server', `koa/${require('koa/package.json').version}; ` +
@@ -69,7 +69,6 @@ router.get('*', async(ctx, next) => {
   ctx.body = renderer.renderToStream(context)
     .on('error', ctx.onerror)
     .pipe(htmlStream)
-    .on('error', ctx.onerror)
     .on('end', () => console.log(`whole request: ${Date.now() - start}ms`))
 })
 
