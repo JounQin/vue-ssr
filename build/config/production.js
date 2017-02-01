@@ -1,6 +1,7 @@
 export default config => ({
   devTool: false,
-  publicPath: `http://${config.serverHost}:${config.serverPort}/`,
+  serverHost: 'localhost',
+  publicPath: `/`,
   hashType: 'chunkhash',
   minimize: true
 })
