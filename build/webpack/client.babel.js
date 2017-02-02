@@ -6,7 +6,7 @@ import pug from 'pug'
 import _debug from 'debug'
 
 import config, {globals, paths, pkg, vendors} from '../config'
-import {nodeModules, cssLoader, generateLoaders} from './utils'
+import {nodeModules, baseLoaders, generateLoaders} from './utils'
 
 import baseConfig, {STYLUS_LOADER, prodEmpty} from './base'
 
@@ -36,21 +36,19 @@ const clientConfig = {
       ...baseConfig.module.rules,
       {
         test: /[/\\]app\.styl$/,
-        use: generateLoaders(cssLoader, STYLUS_LOADER, {
+        loader: generateLoaders(STYLUS_LOADER, baseLoaders, {
           extract: minimize && (appLoader = new ExtractTextPlugin(`${prodEmpty('app.')}[contenthash].css`))
         }),
         exclude: nodeModules
-      },
-      {
+      }, {
         test: /[/\\]bootstrap\.styl$/,
-        use: generateLoaders(cssLoader, STYLUS_LOADER, {
+        loader: generateLoaders(STYLUS_LOADER, baseLoaders, {
           extract: minimize && (bootstrapLoader = new ExtractTextPlugin(`${prodEmpty('bootstrap.')}[contenthash].css`))
         }),
         exclude: nodeModules
-      },
-      {
+      }, {
         test: /[/\\]theme-\w+\.styl$/,
-        use: generateLoaders(cssLoader, STYLUS_LOADER),
+        loader: generateLoaders(STYLUS_LOADER, baseLoaders),
         exclude: nodeModules
       }
     ]

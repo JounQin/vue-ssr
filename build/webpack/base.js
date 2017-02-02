@@ -4,12 +4,12 @@ import webpack from 'webpack'
 import config, {alias, globals, paths} from '../config'
 
 import {
-  commonLoaders,
-  vueLoaders,
-  localIdentName,
   nodeModules,
-  cssLoader,
-  cssModuleLoader,
+  baseLoaders,
+  cssModuleLoaders,
+  commonCssLoaders,
+  vueCssLoaders,
+  localIdentName,
   generateLoaders
 } from './utils'
 
@@ -25,6 +25,8 @@ export const STYLUS_LOADER = 'stylus-loader'
 export const prodEmpty = str => __PROD__ ? '' : str
 
 const filename = `${prodEmpty('[name].')}[${config.hashType}].js`
+
+const sourceMap = !!devTool
 
 export default {
   resolve: {
@@ -46,17 +48,18 @@ export default {
   devtool: devTool,
   module: {
     rules: [
-      ...commonLoaders({
+      ...commonCssLoaders({
+        sourceMap,
         exclude: 'styl'
       }),
       {
         test: /^(?!.*[/\\](app|bootstrap|theme-\w+)\.styl$).*\.styl$/,
-        use: generateLoaders(cssModuleLoader, STYLUS_LOADER),
+        loader: generateLoaders(STYLUS_LOADER, cssModuleLoaders),
         exclude: nodeModules
       },
       {
         test: /\.styl$/,
-        use: generateLoaders(cssLoader, STYLUS_LOADER),
+        loader: generateLoaders(STYLUS_LOADER, baseLoaders),
         include: nodeModules
       },
       {
@@ -68,7 +71,9 @@ export default {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders: vueLoaders(),
+          loaders: vueCssLoaders({
+            sourceMap
+          }),
           cssModules: {
             camelCase: true,
             localIdentName
