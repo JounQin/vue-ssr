@@ -13,7 +13,7 @@ import {
   generateLoaders
 } from './utils'
 
-const {__DEV__, __PROD__} = globals
+const {__PROD__} = globals
 
 const PACKAGES = paths.base('packages')
 const NODE_MODULES = 'node_modules'
@@ -79,16 +79,9 @@ export default {
             localIdentName
           }
         }
-      }, {
-        test: /\.pug$/,
-        loader: `vue-template-es2015-loader!template-file-loader?raw&pretty=${__DEV__}&doctype=html`,
-        exclude: nodeModules
-      }, {
-        test: /\.(png|jpe?g|gif)$/,
-        loader: `url-loader?limit=10000&name=${prodEmpty('[name].')}[hash].[ext]!img-loader?minimize&progressive=true`
       },
       {
-        test: /\.(svg|woff2?|eot|ttf)$/,
+        test: /\.(png|jpe?g|gif|svg|woff2?|eot|ttf)$/,
         loader: 'url-loader',
         query: {
           limit: 10000,
