@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import store from 'store'
+
+const {dispatch} = store
+
 Vue.use(VueRouter)
 
-export default new VueRouter({
+const router = new VueRouter({
   mode: 'history',
   routes: [
     {
@@ -18,3 +22,14 @@ export default new VueRouter({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  dispatch('setProgress', 50)
+  next()
+})
+
+router.afterEach(() => {
+  dispatch('setProgress', 100)
+})
+
+export default router

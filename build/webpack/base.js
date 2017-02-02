@@ -28,7 +28,7 @@ const filename = `${prodEmpty('[name].')}[${config.hashType}].js`
 
 export default {
   resolve: {
-    modules: [paths.src(), PACKAGES, NODE_MODULES],
+    modules: [paths.src(), paths.src('components'), paths.src('views'), PACKAGES, NODE_MODULES],
     extensions: ['.vue', '.js', '.styl'],
     enforceExtension: false,
     enforceModuleExtension: false,

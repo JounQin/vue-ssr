@@ -1,20 +1,14 @@
-<template>
-  <div :class="$style.home">
-    {{ text }}
-    <router-link to="/test">Go to test</router-link>
-  </div>
-</template>
+<template lang="pug" src="./index.pug"></template>
 <script>
+  import {ensure, removeClass} from 'utils'
+
   export default {
-    data() {
-      return {
-        text: 'My Text'
-      }
+    name: 'home',
+    mounted() {
+      ensure(Object.values(this.$refs), 'animationend', (e, el) => {
+        removeClass(e ? e.target : el, 'animated')
+      }, 1600)
     }
   }
 </script>
-<style module>
-  .home {
-    color: red;
-  }
-</style>
+<style lang="styl" src="./index.styl" module/>
