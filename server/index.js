@@ -13,7 +13,6 @@ import _debug from 'debug'
 import intercept from './intercept'
 
 import config, {globals, paths} from '../build/config'
-import dev from './dev-tools'
 
 const {__DEV__} = globals
 
@@ -77,7 +76,7 @@ router.get('*', async(ctx, next) => {
 app.use(router.routes()).use(router.allowedMethods())
 
 if (__DEV__) {
-  dev(app, {
+  require('./dev-tools').default(app, {
     bundleUpdated: bundle => (renderer = createRenderer(bundle)),
     templateUpdated: temp => (template = temp)
   })

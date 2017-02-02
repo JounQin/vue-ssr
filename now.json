@@ -1,0 +1,13 @@
+{
+  "name": "vue-ssr",
+  "alias": [
+    "vue-ssr.now.sh"
+  ],
+  "files": [
+    ".babelrc",
+    "build/*",
+    "dist/*",
+    "packages/*",
+    "server/*"
+  ]
+}

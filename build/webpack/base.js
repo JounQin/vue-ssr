@@ -28,6 +28,11 @@ const filename = `${prodEmpty('[name].')}[${config.hashType}].js`
 
 const sourceMap = !!devTool
 
+const urlLoader = `url-loader?${JSON.stringify({
+  limit: 10000,
+  name: `${prodEmpty('[name].')}[hash].[ext]`
+})}`
+
 export default {
   resolve: {
     modules: [paths.src(), paths.src('components'), paths.src('views'), PACKAGES, NODE_MODULES],
@@ -81,12 +86,12 @@ export default {
         }
       },
       {
-        test: /\.(png|jpe?g|gif|svg|woff2?|eot|ttf)$/,
-        loader: 'url-loader',
-        query: {
-          limit: 10000,
-          name: `${prodEmpty('[name].')}[hash].[ext]`
-        }
+        test: /\.(png|jpe?g|gif)$/,
+        loader: urlLoader + '!img-loader?minimize&progressive=true'
+      },
+      {
+        test: /\.(svg|woff2?|eot|ttf)$/,
+        loader: urlLoader
       }
     ]
   },
