@@ -1,3 +1,6 @@
+import 'styles/bootstrap'
+import 'styles/app'
+
 import {app, router} from './app'
 
 router.onReady(() => app.$mount('#app'))

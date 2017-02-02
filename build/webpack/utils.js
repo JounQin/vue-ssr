@@ -1,3 +1,5 @@
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+
 import config, {globals} from '../config'
 
 const {devTool, minimize, browsers} = config
@@ -50,21 +52,32 @@ export const cssModuleLoader = {
   }
 }
 
-export const generateLoaders = (css, loader, {vue} = {}) => {
-  const loaders = [vue ? 'vue-style-loader' : 'style-loader', css]
-  loader && loaders.push({
+export const generateLoaders = (css, loader, {vue, extract} = {}) => {
+  const sourceLoaders = loader ? [css, {
     loader,
     options: {
       sourceMap
     }
-  })
-  return loaders
+  }] : [css]
+
+  const fallbackLoader = vue ? 'vue-style-loader' : 'style-loader'
+
+  return extract ? (extract.extract ? extract : ExtractTextPlugin).extract({
+    fallbackLoader,
+    loader: sourceLoaders
+  }) : [fallbackLoader, ...sourceLoaders]
 }
 
-export const commonLoaders = () => {
+const normalizeExclude = (exclude = []) => Array.isArray(exclude) ? exclude : [exclude]
+
+export const commonLoaders = ({exclude} = {}) => {
   const loaders = []
 
+  exclude = normalizeExclude(exclude)
+
   for (const [key, value] of Object.entries(loaderMap)) {
+    if (exclude.includes(key)) continue
+
     const regExp = new RegExp(`\\.${key}$`)
 
     loaders.push({

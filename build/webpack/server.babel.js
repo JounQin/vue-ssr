@@ -32,5 +32,6 @@ export default {
       __SERVER__: true
     }),
     new VueSSRPlugin()
-  ]
+  ],
+  externals: Object.keys(require(paths.base('package.json')).dependencies)
 }
