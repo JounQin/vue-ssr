@@ -36,21 +36,21 @@ const clientConfig = {
       ...baseConfig.module.rules,
       {
         test: /[/\\]app\.styl$/,
-        loader: generateLoaders(cssLoader, STYLUS_LOADER, {
+        use: generateLoaders(cssLoader, STYLUS_LOADER, {
           extract: minimize && (appLoader = new ExtractTextPlugin(`${prodEmpty('app.')}[contenthash].css`))
         }),
         exclude: nodeModules
       },
       {
         test: /[/\\]bootstrap\.styl$/,
-        loader: generateLoaders(cssLoader, STYLUS_LOADER, {
+        use: generateLoaders(cssLoader, STYLUS_LOADER, {
           extract: minimize && (bootstrapLoader = new ExtractTextPlugin(`${prodEmpty('bootstrap.')}[contenthash].css`))
         }),
         exclude: nodeModules
       },
       {
         test: /[/\\]theme-\w+\.styl$/,
-        loader: generateLoaders(cssLoader, STYLUS_LOADER),
+        use: generateLoaders(cssLoader, STYLUS_LOADER),
         exclude: nodeModules
       }
     ]
@@ -93,7 +93,8 @@ if (minimize) {
       sourceMap
     }),
     bootstrapLoader,
-    appLoader)
+    appLoader
+  )
 }
 
 if (__DEV__) {
@@ -101,7 +102,8 @@ if (__DEV__) {
 
   clientConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin())
+    new webpack.NoEmitOnErrorsPlugin()
+  )
 } else {
   debug(`Extract styles of app and bootstrap for ${NODE_ENV}.`)
 
@@ -112,7 +114,8 @@ if (__DEV__) {
       filename: 'service-worker.js',
       dontCacheBustUrlsMatching: /./,
       staticFileGlobsIgnorePatterns: [/index\.html$/, /\.map$/]
-    }))
+    })
+  )
 }
 
 export default clientConfig

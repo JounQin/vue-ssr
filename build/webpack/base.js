@@ -47,11 +47,11 @@ export default {
   module: {
     rules: [
       ...commonLoaders({
-        exclude: ['styl']
+        exclude: 'styl'
       }),
       {
         test: /^(?!.*[/\\](app|bootstrap|theme-\w+)\.styl$).*\.styl$/,
-        loader: generateLoaders(cssModuleLoader, STYLUS_LOADER),
+        use: generateLoaders(cssModuleLoader, STYLUS_LOADER),
         exclude: nodeModules
       },
       {
