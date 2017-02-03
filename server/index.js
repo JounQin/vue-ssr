@@ -3,9 +3,7 @@ import fs from 'fs'
 import Koa from 'koa'
 import compress from 'koa-compress'
 import logger from 'koa-logger'
-import Router from 'koa-router'
 import serve from 'koa-static'
-import onerror from '../packages/koa-onerror'
 import lruCache from 'lru-cache'
 import HTMLStream from 'vue-ssr-html-stream'
 import _debug from 'debug'
@@ -19,21 +17,6 @@ const {__DEV__} = globals
 const debug = _debug('hi:server')
 
 const app = new Koa()
-
-onerror(app)
-
-app.on('error', (err, ctx) => {
-  const {status, originalError} = err
-
-  switch (status) {
-    case 404:
-      ctx.status = status
-      ctx.res.end('404 | Page Not Found')
-      break
-  }
-
-  debug(originalError || err)
-})
 
 let template
 let renderer
@@ -49,9 +32,7 @@ const createRenderer = bundle => require('../packages/vue-server-renderer').crea
 app.use(compress())
 app.use(logger())
 
-const router = new Router()
-
-router.get('*', async(ctx, next) => {
+app.use(async(ctx, next) => {
   const {req, res} = ctx
 
   if (!renderer || !template) return res.end('waiting for compilation... refresh in a moment.')
@@ -61,7 +42,7 @@ router.get('*', async(ctx, next) => {
   const start = Date.now()
 
   const context = {url: req.url}
-  const htmlStream = new HTMLStream({template, context, contentPlaceholder: '<!--APP-->'})
+  const htmlStream = new HTMLStream({template, context, contentPlaceholder: '<div id="app"></div>'})
 
   res.setHeader('Content-Type', 'text/html')
   res.setHeader('Server', `koa/${require('koa/package.json').version}; ` +
@@ -72,8 +53,6 @@ router.get('*', async(ctx, next) => {
     .pipe(htmlStream)
     .on('end', () => console.log(`whole request: ${Date.now() - start}ms`))
 })
-
-app.use(router.routes()).use(router.allowedMethods())
 
 if (__DEV__) {
   require('./dev-tools').default(app, {

@@ -142,25 +142,25 @@ input
 
 // 1px fallback
 .border
-  @extend $border
+  border1px()
 
 .border-t
-  @extend $border-t
+  border1px-t()
 
 .border-b
-  @extend $border-b
+  border1px-b()
 
 .border-tb
-  @extend $border-tb
+  border1px-tb()
 
 .border-l
-  @extend $border-l
+  border1px-l()
 
 .border-r
-  @extend $border-r
+  border1px-r()
 
 .border-radius
-  @extend $border-radius
+  borderRadius()
 
 .dashed-line
   border-bottom 1px dashed $border-color
@@ -169,7 +169,7 @@ input
 .list-group
   background-color $back-light-color
   padding-left 0
-  @extend $border-tb
+  @extend .border-tb
 
   input, textarea
     border 0
@@ -188,7 +188,7 @@ input
     padding 10px 10px 10px 0
 
     &:not(:last-child)
-      @extend $border-b
+      @extend .border-b
 
     .list-group-left, .list-group-right
       display table-cell
