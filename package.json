@@ -7,9 +7,8 @@
   "author": "JounQin <admin@1stg.me>",
   "license": "MIT",
   "scripts": {
-    "server": "cross-env DEBUG=hi:* node build/bin/start",
-    "dev": "npm run server",
-    "prod": "cross-env NODE_ENV=production npm run server",
+    "dev": "cross-env DEBUG=hi:* node build/bin/start",
+    "prod": "cross-env NODE_ENV=production npm run dev",
     "start": "npm run build && npm run prod",
     "build": "rimraf dist && npm run compile",
     "compile:base": "npm run compile:client && npm run compile:server",

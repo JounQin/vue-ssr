@@ -63,7 +63,8 @@ const clientConfig = {
     new HtmlWebpackPlugin({
       templateContent: pug.renderFile(paths.src('index.pug'), {
         pretty: !minimize,
-        title: `${pkg.name} - ${pkg.description}`
+        title: `${pkg.name} - ${pkg.description}`,
+        polyfill: !__DEV__
       }),
       favicon: paths.src('static/favicon.ico'),
       hash: false,
