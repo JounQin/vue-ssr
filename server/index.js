@@ -42,7 +42,12 @@ app.use(async(ctx, next) => {
   const start = Date.now()
 
   const context = {url: req.url}
-  const htmlStream = new HTMLStream({template, context, contentPlaceholder: '<div id="app"></div>'})
+  const htmlStream = new HTMLStream({
+    template,
+    context,
+    contentPlaceholder: '<div id="app"></div>',
+    styleMode: !__DEV__
+  })
 
   res.setHeader('Content-Type', 'text/html')
   res.setHeader('Server', `koa/${require('koa/package.json').version}; ` +
