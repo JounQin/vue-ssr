@@ -1,6 +1,4 @@
-'use strict'
-
-export default function tryWebpack({headers, method, url}, options = {}) {
+export default ({headers, method, url}, options = {}) => {
   const logger = getLogger(options)
 
   if (method !== 'GET') {
@@ -11,7 +9,9 @@ export default function tryWebpack({headers, method, url}, options = {}) {
       'because the method is not GET.'
     )
     return true
-  } else if (!headers || typeof headers.accept !== 'string') {
+  }
+
+  if (!headers || typeof headers.accept !== 'string') {
     logger(
       'Not intercepting',
       method,
@@ -19,7 +19,9 @@ export default function tryWebpack({headers, method, url}, options = {}) {
       'because the client did not send an HTTP accept header.'
     )
     return true
-  } else if (headers.accept.indexOf('application/json') === 0) {
+  }
+
+  if (headers.accept.indexOf('application/json') === 0) {
     logger(
       'Not intercepting',
       method,
@@ -27,7 +29,9 @@ export default function tryWebpack({headers, method, url}, options = {}) {
       'because the client prefers JSON.'
     )
     return true
-  } else if (!acceptsHtml(headers.accept, options)) {
+  }
+
+  if (!acceptsHtml(headers.accept, options)) {
     logger(
       'Not intercepting',
       method,
@@ -48,7 +52,7 @@ export default function tryWebpack({headers, method, url}, options = {}) {
     )
     return true
   }
-};
+}
 
 const acceptsHtml = (header, {htmlAcceptHeaders = ['text/html', '*/*']}) =>
   !!htmlAcceptHeaders.find(acceptHeader => header.indexOf(acceptHeader) + 1)
