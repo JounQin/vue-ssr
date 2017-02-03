@@ -20,6 +20,7 @@
     "pm2": "cross-env NODE_ENV=production DEBUG=hi:* pm2 start build/bin/start.js --name=vue-ssr"
   },
   "dependencies": {
+    "bootstrap-styl": "^5.0.8",
     "fonts.css": "^1.5.0",
     "koa": "^2.0.0-alpha.7",
     "koa-compress": "^2.0.0",
