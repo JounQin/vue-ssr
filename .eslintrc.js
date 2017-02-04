@@ -3,7 +3,8 @@ module.exports = {
   parser: 'babel-eslint',
   plugins: [
     'babel',
-    'standard'
+    'standard',
+    `vue${require('yargs').argv.fix ? 'fix' : ''}`
   ],
   extends: [
     'standard'

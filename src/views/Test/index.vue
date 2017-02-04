@@ -1,7 +1,5 @@
-<template>
-  <div>
-    {{ text }}
-  </div>
+<template lang="pug">
+  div {{ text }}
 </template>
 <script>
   export default {

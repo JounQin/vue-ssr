@@ -1,16 +1,12 @@
-<template>
-  <div id="app">
-    <hi-loading v-if="progress"/>
-    <hi-progress :progress="progress"/>
-    <transition :name="transition">
-      <keep-alive>
-        <router-view v-if="keepAlive"/>
-      </keep-alive>
-    </transition>
-    <transition :name="transition">
-      <router-view v-if="!keepAlive"/>
-    </transition>
-  </div>
+<template lang="pug">
+  #app
+    hi-loading(v-if="progress")
+    hi-progress(:progress="progress")
+    transition(:name="transition")
+      keep-alive
+        router-view(v-if="keepAlive")
+    transition(:name="transition")
+      router-view(v-if="!keepAlive")
 </template>
 <script>
   import {mapGetters} from 'vuex'

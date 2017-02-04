@@ -18,7 +18,7 @@
     "compile:server": "webpack --config build/webpack/server.babel.js --progress --hide-modules",
     "lint": "npm run lint:es",
     "lint:fix": "npm run lint:es -- --fix",
-    "lint:es": "eslint --ext .js .vue --max-warnings 10 .",
+    "lint:es": "eslint --ext .js,.vue --max-warnings 10 .",
     "pm2": "cross-env NODE_ENV=production DEBUG=hi:* pm2 start build/bin/start.js --name=vue-ssr"
   },
   "dependencies": {
@@ -54,6 +54,8 @@
     "eslint-plugin-babel": "^4.0.1",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
+    "eslint-plugin-vue": "^2.0.1",
+    "eslint-plugin-vuefix": "^0.1.0",
     "extract-text-webpack-plugin": "^2.0.0-rc.2",
     "file-loader": "^0.10.0",
     "html-webpack-plugin": "^2.28.0",
@@ -71,6 +73,7 @@
     "vue-template-compiler": "^2.1.10",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.0",
-    "webpack-hot-middleware": "^2.16.1"
+    "webpack-hot-middleware": "^2.16.1",
+    "yargs": "^6.6.0"
   }
 }
