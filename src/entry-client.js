@@ -3,7 +3,9 @@ import 'styles/app'
 
 import {app, router, store} from './app'
 
-import {on, throttle} from 'utils'
+import {on} from 'utils'
+
+import {throttle} from 'lodash'
 
 const {documentElement: docEl, body} = document
 
