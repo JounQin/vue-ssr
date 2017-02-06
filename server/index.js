@@ -18,16 +18,8 @@ const debug = _debug('hi:server')
 
 const app = new Koa()
 
-let template
 let renderer
-
-// https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-const createRenderer = bundle => require('../packages/vue-server-renderer').createBundleRenderer(bundle, {
-  cache: lruCache({
-    max: 1000,
-    maxAge: 1000 * 60 * 15
-  })
-})
+let template
 
 app.use(compress())
 app.use(logger())
@@ -35,7 +27,10 @@ app.use(logger())
 app.use(async(ctx, next) => {
   const {req, res} = ctx
 
-  if (!renderer || !template) return res.end('waiting for compilation... refresh in a moment.')
+  if (!renderer || !template) {
+    ctx.status = 200
+    return res.end('waiting for compilation... refresh in a moment.')
+  }
 
   if (intercept(ctx, {logger: __DEV__ && debug})) return await next()
 
@@ -57,6 +52,14 @@ app.use(async(ctx, next) => {
     .on('error', ctx.onerror)
     .pipe(htmlStream)
     .on('end', () => console.log(`whole request: ${Date.now() - start}ms`))
+})
+
+// https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
+const createRenderer = bundle => require('../packages/vue-server-renderer').createBundleRenderer(bundle, {
+  cache: lruCache({
+    max: 1000,
+    maxAge: 1000 * 60 * 15
+  })
 })
 
 if (__DEV__) {

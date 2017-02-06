@@ -1,5 +1,6 @@
 import 'babel-polyfill'
 import webpack from 'webpack'
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin'
 
 import config, {alias, globals, paths} from '../config'
 
@@ -103,6 +104,7 @@ export default {
           import: [paths.src('styles/_variables.styl')]
         }
       }
-    })
+    }),
+    new LodashModuleReplacementPlugin()
   ]
 }

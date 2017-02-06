@@ -8,5 +8,8 @@
     ],
     "stage-0"
   ],
+  "plugins": [
+    "lodash"
+  ],
   "comments": false
 }
