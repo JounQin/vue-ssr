@@ -2,7 +2,7 @@ import webpack from 'webpack'
 import VueSSRPlugin from 'vue-ssr-webpack-plugin'
 import _debug from 'debug'
 
-import {globals, paths} from '../config'
+import {globals, paths, pkg} from '../config'
 
 import baseConfig from './base'
 
@@ -33,5 +33,5 @@ export default {
     }),
     new VueSSRPlugin()
   ],
-  externals: Object.keys(require(paths.base('package.json')).dependencies)
+  externals: Object.keys(pkg.dependencies)
 }
