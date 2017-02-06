@@ -4,7 +4,7 @@ module.exports = {
   plugins: [
     'babel',
     'standard',
-    `vue${require('yargs').argv.fix ? 'fix' : ''}`
+    'vue'
   ],
   extends: [
     'standard'
