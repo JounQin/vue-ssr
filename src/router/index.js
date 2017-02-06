@@ -23,12 +23,15 @@ const router = new VueRouter({
   ]
 })
 
+let first = true
+
 router.beforeEach((to, from, next) => {
-  dispatch('setProgress', 50)
+  first || dispatch('setProgress', 50)
   next()
 })
 
 router.afterEach(() => {
+  if (first) return (first = false)
   dispatch('setProgress', 100)
 })
 

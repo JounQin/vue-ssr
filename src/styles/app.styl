@@ -6,6 +6,9 @@
   display none
   background transparent
 
+:root, body, #app
+  height 100%
+
 body
   font-hei()
 
@@ -16,17 +19,15 @@ body
   relative()
   max-width 1024px
   margin 0 auto
-  height 100%
   overflow-x hidden
   overflow-y auto
-  scroll-behavior smooth // @stylint ignore
+  scroll-behavior smooth
 
 a
   &, &:active, &:hover, &:visited
     color inherit
     text-decoration none
 
-// @stylint off
 input
   placeholder(color $placeholder-color,)
   &,
@@ -37,7 +38,6 @@ input
 .disabled
   color $remark-color !important
   cursor not-allowed
-// @stylint on
 
 .btn
 

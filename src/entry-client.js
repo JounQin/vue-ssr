@@ -3,15 +3,15 @@ import 'styles/app'
 
 import {app, router, store} from './app'
 
-import {on, throttle} from 'utils'
+import {on} from 'utils'
 
-const {documentElement: docEl, body} = document
+import {throttle} from 'lodash'
+
+const {documentElement: docEl} = document
 
 const resize = () => {
-  const winHeight = docEl.clientHeight
-  store.dispatch('setSize', {winHeight, winWidth: docEl.clientWidth})
+  store.dispatch('setSize', {winHeight: docEl.clientHeight, winWidth: docEl.clientWidth})
   docEl.style.fontSize = store.getters.fontSize + 'px'
-  body.style.height = winHeight + 'px'
 }
 
 on(window, 'resize', throttle(resize, 300))

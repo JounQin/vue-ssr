@@ -1,4 +1,4 @@
-import {each} from './common'
+import {each} from 'lodash'
 
 export const domEach = (el, ...args) => each(Array.isArray(el) || el instanceof NodeList ? el : [el], ...args)
 
