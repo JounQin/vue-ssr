@@ -3,9 +3,8 @@ import fs from 'fs'
 import Koa from 'koa'
 import compress from 'koa-compress'
 import logger from 'koa-logger'
-import serve from 'koa-static'
 import lruCache from 'lru-cache'
-import HTMLStream from 'vue-ssr-html-stream'
+import HTMLStream from '../packages/vue-ssr-html-stream'
 import _debug from 'debug'
 
 import intercept from './intercept'
@@ -18,11 +17,11 @@ const debug = _debug('hi:server')
 
 const app = new Koa()
 
-let renderer
-let template
-
 app.use(compress())
 app.use(logger())
+
+let renderer
+let template
 
 app.use(async(ctx, next) => {
   const {req, res} = ctx
@@ -70,7 +69,7 @@ if (__DEV__) {
 } else {
   renderer = createRenderer(require(paths.dist('vue-ssr-bundle.json'), 'utf-8'))
   template = fs.readFileSync(paths.dist('index.html'), 'utf-8')
-  app.use(serve('dist'))
+  app.use(require('koa-static')('dist'))
 }
 
 const {serverHost, serverPort} = config
