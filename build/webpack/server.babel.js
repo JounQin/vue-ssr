@@ -1,4 +1,5 @@
 import webpack from 'webpack'
+import BabiliPlugin from 'babili-webpack-plugin'
 import VueSSRPlugin from 'vue-ssr-webpack-plugin'
 import _debug from 'debug'
 
@@ -31,6 +32,7 @@ export default {
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
       __SERVER__: true
     }),
+    new BabiliPlugin(),
     new VueSSRPlugin()
   ],
   externals: Object.keys(pkg.dependencies)
