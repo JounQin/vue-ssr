@@ -39,7 +39,7 @@ app.use(async(ctx, next) => {
   const htmlStream = new HTMLStream({
     template,
     context,
-    contentPlaceholder: '<div id="app"></div>',
+    outletPlaceholder: '<div id="app"></div>',
     styleMode: !__DEV__
   })
 

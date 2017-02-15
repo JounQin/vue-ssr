@@ -5,7 +5,7 @@ class HTMLStream extends Transform {
   constructor (options) {
     super()
     this.started = false
-    const template = parseTemplate(options.template, options.contentPlaceholder)
+    const template = parseTemplate(options.template, options.outletPlaceholder)
     this.head = template.head
     this.neck = template.neck
     this.tail = template.tail
@@ -34,21 +34,19 @@ class HTMLStream extends Transform {
 
   _flush (done) {
     this.emit('beforeEnd')
-    // inline initial store state
-    if (this.context.state) {
-      this.push(`<script>window.__INITIAL_STATE__=${
-        serialize(this.context.state, { isJSON: true })
-        }</script>`)
-    }
     if (!this.styleMode && this.context.styles) {
       this.push(this.context.styles)
+    }
+    // inline initial store state
+    if (this.context.state) {
+      this.push(renderState(this.context.state))
     }
     this.push(this.tail)
     done()
   }
 }
 
-function parseTemplate (template, contentPlaceholder = '<!-- APP -->') {
+function parseTemplate (template, contentPlaceholder = '<!--vue-ssr-outlet-->') {
   if (typeof template === 'object') {
     return template
   }
@@ -73,5 +71,26 @@ function parseTemplate (template, contentPlaceholder = '<!-- APP -->') {
     tail: template.slice(j + contentPlaceholder.length)
   }
 }
+
+function renderTemplate (parsedTemplate, content, context = {}) {
+  return (
+    parsedTemplate.head +
+    (context.head || '') +
+    (context.styles || '') +
+    parsedTemplate.neck +
+    content +
+    (context.state ? renderState(context.state) : '') +
+    parsedTemplate.tail
+  )
+}
+
+function renderState (state) {
+  return `<script>window.__INITIAL_STATE__=${
+    serialize(state, { isJSON: true })
+    }</script>`
+}
+
+HTMLStream.parseTemplate = parseTemplate
+HTMLStream.renderTemplate = renderTemplate
 
 module.exports = HTMLStream
