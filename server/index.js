@@ -39,7 +39,7 @@ app.use(async(ctx, next) => {
   const htmlStream = new HTMLStream({
     template,
     context,
-    contentPlaceholder: '<div id="app"></div>',
+    outletPlaceholder: '<div id="app"></div>',
     styleMode: !__DEV__
   })
 
@@ -54,7 +54,7 @@ app.use(async(ctx, next) => {
 })
 
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-const createRenderer = bundle => require('../packages/vue-server-renderer').createBundleRenderer(bundle, {
+const createRenderer = bundle => require('vue-server-renderer').createBundleRenderer(bundle, {
   cache: lruCache({
     max: 1000,
     maxAge: 1000 * 60 * 15
