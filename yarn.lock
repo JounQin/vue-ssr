@@ -3246,7 +3246,7 @@ ignore@^3.0.11, ignore@^3.2.0:
   version "3.2.7"
   resolved "http://registry.npm.taobao.org/ignore/download/ignore-3.2.7.tgz#4810ca5f1d8eca5595213a34b94f2eb4ed926bbd"
 
-imagemin-gifsicle@^5.1.0:
+imagemin-gifsicle@^5.0.0:
   version "5.1.0"
   resolved "http://registry.npm.taobao.org/imagemin-gifsicle/download/imagemin-gifsicle-5.1.0.tgz#2e4ddcda2a109b221cabaec498e1e2dd28ca768f"
   dependencies:
@@ -3254,15 +3254,15 @@ imagemin-gifsicle@^5.1.0:
     gifsicle "^3.0.0"
     is-gif "^1.0.0"
 
-imagemin-mozjpeg@^6.0.0:
-  version "6.0.0"
-  resolved "http://registry.npm.taobao.org/imagemin-mozjpeg/download/imagemin-mozjpeg-6.0.0.tgz#71a32a457aa1b26117a68eeef2d9b190c2e5091e"
+imagemin-jpegtran@^5.0.0:
+  version "5.0.2"
+  resolved "http://registry.npm.taobao.org/imagemin-jpegtran/download/imagemin-jpegtran-5.0.2.tgz#e6882263b8f7916fddb800640cf75d2e970d2ad6"
   dependencies:
     exec-buffer "^3.0.0"
     is-jpg "^1.0.0"
-    mozjpeg "^4.0.0"
+    jpegtran-bin "^3.0.0"
 
-imagemin-optipng@^5.2.0:
+imagemin-optipng@^5.0.0:
   version "5.2.1"
   resolved "http://registry.npm.taobao.org/imagemin-optipng/download/imagemin-optipng-5.2.1.tgz#d22da412c09f5ff00a4339960b98a88b1dbe8695"
   dependencies:
@@ -3278,14 +3278,14 @@ imagemin-pngquant@^5.0.0:
     is-png "^1.0.0"
     pngquant-bin "^3.0.0"
 
-imagemin-svgo@^5.2.0:
+imagemin-svgo@^5.0.0:
   version "5.2.1"
   resolved "http://registry.npm.taobao.org/imagemin-svgo/download/imagemin-svgo-5.2.1.tgz#74d593ce4cbe1b87efdb3d06a4a56078f71a8147"
   dependencies:
     is-svg "^2.0.0"
     svgo "^0.7.0"
 
-imagemin@^5.2.0:
+imagemin@^5.0.0:
   version "5.2.2"
   resolved "http://registry.npm.taobao.org/imagemin/download/imagemin-5.2.2.tgz#e14a0f357f8810266875eda38634eeb96f6fbd16"
   dependencies:
@@ -3296,17 +3296,18 @@ imagemin@^5.2.0:
     promise.pipe "^3.0.0"
     replace-ext "0.0.1"
 
-img-loader@^2.0.0:
-  version "2.0.0"
-  resolved "http://registry.npm.taobao.org/img-loader/download/img-loader-2.0.0.tgz#583740b3e2a38aeba5435c7dd530be9ce7454fd9"
+img-loader@^1.3.1:
+  version "1.3.1"
+  resolved "http://registry.npm.taobao.org/img-loader/download/img-loader-1.3.1.tgz#f849502b9ecb419f4010f0a30d435fc81a56d762"
   dependencies:
-    imagemin "^5.2.0"
-    imagemin-gifsicle "^5.1.0"
-    imagemin-mozjpeg "^6.0.0"
-    imagemin-optipng "^5.2.0"
+    imagemin "^5.0.0"
+    imagemin-gifsicle "^5.0.0"
+    imagemin-jpegtran "^5.0.0"
+    imagemin-optipng "^5.0.0"
     imagemin-pngquant "^5.0.0"
-    imagemin-svgo "^5.2.0"
-    loader-utils "^1.0.4"
+    imagemin-svgo "^5.0.0"
+    loader-utils "^0.2.15"
+    object-assign "^4.0.0"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -3664,6 +3665,14 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
+jpegtran-bin@^3.0.0:
+  version "3.2.0"
+  resolved "http://registry.npm.taobao.org/jpegtran-bin/download/jpegtran-bin-3.2.0.tgz#f60ecf4ae999c0bdad2e9fbcdf2b6f0981e7a29b"
+  dependencies:
+    bin-build "^2.0.0"
+    bin-wrapper "^3.0.0"
+    logalot "^2.0.0"
+
 js-base64@^2.1.9:
   version "2.1.9"
   resolved "http://registry.npm.taobao.org/js-base64/download/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
@@ -3897,7 +3906,7 @@ loader-runner@^2.3.0:
   version "2.3.0"
   resolved "http://registry.npm.taobao.org/loader-runner/download/loader-runner-2.3.0.tgz#f482aea82d543e07921700d5a46ef26fdac6b8a2"
 
-loader-utils@^0.2.16:
+loader-utils@^0.2.15, loader-utils@^0.2.16:
   version "0.2.17"
   resolved "http://registry.npm.taobao.org/loader-utils/download/loader-utils-0.2.17.tgz#f86e6374d43205a6e6c60e9196f17c0299bfb348"
   dependencies:
@@ -3906,7 +3915,7 @@ loader-utils@^0.2.16:
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
-loader-utils@^1.0.2, loader-utils@^1.0.4, loader-utils@^1.1.0:
+loader-utils@^1.0.2, loader-utils@^1.1.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/loader-utils/download/loader-utils-1.1.0.tgz#c98aef488bcceda2ffb5e2de646d6a754429f5cd"
   dependencies:
@@ -4224,14 +4233,6 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkd
   resolved "http://registry.npm.taobao.org/mkdirp/download/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
-
-mozjpeg@^4.0.0:
-  version "4.1.1"
-  resolved "http://registry.npm.taobao.org/mozjpeg/download/mozjpeg-4.1.1.tgz#859030b24f689a53db9b40f0160d89195b88fd50"
-  dependencies:
-    bin-build "^2.0.0"
-    bin-wrapper "^3.0.0"
-    logalot "^2.0.0"
 
 ms@0.7.1:
   version "0.7.1"
