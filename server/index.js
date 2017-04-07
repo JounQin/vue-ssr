@@ -23,7 +23,7 @@ app.use(logger())
 let renderer
 let template
 
-app.use(async(ctx, next) => {
+app.use(async (ctx, next) => {
   const {req, res} = ctx
 
   if (!renderer || !template) {
@@ -31,7 +31,10 @@ app.use(async(ctx, next) => {
     return res.end('waiting for compilation... refresh in a moment.')
   }
 
-  if (intercept(ctx, {logger: __DEV__ && debug})) return await next()
+  if (intercept(ctx, {logger: __DEV__ && debug})) {
+    await next()
+    return
+  }
 
   const start = Date.now()
 
