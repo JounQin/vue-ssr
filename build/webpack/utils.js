@@ -21,8 +21,8 @@ export const generateLoaders = (loader, loaders, options = {}) => {
 
   let extract = options.extract
   return extract ? (extract.extract ? extract : ExtractTextPlugin).extract({
-    fallbackLoader: styleLoader,
-    loader: sourceLoaders
+    fallback: styleLoader,
+    use: sourceLoaders
   }) : [styleLoader, sourceLoaders].join('!')
 }
 
