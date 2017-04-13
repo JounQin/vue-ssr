@@ -36,11 +36,11 @@
     "vue-router": "^2.4.0",
     "vue-server-renderer": "^2.2.6",
     "vue-ssr-html-stream": "^2.2.0",
-    "vuex": "^2.2.1"
+    "vuex": "^2.3.0"
   },
   "devDependencies": {
     "babel-core": "^7.0.0-alpha.7",
-    "babel-eslint": "^7.2.1",
+    "babel-eslint": "^7.2.2",
     "babel-loader": "^7.0.0-beta.1",
     "babel-plugin-lodash": "^3.2.11",
     "babel-polyfill": "^7.0.0-alpha.7",
