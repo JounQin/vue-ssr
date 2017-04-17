@@ -4,7 +4,7 @@ import Koa from 'koa'
 import compress from 'koa-compress'
 import logger from 'koa-logger'
 import lruCache from 'lru-cache'
-import HTMLStream from '../packages/vue-ssr-html-stream'
+import HTMLStream from 'vue-ssr-html-stream'
 import _debug from 'debug'
 
 import intercept from './intercept'

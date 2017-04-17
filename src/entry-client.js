@@ -1,11 +1,10 @@
-import 'styles/bootstrap'
-import 'styles/app'
-
 import {app, router, store} from './app'
 
 import {on} from 'utils'
 
 import {throttle} from 'lodash'
+
+window.__INITIAL_STATE__ && store.replaceState(window.__INITIAL_STATE__)
 
 const {documentElement: docEl} = document
 

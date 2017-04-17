@@ -34,11 +34,15 @@ export const vendors = [
   'vuex'
 ]
 
+const serverHost = process.env.HOST || 'local.1stg.me'
+const serverPort = process.env.PORT || 3000
+
 export default {
-  serverHost: 'local.1stg.me',
-  serverPort: 3000,
+  serverHost,
+  serverPort,
   devTool: 'source-map',
   publicPath: '',
+  innerServer: `http://localhost:${serverPort}/`,
   hashType: 'hash',
   minimize: false,
   browsers: ['> 1% in CN'],

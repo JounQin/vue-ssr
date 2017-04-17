@@ -28,7 +28,7 @@ const clientConfig = {
   ...baseConfig,
   target: 'web',
   entry: {
-    app: [paths.src('entry-client')],
+    app: ['babel-polyfill', paths.src('entry-client')],
     vendors
   },
   module: {
@@ -57,7 +57,9 @@ const clientConfig = {
     ...baseConfig.plugins,
     new webpack.DefinePlugin({
       ...globals,
-      __SERVER__: false
+      __SERVER__: false,
+      SERVER_PREFIX: JSON.stringify(config.publicPath),
+      INNER_SERVER: JSON.stringify(config.innerServer)
     }),
     new webpack.optimize.CommonsChunkPlugin('vendors'),
     new HtmlWebpackPlugin({

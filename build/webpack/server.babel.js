@@ -3,11 +3,12 @@ import BabiliPlugin from 'babili-webpack-plugin'
 import VueSSRPlugin from 'vue-ssr-webpack-plugin'
 import _debug from 'debug'
 
-import {globals, paths, pkg} from '../config'
+import config, {globals, paths, pkg} from '../config'
+import {nodeModules, baseLoaders, generateLoaders} from './utils'
 
-import baseConfig from './base'
+import baseConfig, {STYLUS_LOADER} from './base'
 
-const {NODE_ENV} = globals
+const {__PROD__, NODE_ENV} = globals
 
 const VUE_ENV = process.env.VUE_ENV = 'server'
 
@@ -19,7 +20,21 @@ export default {
   ...baseConfig,
   target: 'node',
   devtool: false,
-  entry: paths.src('entry-server'),
+  entry: ['babel-polyfill', paths.src('entry-server')],
+  module: {
+    rules: [
+      ...baseConfig.module.rules,
+      {
+        test: /[/\\](app|bootstrap)\.styl$/,
+        loader: __PROD__ ? 'null-loader' : generateLoaders(STYLUS_LOADER, baseLoaders, {vue: true}),
+        exclude: nodeModules
+      }, {
+        test: /[/\\]theme-\w+\.styl$/,
+        loader: generateLoaders(STYLUS_LOADER, baseLoaders, {vue: true}),
+        exclude: nodeModules
+      }
+    ]
+  },
   output: {
     ...baseConfig.output,
     filename: 'server-bundle.js',
@@ -30,7 +45,9 @@ export default {
     new webpack.DefinePlugin({
       ...globals,
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
-      __SERVER__: true
+      __SERVER__: true,
+      SERVER_PREFIX: JSON.stringify(config.publicPath),
+      INNER_SERVER: JSON.stringify(config.innerServer)
     }),
     new BabiliPlugin(),
     new VueSSRPlugin()
