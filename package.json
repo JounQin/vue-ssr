@@ -37,23 +37,23 @@
     "vue-router": "^2.4.0",
     "vue-server-renderer": "^2.2.6",
     "vue-ssr-html-stream": "^2.2.0",
-    "vuex": "^2.3.0"
+    "vuex": "^2.3.1"
   },
   "devDependencies": {
-    "babel-core": "^7.0.0-alpha.7",
+    "babel-core": "^7.0.0-alpha.8",
     "babel-eslint": "^7.2.2",
     "babel-loader": "^7.0.0-beta.1",
     "babel-plugin-lodash": "^3.2.11",
     "babel-polyfill": "^7.0.0-alpha.7",
-    "babel-preset-env": "2.0.0-alpha.3",
-    "babel-preset-stage-0": "^7.0.0-alpha.7",
-    "babel-register": "^7.0.0-alpha.7",
+    "babel-preset-env": "^2.0.0-alpha.6",
+    "babel-preset-stage-0": "^7.0.0-alpha.8",
+    "babel-register": "^7.0.0-alpha.8",
     "babili-webpack-plugin": "^0.0.11",
     "cross-env": "^4.0.0",
     "css-loader": "^0.28.0",
     "debug": "^2.6.3",
     "eslint": "^3.19.0",
-    "eslint-config-standard": "^10.2.0",
+    "eslint-config-standard": "^10.2.1",
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-node": "^4.2.2",
@@ -66,7 +66,7 @@
     "img-loader": "^2.0.0",
     "lodash-webpack-plugin": "^0.11.2",
     "null-loader": "^0.1.1",
-    "pug": "^2.0.0-beta11",
+    "pug": "^2.0.0-beta12",
     "rimraf": "^2.6.1",
     "style-loader": "^0.16.1",
     "stylus": "^0.54.5",
@@ -77,9 +77,9 @@
     "vue-ssr-webpack-plugin": "^3.0.0",
     "vue-style-loader": "^3.0.0",
     "vue-template-compiler": "^2.2.6",
-    "webpack": "^2.3.3",
+    "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-hot-middleware": "^2.18.0",
-    "yargs": "^7.0.2"
+    "yargs": "^7.1.0"
   }
 }
