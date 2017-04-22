@@ -25,7 +25,7 @@
     "axios": "^0.16.1",
     "bootstrap-styl": "^5.0.8",
     "fonts.css": "^1.5.0",
-    "koa": "^2.0.0",
+    "koa": "^2.2.0",
     "koa-compress": "^2.0.0",
     "koa-logger": "^2.0.1",
     "koa-static": "^3.0.0",
@@ -40,18 +40,18 @@
     "vuex": "^2.3.1"
   },
   "devDependencies": {
-    "babel-core": "^7.0.0-alpha.8",
-    "babel-eslint": "^7.2.2",
-    "babel-loader": "^7.0.0-beta.1",
+    "babel-core": "^7.0.0-alpha.9",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
     "babel-plugin-lodash": "^3.2.11",
-    "babel-polyfill": "^7.0.0-alpha.7",
-    "babel-preset-env": "^2.0.0-alpha.6",
-    "babel-preset-stage-0": "^7.0.0-alpha.8",
-    "babel-register": "^7.0.0-alpha.8",
+    "babel-polyfill": "^7.0.0-alpha.9",
+    "babel-preset-env": "^2.0.0-alpha.7",
+    "babel-preset-stage-0": "^7.0.0-alpha.9",
+    "babel-register": "^7.0.0-alpha.9",
     "babili-webpack-plugin": "^0.0.11",
-    "cross-env": "^4.0.0",
+    "cross-env": "^5.0.0-beta.0",
     "css-loader": "^0.28.0",
-    "debug": "^2.6.3",
+    "debug": "^2.6.4",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-babel": "^4.1.1",
@@ -78,8 +78,8 @@
     "vue-style-loader": "^3.0.0",
     "vue-template-compiler": "^2.2.6",
     "webpack": "^2.4.1",
-    "webpack-dev-middleware": "^1.10.1",
+    "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0",
-    "yargs": "^7.1.0"
+    "yargs": "^8.0.0-candidate.0"
   }
 }
