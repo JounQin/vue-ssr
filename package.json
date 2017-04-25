@@ -19,7 +19,8 @@
     "lint": "npm run lint:es",
     "lint:fix": "npm run lint:es -- --fix",
     "lint:es": "eslint --ext .js,.vue --max-warnings 10 .",
-    "pm2": "cross-env NODE_ENV=production DEBUG=hi:* pm2 start build/bin/start.js --name=vue-ssr"
+    "pm2": "cross-env NODE_ENV=production DEBUG=hi:* pm2 start build/bin/start.js --name=vue-ssr",
+    "deploy": "bash build/bash/deploy.sh"
   },
   "dependencies": {
     "axios": "^0.16.1",
