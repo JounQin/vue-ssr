@@ -36,7 +36,7 @@ export const vendors = [
   'vuex'
 ]
 
-const serverHost = process.env.HOST || 'local.1stg.me'
+const serverHost = process.env.HOST || 'localhost'
 const serverPort = process.env.PORT || 3000
 
 export default {
