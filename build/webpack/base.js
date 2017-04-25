@@ -1,4 +1,3 @@
-import 'babel-polyfill'
 import webpack from 'webpack'
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin'
 

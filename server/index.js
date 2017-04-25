@@ -7,6 +7,7 @@ import lruCache from 'lru-cache'
 import HTMLStream from 'vue-ssr-html-stream'
 import _debug from 'debug'
 
+import router from './router'
 import intercept from './intercept'
 
 import config, {globals, paths} from '../build/config'
@@ -17,18 +18,26 @@ const debug = _debug('hi:server')
 
 const app = new Koa()
 
-app.use(compress())
-app.use(logger())
+app.use(compress()).use(logger())
+
+router(app)
 
 let renderer
 let template
 
-app.use(async (ctx, next) => {
-  const {req, res} = ctx
+const koaVersion = require('koa/package.json').version
+const vueVersion = require('vue-server-renderer/package.json').version
 
+const DEFAULT_HEADERS = {
+  'Content-Type': 'text/html',
+  Server: `koa/${koaVersion}; vue-server-renderer/${vueVersion}`
+}
+
+app.use(async (ctx, next) => {
   if (!renderer || !template) {
     ctx.status = 200
-    return res.end('waiting for compilation... refresh in a moment.')
+    ctx.body = 'waiting for compilation... refresh in a moment.'
+    return
   }
 
   if (intercept(ctx, {logger: __DEV__ && debug})) {
@@ -36,23 +45,19 @@ app.use(async (ctx, next) => {
     return
   }
 
+  ctx.set(DEFAULT_HEADERS)
+
   const start = Date.now()
 
-  const context = {url: req.url}
-  const htmlStream = new HTMLStream({
-    template,
-    context,
-    outletPlaceholder: '<div id="app"></div>',
-    styleMode: !__DEV__
-  })
-
-  res.setHeader('Content-Type', 'text/html')
-  res.setHeader('Server', `koa/${require('koa/package.json').version}; ` +
-    `vue-server-renderer/${require('vue-server-renderer/package.json').version}`)
+  const context = {url: ctx.url}
 
   ctx.body = renderer.renderToStream(context)
     .on('error', ctx.onerror)
-    .pipe(htmlStream)
+    .pipe(new HTMLStream({
+      template,
+      context,
+      outletPlaceholder: '<div id="app"></div>'
+    }))
     .on('end', () => console.log(`whole request: ${Date.now() - start}ms`))
 })
 

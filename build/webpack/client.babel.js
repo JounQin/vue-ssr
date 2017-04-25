@@ -28,7 +28,7 @@ const clientConfig = {
   ...baseConfig,
   target: 'web',
   entry: {
-    app: ['babel-polyfill', paths.src('entry-client')],
+    app: [paths.src('entry-client')],
     vendors
   },
   module: {

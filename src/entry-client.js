@@ -1,10 +1,10 @@
 import {app, router, store} from './app'
-
 import {on} from 'utils'
-
 import {throttle} from 'lodash'
 
 window.__INITIAL_STATE__ && store.replaceState(window.__INITIAL_STATE__)
+
+if (__DEV__) require('vconsole')
 
 const {documentElement: docEl} = document
 

@@ -20,7 +20,7 @@ export default {
   ...baseConfig,
   target: 'node',
   devtool: false,
-  entry: ['babel-polyfill', paths.src('entry-server')],
+  entry: paths.src('entry-server'),
   module: {
     rules: [
       ...baseConfig.module.rules,

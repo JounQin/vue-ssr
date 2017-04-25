@@ -3,7 +3,11 @@
     [
       "env",
       {
-        "modules": false
+        "modules": false,
+        "targets": {
+          "node": "current",
+          "uglify": true
+        }
       }
     ],
     "stage-0"
