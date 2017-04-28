@@ -27,8 +27,7 @@ const clientConfig = {
   ...baseConfig,
   target: 'web',
   entry: {
-    app: [paths.src('entry-client')],
-    vendors
+    app: [paths.src('entry-client')]
   },
   module: {
     rules: [
@@ -60,7 +59,22 @@ const clientConfig = {
       SERVER_PREFIX: JSON.stringify(config.publicPath),
       INNER_SERVER: JSON.stringify(config.innerServer)
     }),
-    new webpack.optimize.CommonsChunkPlugin('vendors'),
+    // extract vendor chunks for better caching
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module) {
+        // a module is extracted into the vendor chunk if...
+        return (
+          // it's inside node_modules
+          /node_modules/.test(module.context) &&
+          // and not a CSS file (due to extract-text-webpack-plugin limitation)
+          !/\.css$/.test(module.request)
+        )
+      }
+    }),
+    // extract webpack runtime & manifest to avoid vendor chunk hash changing
+    // on every build.
+    new webpack.optimize.CommonsChunkPlugin('manifest'),
     new VueSSRClientPlugin()
   ]
 }
