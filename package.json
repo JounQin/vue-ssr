@@ -29,6 +29,7 @@
     "koa": "^2.2.0",
     "koa-compress": "^2.0.0",
     "koa-logger": "^2.0.1",
+    "koa-onerror": "^3.1.0",
     "koa-router": "^7.1.1",
     "koa-static": "^3.0.0",
     "lodash": "^4.17.4",

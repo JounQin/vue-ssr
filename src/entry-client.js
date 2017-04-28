@@ -21,25 +21,23 @@ on(window, 'resize', throttle(resize, 300))
 resize()
 
 router.onReady(() => {
-  router.beforeResolve((to, from, next) => {
+  router.beforeResolve(async (to, from, next) => {
     const matched = router.getMatchedComponents(to)
     const prevMatched = router.getMatchedComponents(from)
+
+    if (!prevMatched) return next()
+
     let diffed = false
 
-    const activated = matched.filter((c, i) => {
-      return diffed || (diffed = (prevMatched[i] !== c))
-    })
-    if (!activated.length) {
-      return next()
-    }
+    const activated = matched.filter((comp, index) => diffed || (diffed = (prevMatched[index] !== comp)))
 
-    Promise.all(activated.map(comp => {
-      if (comp.asyncData) {
-        return comp.asyncData({store, route: to})
-      }
-    })).then(() => {
-      next()
-    }).catch(next)
+    if (!activated.length) return next()
+
+    try {
+      await Promise.all(activated.map(({asyncData}) => asyncData && asyncData({store, route: to})))
+    } catch (e) {}
+
+    next()
   })
 
   app.$mount('#app')

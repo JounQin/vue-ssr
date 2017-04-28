@@ -5,10 +5,10 @@ import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
 import VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import _debug from 'debug'
 
-import config, { globals, paths, vendors } from '../config'
-import { nodeModules, baseLoaders, generateLoaders } from './utils'
+import config, {globals, paths} from '../config'
+import {nodeModules, baseLoaders, generateLoaders} from './utils'
 
-import baseConfig, { STYLUS_LOADER, prodEmpty } from './base'
+import baseConfig, {STYLUS_LOADER, prodEmpty} from './base'
 
 const {devTool, minimize} = config
 
@@ -28,7 +28,7 @@ const clientConfig = {
   ...baseConfig,
   target: 'web',
   entry: {
-    app: [paths.src('entry-client')]
+    app: ['regenerator-runtime/runtime', paths.src('entry-client')]
   },
   module: {
     rules: [

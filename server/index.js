@@ -1,5 +1,6 @@
 import Koa from 'koa'
 import compress from 'koa-compress'
+import onerror from 'koa-onerror'
 import logger from 'koa-logger'
 import lruCache from 'lru-cache'
 import pug from 'pug'
@@ -21,6 +22,8 @@ const template = pug.renderFile(paths.src('index.pug'), {
 
 const app = new Koa()
 
+onerror(app)
+
 app.use(compress()).use(logger())
 
 router(app)
@@ -36,7 +39,9 @@ const DEFAULT_HEADERS = {
   Server: `koa/${koaVersion}; vue-server-renderer/${vueVersion}`
 }
 
-const render = async (ctx, next) => {
+app.use(async (ctx, next) => {
+  __DEV__ && await readyPromise
+
   if (intercept(ctx, {logger: __DEV__ && debug})) {
     await next()
     return
@@ -49,12 +54,8 @@ const render = async (ctx, next) => {
   const context = {url: ctx.url, title: 'Vue Server Slide Rendering'}
 
   ctx.body = renderer.renderToStream(context)
-    .on('error', ctx.onerror)
+    .on('error', e => ctx.onerror(e))
     .on('end', () => console.log(`whole request: ${Date.now() - start}ms`))
-}
-
-app.use(async (ctx, next) => {
-  __DEV__ ? await readyPromise.then(() => render(ctx, next)) : await render(ctx, next)
 })
 
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
