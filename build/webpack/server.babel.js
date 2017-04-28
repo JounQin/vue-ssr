@@ -1,9 +1,10 @@
 import webpack from 'webpack'
 import BabiliPlugin from 'babili-webpack-plugin'
-import VueSSRPlugin from 'vue-ssr-webpack-plugin'
+import VueSSRServerPlugin from 'vue-server-renderer/server-plugin'
+import nodeExternals from 'webpack-node-externals'
 import _debug from 'debug'
 
-import config, {globals, paths, pkg} from '../config'
+import config, {globals, paths} from '../config'
 import {nodeModules, baseLoaders, generateLoaders} from './utils'
 
 import baseConfig, {STYLUS_LOADER} from './base'
@@ -19,18 +20,18 @@ debug(`create webpack configuration for NODE_ENV:${NODE_ENV}, VUE_ENV:${VUE_ENV}
 export default {
   ...baseConfig,
   target: 'node',
-  devtool: false,
+  devtool: '#source-map',
   entry: paths.src('entry-server'),
   module: {
     rules: [
       ...baseConfig.module.rules,
       {
         test: /[/\\](app|bootstrap)\.styl$/,
-        loader: __PROD__ ? 'null-loader' : generateLoaders(STYLUS_LOADER, baseLoaders, {vue: true}),
+        loader: __PROD__ ? 'null-loader' : generateLoaders(STYLUS_LOADER, baseLoaders),
         exclude: nodeModules
       }, {
         test: /[/\\]theme-\w+\.styl$/,
-        loader: generateLoaders(STYLUS_LOADER, baseLoaders, {vue: true}),
+        loader: generateLoaders(STYLUS_LOADER, baseLoaders),
         exclude: nodeModules
       }
     ]
@@ -50,7 +51,10 @@ export default {
       INNER_SERVER: JSON.stringify(config.innerServer)
     }),
     new BabiliPlugin(),
-    new VueSSRPlugin()
+    new VueSSRServerPlugin()
   ],
-  externals: Object.keys(pkg.dependencies)
+  externals: nodeExternals({
+    // do not externalize CSS files in case we need to import it from a dep
+    whitelist: /\.css$/
+  })
 }

@@ -17,7 +17,7 @@ export const generateLoaders = (loader, loaders, options = {}) => {
     return loader + (sourceMap && index ? hyphen + 'sourceMap' : '')
   }).join('!')
 
-  const styleLoader = `${options.vue ? 'vue-' : ''}style-loader`
+  const styleLoader = 'vue-style-loader'
 
   let extract = options.extract
   return extract ? (extract.extract ? extract : ExtractTextPlugin).extract({

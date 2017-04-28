@@ -38,7 +38,6 @@
     "vue": "^2.3.0",
     "vue-router": "^2.5.2",
     "vue-server-renderer": "^2.3.0",
-    "vue-ssr-html-stream": "^2.2.0",
     "vuex": "^2.3.1"
   },
   "devDependencies": {
@@ -51,6 +50,7 @@
     "babel-preset-stage-0": "^7.0.0-alpha.9",
     "babel-register": "^7.0.0-alpha.9",
     "babili-webpack-plugin": "^0.0.11",
+    "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^5.0.0-beta.0",
     "css-loader": "^0.28.0",
     "debug": "^2.6.4",
@@ -70,7 +70,6 @@
     "null-loader": "^0.1.1",
     "pug": "^2.0.0-beta12",
     "rimraf": "^2.6.1",
-    "style-loader": "^0.16.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "sw-precache-webpack-plugin": "^0.10.0",
@@ -83,6 +82,7 @@
     "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0",
+    "webpack-node-externals": "^1.5.4",
     "yargs": "^8.0.0-candidate.0"
   }
 }

@@ -10,12 +10,7 @@ module.exports = {
     'standard'
   ],
   env: {
-    browser: true
-  },
-  globals: {
-    __DEV__: false,
-    __PROD__: false,
-    __SERVER__: false
+    node: true
   },
   parserOptions: {
     ecmaVersion: 6,
@@ -35,6 +30,7 @@ module.exports = {
     ],
     'max-nested-callbacks': 2,
     'max-params': [2, 5],
+    'standard/no-callback-literal': 0,
     'space-before-function-paren': [
       2,
       {
