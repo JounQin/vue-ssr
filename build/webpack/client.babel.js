@@ -1,13 +1,14 @@
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
 import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
 import VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import _debug from 'debug'
 
-import config, {globals, paths, vendors} from '../config'
-import {nodeModules, baseLoaders, generateLoaders} from './utils'
+import config, { globals, paths, vendors } from '../config'
+import { nodeModules, baseLoaders, generateLoaders } from './utils'
 
-import baseConfig, {STYLUS_LOADER, prodEmpty} from './base'
+import baseConfig, { STYLUS_LOADER, prodEmpty } from './base'
 
 const {devTool, minimize} = config
 
@@ -59,6 +60,10 @@ const clientConfig = {
       SERVER_PREFIX: JSON.stringify(config.publicPath),
       INNER_SERVER: JSON.stringify(config.innerServer)
     }),
+    new CopyWebpackPlugin([{
+      from: paths.src('static'),
+      to: paths.dist()
+    }]),
     // extract vendor chunks for better caching
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',

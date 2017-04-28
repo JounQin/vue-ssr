@@ -61,6 +61,7 @@ app.use(async (ctx, next) => {
 const createRenderer = (bundle, options) => require('vue-server-renderer').createBundleRenderer(bundle, {
   ...options,
   template,
+  inject: false,
   cache: lruCache({
     max: 1000,
     maxAge: 1000 * 60 * 15
