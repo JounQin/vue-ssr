@@ -1,33 +1,33 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import store from 'store'
-
-const {dispatch} = store
-
 Vue.use(VueRouter)
 
-const router = new VueRouter({
-  mode: 'history',
-  routes: [
-    {
-      name: 'home',
-      path: '/',
-      component: () => import('views/Home')
-    }
-  ]
-})
+export const createRouter = store => {
+  const {dispatch} = store
 
-let first = true
+  const router = new VueRouter({
+    mode: 'history',
+    routes: [
+      {
+        name: 'home',
+        path: '/',
+        component: () => import('views/Home')
+      }
+    ]
+  })
 
-router.beforeEach((to, from, next) => {
-  first || dispatch('setProgress', 50)
-  next()
-})
+  let first = true
 
-router.afterEach(() => {
-  if (first) return (first = false)
-  dispatch('setProgress', 100)
-})
+  router.beforeEach((to, from, next) => {
+    first || dispatch('setProgress', 50)
+    next()
+  })
 
-export default router
+  router.afterEach(() => {
+    if (first) return (first = false)
+    dispatch('setProgress', 100)
+  })
+
+  return router
+}

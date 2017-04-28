@@ -1,11 +1,10 @@
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
-import pug from 'pug'
+import VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import _debug from 'debug'
 
-import config, {globals, paths, pkg, vendors} from '../config'
+import config, {globals, paths, vendors} from '../config'
 import {nodeModules, baseLoaders, generateLoaders} from './utils'
 
 import baseConfig, {STYLUS_LOADER, prodEmpty} from './base'
@@ -62,20 +61,7 @@ const clientConfig = {
       INNER_SERVER: JSON.stringify(config.innerServer)
     }),
     new webpack.optimize.CommonsChunkPlugin('vendors'),
-    new HtmlWebpackPlugin({
-      templateContent: pug.renderFile(paths.src('index.pug'), {
-        pretty: !minimize,
-        title: `${pkg.name} - ${pkg.description}`,
-        polyfill: !__DEV__
-      }),
-      favicon: paths.src('static/favicon.ico'),
-      hash: false,
-      inject: true,
-      minify: {
-        collapseWhitespace: minimize,
-        minifyJS: minimize
-      }
-    })
+    new VueSSRClientPlugin()
   ]
 }
 

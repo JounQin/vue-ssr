@@ -3,19 +3,23 @@ import 'styles/app'
 
 import Vue from 'vue'
 
-import router from 'router'
-import store from 'store'
+import {createRouter} from 'router'
+import {createStore} from 'store'
 
 import 'plugins'
 
 import App from 'views/App'
 
-if (module.hot) module.hot.accept()
+export const createApp = ssrContext => {
+  const store = createStore()
+  const router = createRouter(store)
 
-export const app = new Vue({
-  ...App,
-  router,
-  store
-})
+  const app = new Vue({
+    ...App,
+    router,
+    store,
+    ssrContext
+  })
 
-export {router, store}
+  return {app, router, store}
+}

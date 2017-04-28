@@ -1,10 +1,8 @@
-import fs from 'fs'
-
 import Koa from 'koa'
 import compress from 'koa-compress'
 import logger from 'koa-logger'
 import lruCache from 'lru-cache'
-import HTMLStream from 'vue-ssr-html-stream'
+import pug from 'pug'
 import _debug from 'debug'
 
 import router from './router'
@@ -16,6 +14,11 @@ const {__DEV__} = globals
 
 const debug = _debug('hi:server')
 
+const template = pug.renderFile(paths.src('index.pug'), {
+  pretty: !config.minimize,
+  polyfill: !__DEV__
+})
+
 const app = new Koa()
 
 app.use(compress()).use(logger())
@@ -23,7 +26,7 @@ app.use(compress()).use(logger())
 router(app)
 
 let renderer
-let template
+let readyPromise
 
 const koaVersion = require('koa/package.json').version
 const vueVersion = require('vue-server-renderer/package.json').version
@@ -33,13 +36,7 @@ const DEFAULT_HEADERS = {
   Server: `koa/${koaVersion}; vue-server-renderer/${vueVersion}`
 }
 
-app.use(async (ctx, next) => {
-  if (!renderer || !template) {
-    ctx.status = 200
-    ctx.body = 'waiting for compilation... refresh in a moment.'
-    return
-  }
-
+const render = async (ctx, next) => {
   if (intercept(ctx, {logger: __DEV__ && debug})) {
     await next()
     return
@@ -49,34 +46,37 @@ app.use(async (ctx, next) => {
 
   const start = Date.now()
 
-  const context = {url: ctx.url}
+  const context = {url: ctx.url, title: 'Vue Server Slide Rendering'}
 
   ctx.body = renderer.renderToStream(context)
     .on('error', ctx.onerror)
-    .pipe(new HTMLStream({
-      template,
-      context,
-      outletPlaceholder: '<div id="app"></div>'
-    }))
     .on('end', () => console.log(`whole request: ${Date.now() - start}ms`))
+}
+
+app.use(async (ctx, next) => {
+  __DEV__ ? await readyPromise.then(() => render(ctx, next)) : await render(ctx, next)
 })
 
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-const createRenderer = bundle => require('vue-server-renderer').createBundleRenderer(bundle, {
+const createRenderer = (bundle, options) => require('vue-server-renderer').createBundleRenderer(bundle, {
+  ...options,
+  template,
   cache: lruCache({
     max: 1000,
     maxAge: 1000 * 60 * 15
-  })
+  }),
+  basedir: paths.dist(),
+  runInNewContext: false
 })
 
 if (__DEV__) {
-  require('./dev-tools').default(app, {
-    bundleUpdated: bundle => (renderer = createRenderer(bundle)),
-    templateUpdated: temp => (template = temp)
+  readyPromise = require('./dev-tools').default(app, (bundle, options) => {
+    renderer = createRenderer(bundle, options)
   })
 } else {
-  renderer = createRenderer(require(paths.dist('vue-ssr-bundle.json'), 'utf-8'))
-  template = fs.readFileSync(paths.dist('index.html'), 'utf-8')
+  renderer = createRenderer(require(paths.dist('vue-ssr-server-bundle.json')), {
+    clientManifest: require(paths.dist('vue-ssr-client-manifest.json'))
+  })
   app.use(require('koa-static')('dist'))
 }
 

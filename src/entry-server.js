@@ -1,18 +1,23 @@
-import {app, router} from './app'
+import {createApp} from './app'
 
-export default ({url}) => {
-  const start = __DEV__ && Date.now()
-
+export default context => {
   return new Promise((resolve, reject) => {
-    router.push(url)
+    const start = __DEV__ && Date.now()
+    const {app, router, store} = createApp(context)
+
+    router.push(context.url)
 
     router.onReady(() => {
-      Promise.all(router.getMatchedComponents().map(component => component.preFetch && component.preFetch()))
+      Promise.all(router.getMatchedComponents().map(component => component.asyncData && component.asyncData({
+        store,
+        route: router.currentRoute
+      })))
         .then(() => {
           __DEV__ && console.log(`data pre-fetch: ${Date.now() - start}ms`)
+          context.state = store.state
           resolve(app)
         })
         .catch(reject)
-    })
+    }, reject)
   })
 }
