@@ -31,10 +31,8 @@ router.onReady(() => {
 
     const activated = matched.filter((comp, index) => diffed || (diffed = (prevMatched[index] !== comp)))
 
-    if (!activated.length) return next()
-
     try {
-      await Promise.all(activated.map(({asyncData}) => asyncData && asyncData({store, route: to})))
+      activated.length && await Promise.all(activated.map(({asyncData}) => asyncData && asyncData({store, route: to})))
     } catch (e) {}
 
     next()

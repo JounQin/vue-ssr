@@ -27,9 +27,7 @@ let appLoader, bootstrapLoader
 const clientConfig = {
   ...baseConfig,
   target: 'web',
-  entry: {
-    app: ['regenerator-runtime/runtime', paths.src('entry-client')]
-  },
+  entry: [baseConfig.entry, paths.src('entry-client')],
   module: {
     rules: [
       ...baseConfig.module.rules,

@@ -21,7 +21,7 @@ export default {
   ...baseConfig,
   target: 'node',
   devtool: '#source-map',
-  entry: paths.src('entry-server'),
+  entry: [baseConfig.entry, paths.src('entry-server')],
   module: {
     rules: [
       ...baseConfig.module.rules,
@@ -55,6 +55,6 @@ export default {
   ],
   externals: nodeExternals({
     // do not externalize CSS files in case we need to import it from a dep
-    whitelist: /\.css$/
+    whitelist: ['regenerator-runtime/runtime', /\.css$/]
   })
 }

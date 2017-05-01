@@ -44,6 +44,7 @@ export default {
   resolveLoader: {
     modules: [PACKAGES, NODE_MODULES]
   },
+  entry: 'regenerator-runtime/runtime',
   output: {
     path: paths.dist(),
     publicPath: config.publicPath,

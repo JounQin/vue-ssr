@@ -18,7 +18,7 @@ export default (app, cb) => {
     cb(...args)
   }
 
-  clientConfig.entry.app.push('webpack-hot-middleware/client')
+  clientConfig.entry.push('webpack-hot-middleware/client')
 
   const clientCompiler = webpack(clientConfig)
 

@@ -1431,6 +1431,10 @@ camelcase@^3.0.0:
   version "3.0.0"
   resolved "http://registry.npm.taobao.org/camelcase/download/camelcase-3.0.0.tgz#32fc4b9fcdaf845fcdf7e73bb97cac2261f0ab0a"
 
+camelcase@^4.1.0:
+  version "4.1.0"
+  resolved "http://registry.npm.taobao.org/camelcase/download/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
+
 caniuse-api@^1.5.2:
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/caniuse-api/download/caniuse-api-1.6.0.tgz#ca4c37791c8d1c5bbd2978ead775a74374eb9d30"
@@ -6393,9 +6397,9 @@ vue-loader@^12.0.2:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.2.2"
 
-vue-router@^2.5.2:
-  version "2.5.2"
-  resolved "http://registry.npm.taobao.org/vue-router/download/vue-router-2.5.2.tgz#870db3b63ead0aab4cd0bac63a7b81341c593f56"
+vue-router@^2.5.3:
+  version "2.5.3"
+  resolved "http://registry.npm.taobao.org/vue-router/download/vue-router-2.5.3.tgz#073783f564b6aece6c8a59c63e298dc2aabfb51b"
 
 vue-server-renderer@^2.3.0:
   version "2.3.0"
@@ -6626,11 +6630,11 @@ yargs-parser@^4.2.0:
   dependencies:
     camelcase "^3.0.0"
 
-yargs-parser@^5.0.0:
-  version "5.0.0"
-  resolved "http://registry.npm.taobao.org/yargs-parser/download/yargs-parser-5.0.0.tgz#275ecf0d7ffe05c77e64e7c86e4cd94bf0e1228a"
+yargs-parser@^6.0.1:
+  version "6.0.1"
+  resolved "http://registry.npm.taobao.org/yargs-parser/download/yargs-parser-6.0.1.tgz#0026e672e284e7df459111d2e51462efad725350"
   dependencies:
-    camelcase "^3.0.0"
+    camelcase "^4.1.0"
 
 yargs@^6.0.0:
   version "6.6.0"
@@ -6650,9 +6654,9 @@ yargs@^6.0.0:
     y18n "^3.2.1"
     yargs-parser "^4.2.0"
 
-yargs@^8.0.0-candidate.0:
-  version "8.0.0-candidate.0"
-  resolved "http://registry.npm.taobao.org/yargs/download/yargs-8.0.0-candidate.0.tgz#bde92614c0913a45ed7dd63b77e7248fbdacc034"
+yargs@^8.0.0:
+  version "8.0.0"
+  resolved "http://registry.npm.taobao.org/yargs/download/yargs-8.0.0.tgz#5d35b3dfb43377e44224d5b8436d11993b9d0c16"
   dependencies:
     camelcase "^3.0.0"
     cliui "^3.2.0"
@@ -6666,7 +6670,7 @@ yargs@^8.0.0-candidate.0:
     string-width "^1.0.2"
     which-module "^1.0.0"
     y18n "^3.2.1"
-    yargs-parser "^5.0.0"
+    yargs-parser "^6.0.1"
 
 yargs@~3.10.0:
   version "3.10.0"
