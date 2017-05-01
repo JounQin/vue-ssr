@@ -15,10 +15,10 @@ export const createApp = ssrContext => {
   const router = createRouter(store)
 
   const app = new Vue({
-    ...App,
     router,
     store,
-    ssrContext
+    ssrContext,
+    render: h => h(App)
   })
 
   return {app, router, store}
