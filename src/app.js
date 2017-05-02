@@ -3,8 +3,8 @@ import 'styles/app'
 
 import Vue from 'vue'
 
-import {createRouter} from 'router'
-import {createStore} from 'store'
+import createRouter from 'router'
+import createStore from 'store'
 
 import 'plugins'
 

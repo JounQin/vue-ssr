@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-export const createRouter = store => {
+export default store => {
   const {dispatch} = store
 
   const router = new VueRouter({
