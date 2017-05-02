@@ -10,14 +10,13 @@ import 'plugins'
 
 import App from 'views/App'
 
-export const createApp = ssrContext => {
+export const createApp = () => {
   const store = createStore()
   const router = createRouter(store)
 
   const app = new Vue({
     router,
     store,
-    ssrContext,
     render: h => h(App)
   })
 

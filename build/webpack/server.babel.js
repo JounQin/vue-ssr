@@ -55,6 +55,6 @@ export default {
   ],
   externals: nodeExternals({
     // do not externalize CSS files in case we need to import it from a dep
-    whitelist: ['regenerator-runtime/runtime', /\.css$/]
+    whitelist: /\.css$/
   })
 }

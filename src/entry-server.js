@@ -3,7 +3,7 @@ import {createApp} from './app'
 export default context => new Promise((resolve, reject) => {
   const start = __DEV__ && Date.now()
 
-  const {app, router, store} = createApp(context)
+  const {app, router, store} = createApp()
 
   router.push(context.url)
 
