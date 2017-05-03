@@ -20,7 +20,7 @@ const NODE_MODULES = 'node_modules'
 
 const {devTool, minimize} = config
 
-export const STYLUS_LOADER = 'stylus-loader?paths=node_modules/bootstrap-styl/'
+export const STYLUS_LOADER = 'stylus-loader'
 
 export const prodEmpty = str => __PROD__ ? '' : str
 
@@ -101,7 +101,8 @@ export default {
       minimize,
       stylus: {
         default: {
-          import: [paths.src('styles/_variables.styl')]
+          import: paths.src('styles/_variables.styl'),
+          paths: paths.base('node_modules/bootstrap-styl')
         }
       }
     }),

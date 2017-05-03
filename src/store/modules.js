@@ -1,11 +1,13 @@
 const modulesContext = require.context('./modules', false, /\.js$/)
 
-const modules = modulesContext.keys().reduce((modules, key) => {
+const chunks = modulesContext.keys().reduce((modules, key) => {
   modules[key.replace(/(^\.\/)|(\.js$)/g, '')] = modulesContext(key).default
   return modules
 }, {})
 
-export default () => Object.keys(modules).reduce((prev, curr) => {
-  prev[curr] = modules[curr]()
-  return prev
+const moduleNames = Object.keys(chunks)
+
+export default () => moduleNames.reduce((modules, moduleName) => {
+  modules[moduleName] = chunks[moduleName]()
+  return modules
 }, {})
