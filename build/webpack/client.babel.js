@@ -65,7 +65,7 @@ const clientConfig = {
     // extract vendor chunks for better caching
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: function (module) {
+      minChunks(module) {
         // a module is extracted into the vendor chunk if...
         return (
           // it's inside node_modules
