@@ -1,11 +1,13 @@
 import webpack from 'webpack'
+import pug from 'pug'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
 import VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import _debug from 'debug'
 
-import config, {globals, paths} from '../config'
+import config, {globals, paths, pkg} from '../config'
 import {nodeModules, baseLoaders, generateLoaders} from './utils'
 
 import baseConfig, {STYLUS_LOADER, prodEmpty} from './base'
@@ -78,6 +80,20 @@ const clientConfig = {
     // extract webpack runtime & manifest to avoid vendor chunk hash changing
     // on every build.
     new webpack.optimize.CommonsChunkPlugin('manifest'),
+    new HtmlWebpackPlugin({
+      templateContent: pug.renderFile(paths.src('index.pug'), {
+        pretty: !minimize,
+        title: `${pkg.name} - ${pkg.description}`,
+        polyfill: !__DEV__
+      }),
+      favicon: paths.src('static/favicon.ico'),
+      hash: false,
+      inject: true,
+      minify: {
+        collapseWhitespace: minimize,
+        minifyJS: minimize
+      }
+    }),
     new VueSSRClientPlugin()
   ]
 }

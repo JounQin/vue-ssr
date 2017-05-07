@@ -13,6 +13,11 @@ export default store => {
         name: 'home',
         path: '/',
         component: () => import('views/Home')
+      },
+      {
+        name: 'test',
+        path: '/test',
+        component: () => import('views/Test')
       }
     ]
   })

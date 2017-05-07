@@ -4,6 +4,7 @@ import onerror from 'koa-onerror'
 import logger from 'koa-logger'
 import lruCache from 'lru-cache'
 import pug from 'pug'
+import re from 'path-to-regexp'
 import _debug from 'debug'
 
 import router from './router'
@@ -15,7 +16,7 @@ const {__DEV__} = globals
 
 const debug = _debug('hi:server')
 
-const template = pug.renderFile(paths.src('index.pug'), {
+const template = pug.renderFile(paths.server('template.pug'), {
   pretty: !config.minimize,
   polyfill: !__DEV__
 })
@@ -30,6 +31,7 @@ router(app)
 
 let renderer
 let readyPromise
+let nonSsrTemp
 
 const koaVersion = require('koa/package.json').version
 const vueVersion = require('vue-server-renderer/package.json').version
@@ -39,11 +41,23 @@ const DEFAULT_HEADERS = {
   Server: `koa/${koaVersion}; vue-server-renderer/${vueVersion}`
 }
 
+const NON_SSR_PATTERN = ['/test']
+
 app.use(async (ctx, next) => {
-  __DEV__ && await readyPromise
+  await readyPromise
 
   if (intercept(ctx, {logger: __DEV__ && debug})) {
     await next()
+    return
+  }
+
+  if (NON_SSR_PATTERN.find(pattern => re(pattern).exec(ctx.url))) {
+    if (__DEV__) {
+      ctx.body = nonSsrTemp
+    } else {
+      ctx.url = '/index.html'
+      await next()
+    }
     return
   }
 
@@ -72,8 +86,9 @@ const createRenderer = (bundle, options) => require('vue-server-renderer').creat
 })
 
 if (__DEV__) {
-  readyPromise = require('./dev-tools').default(app, (bundle, options) => {
-    renderer = createRenderer(bundle, options)
+  readyPromise = require('./dev-tools').default(app, (bundle, {clientManifest, template}) => {
+    renderer = createRenderer(bundle, {clientManifest})
+    nonSsrTemp = template
   })
 } else {
   renderer = createRenderer(require(paths.dist('vue-ssr-server-bundle.json')), {
@@ -86,5 +101,5 @@ const {serverHost, serverPort} = config
 
 const args = [serverPort, serverHost]
 
-export default app.listen(...args, err =>
+app.listen(...args, err =>
   debug(...err ? [err] : ['Server is now running at %s:%s.', ...args.reverse()]))
