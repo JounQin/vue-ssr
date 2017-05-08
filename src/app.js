@@ -10,7 +10,7 @@ import 'plugins'
 
 import App from 'views/App'
 
-export const createApp = () => {
+export default () => {
   const store = createStore()
   const router = createRouter(store)
 

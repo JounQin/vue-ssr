@@ -1,6 +1,6 @@
 import {throttle} from 'lodash'
 
-import {createApp} from './app'
+import createApp from './app'
 import {on} from 'utils'
 
 const {app, router, store} = createApp()
