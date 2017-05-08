@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+const esModule = module => module.then(m => m.default)
+
 export default store => {
   const {dispatch} = store
 
@@ -17,7 +19,7 @@ export default store => {
       {
         name: 'test',
         path: '/test',
-        component: () => import('views/Test').then(module => module.default)
+        component: () => esModule(import('views/Test'))
       }
     ]
   })
