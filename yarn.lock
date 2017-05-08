@@ -489,6 +489,10 @@ babel-helper-to-multiple-sequence-expressions@^0.0.4:
   version "0.0.4"
   resolved "http://registry.npm.taobao.org/babel-helper-to-multiple-sequence-expressions/download/babel-helper-to-multiple-sequence-expressions-0.0.4.tgz#d94414b386b6286fbaad77f073dea9b34324b01c"
 
+babel-helper-vue-jsx-merge-props@^2.0.2:
+  version "2.0.2"
+  resolved "http://registry.npm.taobao.org/babel-helper-vue-jsx-merge-props/download/babel-helper-vue-jsx-merge-props-2.0.2.tgz#aceb1c373588279e2755ea1cfd35c22394fd33f8"
+
 babel-helpers@7.0.0-alpha.9:
   version "7.0.0-alpha.9"
   resolved "http://registry.npm.taobao.org/babel-helpers/download/babel-helpers-7.0.0-alpha.9.tgz#653f391654e0c18556e78d39fe58fd7f9e730f27"
@@ -635,6 +639,10 @@ babel-plugin-syntax-export-extensions@7.0.0-alpha.9:
 babel-plugin-syntax-function-bind@7.0.0-alpha.9:
   version "7.0.0-alpha.9"
   resolved "http://registry.npm.taobao.org/babel-plugin-syntax-function-bind/download/babel-plugin-syntax-function-bind-7.0.0-alpha.9.tgz#e5cd183b0950ccbac310a3d85286a09bc3840054"
+
+babel-plugin-syntax-jsx@^6.18.0:
+  version "6.18.0"
+  resolved "http://registry.npm.taobao.org/babel-plugin-syntax-jsx/download/babel-plugin-syntax-jsx-6.18.0.tgz#0af32a9a6e13ca7a3fd5069e62d7b0f58d0d8946"
 
 babel-plugin-syntax-object-rest-spread@7.0.0-alpha.9:
   version "7.0.0-alpha.9"
@@ -909,6 +917,12 @@ babel-plugin-transform-unicode-property-regex@^2.0.0:
     babel-helper-regex "^6.18.0"
     babel-runtime "^6.23.0"
     regexpu-core "^4.0.4"
+
+babel-plugin-transform-vue-jsx@^3.4.3:
+  version "3.4.3"
+  resolved "http://registry.npm.taobao.org/babel-plugin-transform-vue-jsx/download/babel-plugin-transform-vue-jsx-3.4.3.tgz#de57d8dd7d619333c981867728f3e6fdf68982ff"
+  dependencies:
+    esutils "^2.0.2"
 
 babel-polyfill@^7.0.0-alpha.9:
   version "7.0.0-alpha.9"
@@ -2196,16 +2210,9 @@ domutils@1.1:
   dependencies:
     domelementtype "1"
 
-domutils@1.5.1:
+domutils@1.5.1, domutils@^1.5.1:
   version "1.5.1"
   resolved "http://registry.npm.taobao.org/domutils/download/domutils-1.5.1.tgz#dcd8488a26f563d61079e48c9f7b7e32373682cf"
-  dependencies:
-    dom-serializer "0"
-    domelementtype "1"
-
-domutils@^1.5.1:
-  version "1.6.0"
-  resolved "http://registry.npm.taobao.org/domutils/download/domutils-1.6.0.tgz#853de07f013287f976b7fe0461740222ea14ecbb"
   dependencies:
     dom-serializer "0"
     domelementtype "1"

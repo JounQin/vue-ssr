@@ -13,7 +13,8 @@
     "stage-0"
   ],
   "plugins": [
-    "lodash"
+    "lodash",
+    "transform-vue-jsx"
   ],
   "comments": false
 }

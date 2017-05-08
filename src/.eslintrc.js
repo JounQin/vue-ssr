@@ -1,4 +1,5 @@
 module.exports = {
+  plugins: ['vue'],
   env: {
     browser: true
   },
@@ -8,5 +9,8 @@ module.exports = {
     __SERVER__: false,
     SERVER_PREFIX: false,
     INNER_SERVER: false
+  },
+  rules: {
+    'vue/jsx-uses-vars': 2
   }
 }

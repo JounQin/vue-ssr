@@ -17,7 +17,7 @@ export default store => {
       {
         name: 'test',
         path: '/test',
-        component: () => import('views/Test')
+        component: () => import('views/Test').then(module => module.default)
       }
     ]
   })
