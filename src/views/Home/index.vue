@@ -9,7 +9,7 @@
       .center-block(:class="$style['slogan-body']")
         textarea(title="请输入内容", readonly) 当心得到控制，平静下来时，剩下的便是灵魂
     div(:class="$style.memberMenu")
-      each val, index in [{pull:'left',link:'/subscribe-index',icon:'icon-book',menu:'预订课程'}, {pull:'right',link:'/test',icon:'icon-person',menu:'个人中心'}]
+      each val, index in [{pull:'left',link:'/articles',icon:'icon-book',menu:'预订课程'}, {pull:'right',link:'/test',icon:'icon-person',menu:'个人中心'}]
         div(:class="$style.outsideCircle", class="pull-" + val.pull + " animated", ref="circle" + index)
           router-link(:class="$style.insideCircle", to=val.link, tag="div")
             span(:class="$style.menuIcon", class="iconfont " + val.icon)

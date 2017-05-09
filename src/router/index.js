@@ -17,6 +17,16 @@ export default store => {
         component: () => import('views/Home')
       },
       {
+        name: 'articles',
+        path: '/articles',
+        component: () => import('views/Articles')
+      },
+      {
+        name: 'article',
+        path: '/article/:id(\\d+)',
+        component: () => import('views/Articles/Article')
+      },
+      {
         name: 'test',
         path: '/test',
         component: () => esModule(import('views/Test'))
