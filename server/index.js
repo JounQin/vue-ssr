@@ -40,6 +40,8 @@ let mfs
 const koaVersion = require('koa/package.json').version
 const vueVersion = require('vue-server-renderer/package.json').version
 
+const INDEX_PAGE = 'index.html'
+
 const DEFAULT_HEADERS = {
   'Content-Type': 'text/html',
   Server: `koa/${koaVersion}; vue-server-renderer/${vueVersion}`
@@ -62,9 +64,9 @@ app.use(async (ctx, next) => {
 
   if (NON_SSR_PATTERN.find(pattern => re(pattern).exec(url))) {
     if (__DEV__) {
-      ctx.body = mfs.createReadStream(paths.dist('index.html'))
+      ctx.body = mfs.createReadStream(paths.dist(INDEX_PAGE))
     } else {
-      ctx.url = 'index.html'
+      ctx.url = INDEX_PAGE
       await next()
     }
     return
