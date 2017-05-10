@@ -134,7 +134,7 @@ if (__DEV__) {
       filename: 'service-worker.js',
       dontCacheBustUrlsMatching: /./,
       staticFileGlobsIgnorePatterns: [/index\.html$/, /\.map$/, /\.json$/],
-      stripPrefix: paths.dist().replace(/\\/g, "/")
+      stripPrefix: paths.dist().replace(/\\/g, '/')
     })
   )
 }
