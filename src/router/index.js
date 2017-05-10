@@ -24,7 +24,7 @@ export default store => {
       {
         name: 'article',
         path: '/article/:id(\\d+)',
-        component: () => import('views/Articles/Article')
+        component: () => import('views/Articles/ArticleItem')
       },
       {
         name: 'test',

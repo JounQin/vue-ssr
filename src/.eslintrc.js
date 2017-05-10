@@ -8,7 +8,8 @@ module.exports = {
     __PROD__: false,
     __SERVER__: false,
     SERVER_PREFIX: false,
-    INNER_SERVER: false
+    INNER_SERVER: false,
+    NON_INDEX_REGEX: false
   },
   rules: {
     'vue/jsx-uses-vars': 2

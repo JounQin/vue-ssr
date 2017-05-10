@@ -8,7 +8,10 @@
   import {mapGetters} from 'vuex'
 
   export default {
-    name: 'article',
+    name: 'article-item',
+    title() {
+      return this.article.title
+    },
     async asyncData({store, route}) {
       await store.dispatch('fetchArticle', route.params.id)
     },

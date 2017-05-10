@@ -94,7 +94,7 @@ app.use(async (ctx, next) => {
 
   const start = Date.now()
 
-  const context = {url: ctx.url, title: 'Vue Server Slide Rendering'}
+  const context = {url, title: 'vue-ssr'}
 
   let html = ''
 

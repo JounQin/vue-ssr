@@ -12,6 +12,7 @@
 
   export default {
     name: 'articles',
+    title: '文章列表页',
     async asyncData({store}) {
       await store.dispatch('fetchArticles')
     },

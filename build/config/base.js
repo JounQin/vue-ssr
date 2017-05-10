@@ -2,12 +2,17 @@ import path from 'path'
 
 const NODE_ENV = process.env.NODE_ENV || 'development'
 
+const NON_INDEX_REGEX = /^(?!.*[/\\](index)\.js).*\.(js|vue)$/.toString()
+
+// __DEV__ || (NON_INDEX_REGEX = NON_INDEX_REGEX.replace('index', 'index|test'))
+
 export const globals = {
   NODE_ENV,
   'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
   __DEV__: NODE_ENV === 'development',
   __TEST__: NODE_ENV === 'test',
-  __PROD__: NODE_ENV === 'production'
+  __PROD__: NODE_ENV === 'production',
+  NON_INDEX_REGEX
 }
 
 export const paths = (() => {
