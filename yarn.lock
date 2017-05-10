@@ -6023,9 +6023,9 @@ stylus-loader@^3.0.1:
     lodash.clonedeep "^4.5.0"
     when "~3.6.x"
 
-stylus-px2rem@^1.0.11:
-  version "1.0.11"
-  resolved "http://registry.npm.taobao.org/stylus-px2rem/download/stylus-px2rem-1.0.11.tgz#638953fb90b8257148c9daccc44290cc29441a3e"
+stylus-pxtorem@^1.0.14:
+  version "1.0.14"
+  resolved "http://registry.npm.taobao.org/stylus-pxtorem/download/stylus-pxtorem-1.0.14.tgz#e064726dead85f1af902a28f380d0fad95d34e45"
   dependencies:
     stylus "^0.54.2"
 
