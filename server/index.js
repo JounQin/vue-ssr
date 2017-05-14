@@ -100,18 +100,12 @@ app.use(async (ctx, next) => {
     let stream
 
     await new Promise((resolve, reject) => {
-      let first = true
       let html = ''
       stream = renderer.renderToStream(context)
-        .on('data', data => {
-          if (first) {
-            first = false
-            stream.pause()
-            stream.unshift(data)
-            resolve()
-          }
-
-          generateStatic && (html += data.toString())
+        .once('data', data => {
+          stream.pause()
+          stream.unshift(data)
+          resolve()
         })
         .on('error', reject)
         .on('end', () => {
@@ -127,6 +121,8 @@ app.use(async (ctx, next) => {
           }
           debug(`whole request: ${Date.now() - start}ms`)
         })
+
+      generateStatic && stream.on('data', data => (html += data))
     })
 
     ctx.body = stream.resume()
