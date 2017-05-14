@@ -3,8 +3,9 @@ import path from 'path'
 
 import Koa from 'koa'
 import compress from 'koa-compress'
-import onerror from 'koa-onerror'
 import logger from 'koa-logger'
+import onerror from 'koa-onerror'
+import serve from 'koa-static'
 import lruCache from 'lru-cache'
 import mkdirp from 'mkdirp'
 import pug from 'pug'
@@ -29,7 +30,7 @@ const app = new Koa()
 
 onerror(app)
 
-app.use(compress()).use(logger())
+app.use(compress()).use(logger()).use(serve(paths.base('public')))
 
 router(app)
 
@@ -161,7 +162,7 @@ if (__DEV__) {
   renderer = createRenderer(require(paths.dist('vue-ssr-server-bundle.json')), {
     clientManifest: require(paths.dist('vue-ssr-client-manifest.json'))
   })
-  app.use(require('koa-static')('dist'))
+  app.use(serve('dist'))
 }
 
 const {serverHost, serverPort} = config

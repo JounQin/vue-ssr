@@ -1,7 +1,6 @@
 import webpack from 'webpack'
 import pug from 'pug'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import CopyWebpackPlugin from 'copy-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
 import VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
@@ -60,10 +59,6 @@ const clientConfig = {
       SERVER_PREFIX: JSON.stringify(config.publicPath),
       INNER_SERVER: JSON.stringify(config.innerServer)
     }),
-    new CopyWebpackPlugin([{
-      from: paths.src('static'),
-      to: paths.dist()
-    }]),
     // extract vendor chunks for better caching
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -86,7 +81,6 @@ const clientConfig = {
         title: `${pkg.name} - ${pkg.description}`,
         polyfill: !__DEV__
       }),
-      favicon: paths.src('static/favicon.ico'),
       hash: false,
       inject: true,
       minify: {
@@ -132,9 +126,16 @@ if (__DEV__) {
     new SWPrecacheWebpackPlugin({
       cacheId: 'vue-ssr',
       filename: 'service-worker.js',
+      minify: true,
       dontCacheBustUrlsMatching: /./,
       staticFileGlobsIgnorePatterns: [/index\.html$/, /\.map$/, /\.json$/],
-      stripPrefix: paths.dist().replace(/\\/g, '/')
+      stripPrefix: paths.dist().replace(/\\/g, '/'),
+      runtimeCaching: [
+        {
+          urlPattern: /\/(test|article(s|\/\d+))?/,
+          handler: 'networkFirst'
+        }
+      ]
     })
   )
 }
