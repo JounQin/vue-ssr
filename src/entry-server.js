@@ -8,7 +8,11 @@ export default context => new Promise((resolve, reject) => {
   router.push(context.url)
 
   router.onReady(async () => {
-    await Promise.all(router.getMatchedComponents().map(({asyncData}) => asyncData && asyncData({
+    const matched = router.getMatchedComponents()
+
+    if (!matched.length) return reject({status: 404})
+
+    await Promise.all(matched.map(({asyncData}) => asyncData && asyncData({
       store,
       route: router.currentRoute
     })))

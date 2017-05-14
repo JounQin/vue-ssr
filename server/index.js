@@ -96,26 +96,49 @@ app.use(async (ctx, next) => {
 
   const context = {url, title: 'vue-ssr'}
 
-  let html = ''
+  try {
+    let stream
 
-  const stream = ctx.body = renderer.renderToStream(context)
-    .on('error', e => ctx.onerror(e))
-    .on('end', () => {
-      if (html) {
-        try {
-          mkdirp.sync(path.dirname(distPath), {fs: mfs})
-          mfs.writeFileSync(distPath, html)
-        } catch (e) {
-          console.error(e)
-        }
+    await new Promise((resolve, reject) => {
+      let first = true
+      let html = ''
+      stream = renderer.renderToStream(context)
+        .on('data', data => {
+          if (first) {
+            first = false
+            stream.pause()
+            stream.unshift(data)
+            resolve()
+          }
 
-        debug(`static html file "${distPath}" is generated!`)
-      }
-      debug(`whole request: ${Date.now() - start}ms`)
+          generateStatic && (html += data.toString())
+        })
+        .on('error', reject)
+        .on('end', () => {
+          if (html) {
+            try {
+              mkdirp.sync(path.dirname(distPath), {fs: mfs})
+              mfs.writeFileSync(distPath, html)
+            } catch (e) {
+              console.error(e)
+            }
+
+            debug(`static html file "${distPath}" is generated!`)
+          }
+          debug(`whole request: ${Date.now() - start}ms`)
+        })
     })
 
-  if (generateStatic) {
-    stream.on('data', data => (html += data.toString()))
+    ctx.body = stream.resume()
+  } catch (e) {
+    if (e.status === 404) {
+      ctx.body = '404 | Page Not Found'
+    } else {
+      ctx.status = 500
+      ctx.body = '500 | Internal Server Error'
+      console.error(`error during render : ${url}`)
+      console.error(e.stack)
+    }
   }
 })
 

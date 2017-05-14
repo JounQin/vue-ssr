@@ -30,6 +30,7 @@ module.exports = {
     ],
     'max-nested-callbacks': 2,
     'max-params': [2, 5],
+    'prefer-promise-reject-errors': 0,
     'standard/no-callback-literal': 0,
     'space-before-function-paren': [
       2,
