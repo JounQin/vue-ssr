@@ -132,7 +132,7 @@ if (__DEV__) {
       stripPrefix: paths.dist().replace(/\\/g, '/'),
       runtimeCaching: [
         {
-          urlPattern: /\/(test|article(s|\/\d+))?/,
+          urlPattern: /\/(test|article(s|\/\d+))?$/,
           handler: 'networkFirst'
         }
       ]
