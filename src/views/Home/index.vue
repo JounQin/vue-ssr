@@ -32,9 +32,6 @@
   $btn-color = #dfd28a
 
   .content
-    relative()
-    margin-left auto
-    margin-right auto
     max-width 768px
     height 100%
     overflow hidden

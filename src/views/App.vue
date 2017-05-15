@@ -1,5 +1,5 @@
 <template lang="pug">
-  #app
+  #app.scroll
     hi-loading(v-if="progress")
     hi-progress(:progress="progress")
     transition(:name="transition")
