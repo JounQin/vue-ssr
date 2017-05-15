@@ -1,12 +1,12 @@
 <template lang="pug">
-  #app.scroll
+  #app
     hi-loading(v-if="progress")
     hi-progress(:progress="progress")
     transition(:name="transition")
       keep-alive
-        router-view.app-container(v-if="keepAlive")
+        router-view(v-if="keepAlive")
     transition(:name="transition")
-      router-view.app-container(v-if="!keepAlive")
+      router-view(v-if="!keepAlive")
 </template>
 <script>
   import {mapGetters} from 'vuex'

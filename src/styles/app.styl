@@ -18,10 +18,12 @@ body
   &.bg
     background-color $bg-color
 
-.app-container
+#app
   relative()
   max-width 1024px
   margin 0 auto
+  scroll-behavior smooth  // @stylint ignore
+  -webkit-overflow-scrolling touch
 
 .scroll
   scrollSmooth()
