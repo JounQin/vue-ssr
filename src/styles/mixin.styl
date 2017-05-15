@@ -147,3 +147,13 @@ retina($file, $ext = 'jpg')
 
   @media (min-resolution 2dppx)
     background-image url($file'@2x.'$ext)
+
+scrollSmooth($type = null)
+  if ($type)
+    overflow-y hidden
+    overflow-x auto
+  else
+    overflow-x hidden
+    overflow-y auto
+  scroll-behavior smooth  // @stylint ignore
+  -webkit-overflow-scrolling touch

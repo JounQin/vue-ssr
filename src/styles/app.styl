@@ -18,13 +18,16 @@ body
   &.bg
     background-color $bg-color
 
-#app
+.app-container
   relative()
   max-width 1024px
   margin 0 auto
-  overflow-x hidden
-  overflow-y auto
-  scroll-behavior smooth
+
+.app-container, .scroll
+  scrollSmooth()
+
+.scroll-x
+  scrollSmooth(true)
 
 a
   &, &:active, &:hover, &:visited
