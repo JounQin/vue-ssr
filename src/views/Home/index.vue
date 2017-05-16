@@ -35,7 +35,7 @@
     relative()
     margin-left auto
     margin-right auto
-    max-width 768px
+    max-width '768px'
     height 100%
     overflow hidden
 

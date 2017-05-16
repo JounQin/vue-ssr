@@ -1,7 +1,8 @@
 <template lang="pug">
   main(:class="$style.container")
     h1 {{ article.title }}
-      router-link.pull-right(tag="small", to="/articles") 返回列表页
+      router-link.pull-right(to="/articles")
+        small 返回列表页
     article(v-html="article.content")
 </template>
 <script>
