@@ -98,12 +98,16 @@ app.use(async (ctx, next) => {
   const context = {url, title: 'vue-ssr'}
 
   try {
+    let resolved = false
     let stream
 
     await new Promise((resolve, reject) => {
       let html = ''
       stream = renderer.renderToStream(context)
-        .once('data', data => {
+        .on('data', data => {
+          if (resolved) return generateStatic && (html += data)
+
+          resolved = true
           stream.pause()
           stream.unshift(data)
           resolve()
@@ -122,8 +126,6 @@ app.use(async (ctx, next) => {
           }
           debug(`whole request: ${Date.now() - start}ms`)
         })
-
-      generateStatic && stream.on('data', data => (html += data))
     })
 
     ctx.body = stream.resume()

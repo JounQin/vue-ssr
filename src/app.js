@@ -1,6 +1,3 @@
-import 'styles/bootstrap'
-import 'styles/app'
-
 import Vue from 'vue'
 
 import createRouter from 'router'
@@ -11,6 +8,9 @@ import 'plugins'
 import App from 'views/App'
 
 export default () => {
+  require('styles/bootstrap')
+  require('styles/app')
+
   const store = createStore()
   const router = createRouter(store)
 
