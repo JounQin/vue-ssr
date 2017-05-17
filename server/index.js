@@ -98,16 +98,12 @@ app.use(async (ctx, next) => {
   const context = {url, title: 'vue-ssr'}
 
   try {
-    let resolved = false
     let stream
+    let html = ''
 
     await new Promise((resolve, reject) => {
-      let html = ''
       stream = renderer.renderToStream(context)
-        .on('data', data => {
-          if (resolved) return generateStatic && (html += data)
-
-          resolved = true
+        .once('data', data => {
           stream.pause()
           stream.unshift(data)
           resolve()
@@ -129,6 +125,7 @@ app.use(async (ctx, next) => {
     })
 
     ctx.body = stream.resume()
+    generateStatic && stream.on('data', data => (html += data))
   } catch (e) {
     if (e.status === 404) {
       ctx.body = '404 | Page Not Found'
