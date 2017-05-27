@@ -1,3 +1,6 @@
+import 'styles/bootstrap'
+import 'styles/app'
+
 import Vue from 'vue'
 
 import createRouter from 'router'
@@ -7,11 +10,8 @@ import 'plugins'
 
 import App from 'views/App'
 
-export default () => {
-  require('styles/bootstrap')
-  require('styles/app')
-
-  const store = createStore()
+export default axios => {
+  const store = createStore(axios)
   const router = createRouter(store)
 
   const app = new Vue({

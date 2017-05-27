@@ -1,11 +1,19 @@
+import _axios from 'axios'
+
 import createApp from './app'
 
 export default context => new Promise((resolve, reject) => {
+  const {ctx} = context
+
   const start = __DEV__ && Date.now()
 
-  const {app, router, store} = createApp()
+  const axios = _axios.create()
 
-  router.push(context.url)
+  axios.defaults.headers = ctx.headers
+
+  const {app, router, store} = createApp(axios)
+
+  router.push(ctx.url)
 
   router.onReady(async () => {
     const matched = router.getMatchedComponents()

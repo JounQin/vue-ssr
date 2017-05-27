@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import axios from 'axios'
 import {throttle} from 'lodash'
 
 import createApp from './app'
@@ -16,7 +17,7 @@ Vue.mixin({
   }
 })
 
-const {app, router, store} = createApp()
+const {app, router, store} = createApp(axios)
 
 window.__INITIAL_STATE__ && store.replaceState(window.__INITIAL_STATE__)
 

@@ -95,7 +95,7 @@ app.use(async (ctx, next) => {
 
   const start = Date.now()
 
-  const context = {url, title: 'vue-ssr'}
+  const context = {ctx, title: 'vue-ssr'}
 
   try {
     let stream

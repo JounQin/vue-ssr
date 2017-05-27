@@ -1,11 +1,9 @@
-import axios from 'axios'
-
 import {generateGetters} from 'utils'
 
 const RESET_ARTICLES = 'RESET_ARTICLES'
 const RESET_ARTICLE = 'RESET_ARTICLE'
 
-export default () => {
+export default axios => {
   const state = {
     articles: [],
     article: {}
