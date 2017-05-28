@@ -3,11 +3,13 @@ import _axios from 'axios'
 import createApp from './app'
 
 export default context => new Promise((resolve, reject) => {
-  const {ctx} = context
-
   const start = __DEV__ && Date.now()
 
+  const {ctx} = context
+
   const axios = _axios.create()
+
+  context.axios = axios
 
   axios.defaults.headers = ctx.headers
 
