@@ -7,7 +7,7 @@ const debug = _debug('hi:webpack-hmr')
 export default compiler => {
   debug('Enable Webpack Hot Module Replacement (HMR).')
 
-  const middleware = webpackHotMiddleware(compiler)
+  const middleware = webpackHotMiddleware(compiler, {heartbeat: 5000})
   return async function koaWebpackHMR(ctx, next) {
     /* eslint prefer-const: 0 */
     let hasNext = await applyExpressMiddleware(middleware, ctx.req, ctx.res)

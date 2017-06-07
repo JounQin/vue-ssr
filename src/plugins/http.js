@@ -5,14 +5,10 @@ const {prototype: proto} = Vue
 
 axios.defaults.baseURL = (__SERVER__ ? INNER_SERVER : SERVER_PREFIX) + 'api'
 
-if (!__DEV__ || !proto._$http) {
+if (!__DEV__ || !proto.hasOwnProperty('$http')) {
   Object.defineProperty(proto, '$http', __SERVER__ ? {
     get() {
       return this.$ssrContext.axios
     }
   } : {value: axios})
-
-  if (__DEV__) {
-    proto._$http = true
-  }
 }
