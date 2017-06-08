@@ -127,7 +127,9 @@ app.use(async (ctx, next) => {
     ctx.body = stream.resume()
     generateStatic && stream.on('data', data => (html += data))
   } catch (e) {
-    if (e.status === 404) {
+    if (e.url) {
+      ctx.redirect(e.url)
+    } else if (e.status === 404) {
       ctx.body = '404 | Page Not Found'
     } else {
       ctx.status = 500

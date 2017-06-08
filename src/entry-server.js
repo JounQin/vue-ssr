@@ -15,7 +15,12 @@ export default context => new Promise((resolve, reject) => {
 
   const {app, router, store} = createApp(axios)
 
-  router.push(ctx.url)
+  const {url} = ctx
+  const {fullPath} = router.resolve(url).route
+
+  if (fullPath !== url) return reject({status: 302, url: fullPath})
+
+  router.push(url)
 
   router.onReady(async () => {
     const matched = router.getMatchedComponents()

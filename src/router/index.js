@@ -30,6 +30,11 @@ export default store => {
         name: 'test',
         path: '/test',
         component: () => esModule(import('views/Test'))
+      },
+      {
+        name: 'redirect',
+        path: '/redirect',
+        redirect: '/'
       }
     ]
   })
