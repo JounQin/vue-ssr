@@ -19,22 +19,27 @@ Vue.mixin({
 
 const {app, router, store} = createApp(axios)
 
-window.__INITIAL_STATE__ && store.replaceState(window.__INITIAL_STATE__)
+const {__INITIAL_STATE__} = window
 
-if (__PROD__) require('vconsole')
+if (__INITIAL_STATE__) {
+  store.replaceState(__INITIAL_STATE__)
+  if (__PROD__) {
+    delete window.__INITIAL_STATE__
+  }
+}
 
 const {documentElement: docEl} = document
 
-const resize = () => {
-  store.dispatch('setSize', {winHeight: docEl.clientHeight, winWidth: docEl.clientWidth})
+const setSize = () => store.dispatch('setSize', {winHeight: docEl.clientHeight, winWidth: docEl.clientWidth})
+
+on(window, 'resize', throttle(() => {
+  setSize()
   docEl.style.fontSize = store.getters.fontSize + 'px'
-}
+}, 300))
 
-on(window, 'resize', throttle(resize, 300))
+setSize()
 
-resize()
-
-router.onReady(() => {
+const ready = () => {
   router.beforeResolve(async (to, from, next) => {
     const matched = router.getMatchedComponents(to)
     const prevMatched = router.getMatchedComponents(from)
@@ -54,7 +59,13 @@ router.onReady(() => {
   })
 
   app.$mount('#app')
-})
+
+  if (__PROD__) {
+    require('vconsole')
+  }
+}
+
+__INITIAL_STATE__ ? router.onReady(ready) : ready()
 
 if (module.hot) module.hot.accept()
 

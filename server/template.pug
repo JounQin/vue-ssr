@@ -9,6 +9,12 @@ html(lang="zh-cmn-Hans-CN")
     link(rel="manifest", href="/manifest.json")
     | {{{ renderResourceHints() }}}
     | {{{ renderStyles() }}}
+    script.
+      (function () {
+        var docEl = document.documentElement
+        var clientWidth = docEl.clientWidth
+        docEl.style.fontSize = (clientWidth < 768 ? clientWidth : 375) / 375 * 16 + 'px'
+      })()
   body
     //vue-ssr-outlet
     | {{{ renderState() }}}
