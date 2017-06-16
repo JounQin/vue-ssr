@@ -29,9 +29,7 @@ export const paths = (() => {
 
 export const pkg = require(paths.base('package.json'))
 
-export const alias = {
-  vue: 'vue/dist/vue.common'
-}
+export const alias = {}
 
 export const vendors = [
   'axios',

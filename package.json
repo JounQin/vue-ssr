@@ -35,12 +35,12 @@
     "koa-router": "^7.2.0",
     "koa-static": "^3.0.0",
     "lodash": "^4.17.4",
-    "lru-cache": "^4.1.0",
+    "lru-cache": "^4.1.1",
     "markdown-it": "^8.3.1",
     "mkdirp": "^0.5.1",
     "nib": "^1.1.2",
     "path-to-regexp": "^1.7.0",
-    "stylus-px2rem": "^1.0.13",
+    "stylus-px2rem": "^1.0.14",
     "vue": "^2.3.4",
     "vue-router": "^2.5.3",
     "vue-server-renderer": "^2.3.4",
@@ -81,7 +81,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "sw-precache-webpack-plugin": "^0.11.3",
-    "url-loader": "^0.5.8",
+    "url-loader": "^0.5.9",
     "vconsole": "^2.5.2",
     "vue-loader": "^12.2.1",
     "vue-style-loader": "^3.0.1",
@@ -90,6 +90,6 @@
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0",
     "webpack-node-externals": "^1.6.0",
-    "yargs": "^8.0.1"
+    "yargs": "^8.0.2"
   }
 }
