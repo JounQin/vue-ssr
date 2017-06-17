@@ -10,6 +10,7 @@ export default store => {
 
   const router = new VueRouter({
     mode: 'history',
+    fallback: false,
     routes: [
       {
         name: 'home',
