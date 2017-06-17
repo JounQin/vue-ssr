@@ -6,11 +6,14 @@
   "repository": "git@github.com:JounQin/vue-ssr.git",
   "author": "JounQin <admin@1stg.me>",
   "license": "MIT",
+  "now": {
+    "alias": "vue-ssr"
+  },
   "scripts": {
     "dev": "cross-env DEBUG=hi:* node build/bin/start",
-    "prod": "cross-env NODE_ENV=production npm run dev",
-    "start": "npm run build && npm run prod",
+    "start": "cross-env NODE_ENV=production npm run dev",
     "build": "rimraf dist && npm run compile",
+    "prod": "npm run build && npm run start",
     "compile:base": "npm run compile:client && npm run compile:server",
     "compile:dev": "cross-env DEBUG=hi:* npm run compile:base",
     "compile": "cross-env NODE_ENV=production npm run compile:dev",
