@@ -57,8 +57,6 @@ const DEFAULT_HEADERS = {
 const NON_SSR_PATTERN = ['/test']
 const STATIC_PATTERN = ['/', '/articles', '/article/:id(\\d+)']
 
-let staticError
-
 app.use(async (ctx, next) => {
   await readyPromise
 
@@ -86,11 +84,13 @@ app.use(async (ctx, next) => {
   if (STATIC_PATTERN.find(pattern => re(pattern).exec(url))) {
     const staticFile = url.split('?')[0].replace(/^\//, '') || 'home'
     const staticPath = `static/${staticFile}.html`
+
     // only /tmp folder is writable in now.sh
-    distPath = staticError ? path.resolve('/tmp', staticPath) : paths.dist(staticPath)
+    const isNowSh = ctx.hostname.endsWith('.now.sh')
+    distPath = isNowSh ? path.resolve('/tmp', staticPath) : paths.dist(staticPath)
 
     if (mfs.existsSync(distPath)) {
-      if (__DEV__ || staticError) {
+      if (__DEV__ || isNowSh) {
         ctx.body = mfs.createReadStream(distPath)
       } else {
         ctx.url = staticPath
@@ -125,7 +125,6 @@ app.use(async (ctx, next) => {
               mfs.writeFileSync(distPath, html)
               debug(`static html file "${distPath}" is generated!`)
             } catch (e) {
-              staticError = true
               console.error(e)
             }
           }
