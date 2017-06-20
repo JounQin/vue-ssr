@@ -28,6 +28,7 @@ let appLoader, bootstrapLoader
 const clientConfig = {
   ...baseConfig,
   target: 'web',
+  node: false,
   entry: [baseConfig.entry, paths.src('entry-client')],
   module: {
     rules: [
