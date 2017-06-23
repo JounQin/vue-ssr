@@ -26,7 +26,7 @@ export default {
     rules: [
       ...baseConfig.module.rules,
       {
-        test: /[/\\](app|bootstrap)\.styl$/,
+        test: /[/\\]app\.styl$/,
         loader: __PROD__ ? 'null-loader' : generateLoaders(STYLUS_LOADER, baseLoaders),
         exclude: nodeModules
       }, {

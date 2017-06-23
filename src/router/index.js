@@ -13,9 +13,8 @@ export default store => {
     fallback: false,
     routes: [
       {
-        name: 'home',
         path: '/',
-        component: () => import('views/Home')
+        redirect: '/articles'
       },
       {
         name: 'articles',
@@ -31,11 +30,6 @@ export default store => {
         name: 'test',
         path: '/test',
         component: () => esModule(import('views/Test'))
-      },
-      {
-        name: 'redirect',
-        path: '/redirect',
-        redirect: '/'
       }
     ]
   })

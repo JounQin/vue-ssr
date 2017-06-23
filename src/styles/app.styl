@@ -1,250 +1,44 @@
-@require "iconfont"
+@require "~normalize.css"
+@require "code.styl"
+@require "type.styl"
 @require "transition"
 
+*, *:before, *:after
+  box-sizing border-box
+
 ::-webkit-scrollbar
-  size 0
+  width 0
+  height 0
+  opacity 0
   display none
   background transparent
-  opacity 0
 
 html
-  font-size '16px'
+  font-size 16px
+  -webkit-tap-highlight-color rgba(0, 0, 0, 0)
 
 html, body, #app
   height 100%
 
-body
-  font-hei()
-
-  &.bg
-    background-color $bg-color
-
 #app
-  relative()
-  max-width '1024px'
+  position relative
+  max-width 1024px
   margin 0 auto
   scroll-behavior smooth
   -webkit-overflow-scrolling touch
-
-.scroll
-  scrollSmooth()
-
-.scroll-x
-  scrollSmooth(true)
 
 a
   &, &:active, &:hover, &:visited
     color inherit
     text-decoration none
 
-input
-  placeholder(color $placeholder-color,)
-  &,
-  &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button
-    appearance none
+h4
+  margin 10px 0
 
-.disabled
-  color $remark-color !important
-  cursor not-allowed
+.list-unstyled
+  list-style none
+  margin-top 0
+  margin-bottom 10px
 
-.btn
-  &.btn-hg
-    padding 11px 15px
-
-  &.btn-disabled-default,
-  &.btn-disabled-primary
-    border-color $remark-color
-
-  &.btn-disabled-default
-    color $remark-color
-
-  &.btn-disabled-primary
-    color $reverse-color
-    background-color $remark-color
-
-.input-group-addon
-  color $icon-color
-  background-color $back-light-color
-
-.form-control
-  height $input-size
-
-  &:not(:first-child)
-    border-left 0
-    padding-left 0
-
-  &:not(:last-child)
-    border-right 0
-
-.input-group-addon,
-.form-control
-  padding 6px 12px
-
-  &, &:focus
-    box-shadow none
-    border-color $input-border-color
-
-  &:first-child
-    padding-left 22px
-    border-radius $half-input-size 0 0 $half-input-size
-
-  &:last-child
-    border-radius 0 $half-input-size $half-input-size 0
-
-.input-group-primary
-  border 1px solid $input-border-color
-  border-radius $half-input-size
-  overflow hidden
-
-  .input-group-addon,
-  .form-control
-    border 0
-
-.has-error
-  .input-group-primary
-    border-color $highlight-color
-
-  .input-group-addon, .form-control
-    &, &:focus
-      border-color $highlight-color
-      background-color $back-light-color
-      box-shadow none
-
-  .input-group-addon
-    color $icon-color
-
-  .form-control-static
-    color $highlight-color
-
-.icon-character
-  display inline-block
-  line-height 1
-  border-radius 5px
-  padding 4px
-  color $reverse-color
-  scaleSize(10)
-  margin-left -2px
-  margin-right -2px
-
-.remark-color
-  color $remark-color
-
-.remark-bg
-  background-color $remark-color
-
-.panel-full
-  padding-left 10px
-  padding-right 10px
-  border-radius 0
-
-  .panel-heading
-    border-color $card-line-color
-
-  .panel-heading, .panel-body, .panel-footer
-    padding-left 0
-    padding-right 0
-
-.shadow-bottom
-  box-shadow $bottom-shadow
-
-// 1px fallback
-.border
-  border1px()
-
-.border-t
-  border1px-t()
-
-.border-b
-  border1px-b()
-
-.border-tb
-  border1px-tb()
-
-.border-l
-  border1px-l()
-
-.border-r
-  border1px-r()
-
-.border-radius
-  borderRadius()
-
-.dashed-line
-  border-bottom 1px dashed $border-color
-  transform scaleY(.5)
-
-.list-group
-  background-color $back-light-color
-  padding-left 0
-  @extend .border-tb
-
-  input, textarea
-    border 0
-    outline 0
-    resize none
-
-  textarea
-    display block
-    width 100%
-    padding 5px 0
-
-  .list-group-item
-    position relative
-    display block
-    margin-left 10px
-    padding 10px 10px 10px 0
-
-    &:not(:last-child)
-      @extend .border-b
-
-    .list-group-left, .list-group-right
-      display table-cell
-      vertical-align middle
-
-    .list-group-left
-      white-space nowrap
-      color $stress-color
-
-    .list-group-right
-      width 10000px
-
-      &, span
-        vertical-align middle
-
-      &, input
-        text-align right
-
-.fixed-bottom
-  fixed()
-  bottom 0
-  width 100%
-  max-width 1024px
-  padding 12px 16px
-  background-color $back-light-color
-  display flex
-
-  .btn
-    flex 1
-    font-size $stress-size
-
-    + .btn
-      margin-left 10px
-
-.mask
-  fixed(top right bottom left)
-  z-index 500
-  background-color $stress-color
-  opacity .5
-
-  &.transparent
-    opacity 0
-
-.vertical-line
-  border1px-l($border-color)
-  width 1px
-  margin 0 8px
-
-.split-line
-  border1px-t($border-color)
-  height 2px
+.pull-right
+  float right !important

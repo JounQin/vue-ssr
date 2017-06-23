@@ -23,7 +23,7 @@ const debug = _debug('hi:webpack:client')
 
 debug(`create webpack configuration for NODE_ENV:${NODE_ENV}, VUE_ENV:${VUE_ENV}`)
 
-let appLoader, bootstrapLoader
+let appLoader
 
 const clientConfig = {
   ...baseConfig,
@@ -37,12 +37,6 @@ const clientConfig = {
         test: /[/\\]app\.styl$/,
         loader: generateLoaders(STYLUS_LOADER, baseLoaders, {
           extract: minimize && (appLoader = new ExtractTextPlugin(`${prodEmpty('app.')}[contenthash].css`))
-        }),
-        exclude: nodeModules
-      }, {
-        test: /[/\\]bootstrap\.styl$/,
-        loader: generateLoaders(STYLUS_LOADER, baseLoaders, {
-          extract: minimize && (bootstrapLoader = new ExtractTextPlugin(`${prodEmpty('bootstrap.')}[contenthash].css`))
         }),
         exclude: nodeModules
       }, {
@@ -107,7 +101,6 @@ if (minimize) {
       comments: false,
       sourceMap
     }),
-    bootstrapLoader,
     appLoader
   )
 }

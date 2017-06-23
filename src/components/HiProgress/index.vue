@@ -20,7 +20,7 @@
   $progress-color = #39b983
 
   .hi-progress
-    fixed()
+    position fixed
     z-index 100001
     top 0
     left 0

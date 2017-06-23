@@ -1,6 +1,5 @@
 <template lang="pug">
   main(:class="$style.container")
-    router-link(to="/") Go Home
     ol.list-unstyled
       li(v-for="{id, title, summary} of articles")
         router-link(:to="`/article/${id}`")

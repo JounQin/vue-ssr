@@ -59,7 +59,7 @@ export default {
         exclude: 'styl'
       }),
       {
-        test: /^(?!.*[/\\](app|bootstrap|theme-\w+)\.styl$).*\.styl$/,
+        test: /^(?!.*[/\\](app|theme-\w+)\.styl$).*\.styl$/,
         loader: generateLoaders(STYLUS_LOADER, cssModuleLoaders),
         exclude: nodeModules
       },

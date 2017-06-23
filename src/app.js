@@ -1,4 +1,3 @@
-import 'styles/bootstrap'
 import 'styles/app'
 
 import Vue from 'vue'
