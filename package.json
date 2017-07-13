@@ -41,9 +41,9 @@
     "mkdirp": "^0.5.1",
     "normalize.css": "^7.0.0",
     "path-to-regexp": "^1.7.0",
-    "vue": "^2.3.4",
+    "vue": "^2.4.1",
     "vue-router": "^2.7.0",
-    "vue-server-renderer": "^2.3.4",
+    "vue-server-renderer": "^2.4.1",
     "vuex": "^2.3.1"
   },
   "devDependencies": {
@@ -85,8 +85,8 @@
     "vconsole": "^2.5.2",
     "vue-loader": "^13.0.1",
     "vue-style-loader": "^3.0.1",
-    "vue-template-compiler": "^2.3.4",
-    "webpack": "^3.1.0",
+    "vue-template-compiler": "^2.4.1",
+    "webpack": "^3.2.0",
     "webpack-dev-middleware": "^1.11.0",
     "webpack-hot-middleware": "^2.18.2",
     "webpack-node-externals": "^1.6.0",
