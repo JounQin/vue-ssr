@@ -4,7 +4,6 @@ import path from 'path'
 import Koa from 'koa'
 import compress from 'koa-compress'
 import logger from 'koa-logger'
-import onerror from 'koa-onerror'
 import serve from 'koa-static'
 import lruCache from 'lru-cache'
 import mkdirp from 'mkdirp'
@@ -33,8 +32,6 @@ const template = config.minimize ? minify(tpl, {
 }) : tpl
 
 const app = new Koa()
-
-onerror(app)
 
 app.use(compress()).use(logger()).use(serve(paths.base('public')))
 
@@ -106,46 +103,43 @@ app.use(async (ctx, next) => {
 
   const context = {ctx, title: 'vue-ssr'}
 
-  try {
-    let stream
-    let html = ''
+  let html = ''
 
-    await new Promise((resolve, reject) => {
-      stream = renderer.renderToStream(context)
-        .once('data', data => {
-          stream.pause()
-          stream.unshift(data)
-          resolve()
-        })
-        .on('error', reject)
-        .on('end', () => {
-          if (html) {
-            try {
-              mkdirp.sync(path.dirname(distPath), {fs: mfs})
-              mfs.writeFileSync(distPath, html)
-              debug(`static html file "${distPath}" is generated!`)
-            } catch (e) {
-              console.error(e)
-            }
-          }
-          debug(`whole request: ${Date.now() - start}ms`)
-        })
+  ctx.respond = false
+  ctx.status = 200
+
+  const {res} = ctx
+
+  const stream = renderer.renderToStream(context)
+    .on('error', e => {
+      switch (ctx.status = e.status || 500) {
+        case 302:
+          ctx.redirect(e.url)
+          return res.end()
+        case 404:
+          return res.end('404 | Page Not Found')
+        default:
+          res.end('500 | Internal Server Error')
+          console.error(`error during render : ${url}`)
+          console.error(e.stack)
+      }
+    })
+    .on('end', () => {
+      if (html) {
+        try {
+          mkdirp.sync(path.dirname(distPath), {fs: mfs})
+          mfs.writeFileSync(distPath, html)
+          debug(`static html file "${distPath}" is generated!`)
+        } catch (e) {
+          console.error(e)
+        }
+      }
+      debug(`whole request: ${Date.now() - start}ms`)
     })
 
-    ctx.body = stream.resume()
-    generateStatic && stream.on('data', data => (html += data))
-  } catch (e) {
-    if (e.url) {
-      ctx.redirect(e.url)
-    } else if (e.status === 404) {
-      ctx.body = '404 | Page Not Found'
-    } else {
-      ctx.status = 500
-      ctx.body = '500 | Internal Server Error'
-      console.error(`error during render : ${url}`)
-      console.error(e.stack)
-    }
-  }
+  generateStatic && stream.on('data', data => (html += data))
+
+  stream.pipe(res)
 })
 
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer

@@ -1427,9 +1427,9 @@ character-parser@^2.1.1:
   dependencies:
     is-regex "^1.0.3"
 
-chokidar@^1.4.3:
-  version "1.6.1"
-  resolved "http://registry.npm.taobao.org/chokidar/download/chokidar-1.6.1.tgz#2f4447ab5e96e50fb3d789fd90d4c72e0e4c70c2"
+chokidar@^1.7.0:
+  version "1.7.0"
+  resolved "http://registry.npm.taobao.org/chokidar/download/chokidar-1.7.0.tgz#798e689778151c8076b4b360e5edd28cda2bb468"
   dependencies:
     anymatch "^1.3.0"
     async-each "^1.0.0"
@@ -3775,10 +3775,6 @@ koa-logger@^3.0.1:
     chalk "^1.1.3"
     humanize-number "0.0.2"
     passthrough-counter "^1.0.0"
-
-koa-onerror@^3.1.0:
-  version "3.1.0"
-  resolved "http://registry.npm.taobao.org/koa-onerror/download/koa-onerror-3.1.0.tgz#13082b447f9c20847fa3ca335a8a7f1035497b13"
 
 koa-router@^7.2.1:
   version "7.2.1"
@@ -6361,9 +6357,9 @@ vue-hot-reload-api@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.1.0.tgz#9ca58a6e0df9078554ce1708688b6578754d86de"
 
-vue-loader@^13.0.1:
-  version "13.0.1"
-  resolved "http://registry.npm.taobao.org/vue-loader/download/vue-loader-13.0.1.tgz#265b5c81451079304601e8aff3e95af64fb10c43"
+vue-loader@^13.0.2:
+  version "13.0.2"
+  resolved "http://registry.npm.taobao.org/vue-loader/download/vue-loader-13.0.2.tgz#78c3e80f69c0520f99a092854dd7d63e3921a28d"
   dependencies:
     consolidate "^0.14.0"
     hash-sum "^1.0.2"
@@ -6428,12 +6424,12 @@ ware@^1.2.0:
   dependencies:
     wrap-fn "^0.1.0"
 
-watchpack@^1.3.1:
-  version "1.3.1"
-  resolved "http://registry.npm.taobao.org/watchpack/download/watchpack-1.3.1.tgz#7d8693907b28ce6013e7f3610aa2a1acf07dad87"
+watchpack@^1.4.0:
+  version "1.4.0"
+  resolved "http://registry.npm.taobao.org/watchpack/download/watchpack-1.4.0.tgz#4a1472bcbb952bd0a9bb4036801f954dfb39faac"
   dependencies:
     async "^2.1.2"
-    chokidar "^1.4.3"
+    chokidar "^1.7.0"
     graceful-fs "^4.1.2"
 
 webpack-dev-middleware@^1.11.0:
@@ -6465,9 +6461,9 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@^3.2.0:
-  version "3.2.0"
-  resolved "http://registry.npm.taobao.org/webpack/download/webpack-3.2.0.tgz#8b0cae0e1a9fd76bfbf0eab61a8c2ada848c312f"
+webpack@^3.3.0:
+  version "3.3.0"
+  resolved "http://registry.npm.taobao.org/webpack/download/webpack-3.3.0.tgz#ce2f9e076566aba91f74887133a883fd7da187bc"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
@@ -6488,7 +6484,7 @@ webpack@^3.2.0:
     supports-color "^3.1.0"
     tapable "~0.2.5"
     uglifyjs-webpack-plugin "^0.4.6"
-    watchpack "^1.3.1"
+    watchpack "^1.4.0"
     webpack-sources "^1.0.1"
     yargs "^6.0.0"
 
