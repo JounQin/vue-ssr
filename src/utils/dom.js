@@ -7,7 +7,7 @@ const classRegExp = className => new RegExp(`(^|\\s+)${className.toString().trim
 export const hasClass = (el, className) => classRegExp(className).test(el.className)
 
 export const addClass = (el, className) => domEach(el, el => {
-  let classNames = className.split(' ')
+  const classNames = className.split(' ')
   classNames.length > 1 ? each(classNames, className => addClass(el, className))
     : hasClass(el, className) || (el.className = `${el.className} ${className}`.trim())
 })

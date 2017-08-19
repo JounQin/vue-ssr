@@ -19,7 +19,7 @@ export const generateLoaders = (loader, loaders, options = {}) => {
 
   const styleLoader = 'vue-style-loader'
 
-  let extract = options.extract
+  const extract = options.extract
   return extract ? (extract.extract ? extract : ExtractTextPlugin).extract({
     fallback: styleLoader,
     use: sourceLoaders
