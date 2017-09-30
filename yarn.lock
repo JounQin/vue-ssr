@@ -2774,11 +2774,12 @@ file-entry-cache@^2.0.0:
     flat-cache "^1.2.1"
     object-assign "^4.0.1"
 
-file-loader@^0.11.2:
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-0.11.2.tgz#4ff1df28af38719a6098093b88c82c71d1794a34"
+file-loader@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-1.1.0.tgz#f057ae917e3751d7fe77478f15ce913176a1e35b"
   dependencies:
     loader-utils "^1.0.2"
+    schema-utils "^0.3.0"
 
 file-type@^3.1.0:
   version "3.9.0"
@@ -6517,7 +6518,7 @@ vary@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.1.tgz#67535ebb694c1d52257457984665323f587e8d37"
 
-vconsole@3.0.0:
+vconsole@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/vconsole/-/vconsole-3.0.0.tgz#54ca3872677e8faf6e42fdfb6111109242e3f09b"
 
