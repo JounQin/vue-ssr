@@ -74,7 +74,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "sw-precache-webpack-plugin": "^0.11.4",
-    "url-loader": "^0.5.9",
+    "url-loader": "^0.6.1",
     "vconsole": "^3.0.0",
     "vue-loader": "^13.0.5",
     "vue-style-loader": "^3.0.3",
