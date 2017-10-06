@@ -21,15 +21,17 @@ const {__DEV__} = globals
 
 const debug = _debug('hi:server')
 
-const tpl = pug.renderFile(paths.server('template.pug'), {
-  pretty: !config.minimize,
-  polyfill: !__DEV__
-})
+const getTemplate = templatePath => {
+  const tpl = pug.render(fs.readFileSync(templatePath, 'utf-8'), {
+    pretty: !config.minimize,
+    polyfill: !__DEV__
+  })
 
-const template = config.minimize ? minify(tpl, {
-  collapseWhitespace: true,
-  minifyJS: true
-}) : tpl
+  return config.minimize ? minify(tpl, {
+    collapseWhitespace: true,
+    minifyJS: true
+  }) : tpl
+}
 
 const app = new Koa()
 
@@ -40,6 +42,8 @@ router(app)
 let renderer
 let readyPromise
 let mfs
+
+const templatePath = paths.server('template.pug')
 
 const koaVersion = require('koa/package.json').version
 const vueVersion = require('vue-server-renderer/package.json').version
@@ -145,7 +149,6 @@ app.use(async (ctx, next) => {
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
 const createRenderer = (bundle, options) => require('vue-server-renderer').createBundleRenderer(bundle, {
   ...options,
-  template,
   inject: false,
   cache: lruCache({
     max: 1000,
@@ -156,14 +159,15 @@ const createRenderer = (bundle, options) => require('vue-server-renderer').creat
 })
 
 if (__DEV__) {
-  readyPromise = require('./dev-tools').default(app, (bundle, {clientManifest, fs}) => {
-    renderer = createRenderer(bundle, {clientManifest})
+  readyPromise = require('./dev-tools').default(app, templatePath, getTemplate, (bundle, {clientManifest, fs, template}) => {
+    renderer = createRenderer(bundle, {clientManifest, template})
     mfs = fs
   })
 } else {
   mfs = fs
   renderer = createRenderer(require(paths.dist('vue-ssr-server-bundle.json')), {
-    clientManifest: require(paths.dist('vue-ssr-client-manifest.json'))
+    clientManifest: require(paths.dist('vue-ssr-client-manifest.json')),
+    template: getTemplate(templatePath)
   })
   app.use(serve('dist'))
 }
