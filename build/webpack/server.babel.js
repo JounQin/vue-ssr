@@ -1,5 +1,5 @@
 import webpack from 'webpack'
-import BabiliPlugin from 'babili-webpack-plugin'
+import BabelMinifyPlugin from 'babel-minify-webpack-plugin'
 import VueSSRServerPlugin from 'vue-server-renderer/server-plugin'
 import nodeExternals from 'webpack-node-externals'
 import _debug from 'debug'
@@ -50,7 +50,7 @@ export default {
       SERVER_PREFIX: JSON.stringify(config.publicPath),
       INNER_SERVER: JSON.stringify(config.innerServer)
     }),
-    new BabiliPlugin(),
+    new BabelMinifyPlugin(),
     new VueSSRServerPlugin()
   ],
   externals: nodeExternals({
