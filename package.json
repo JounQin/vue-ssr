@@ -84,6 +84,6 @@
     "webpack-dev-middleware": "^2.0.1",
     "webpack-hot-middleware": "^2.20.0",
     "webpack-node-externals": "^1.6.0",
-    "yargs": "^10.0.3"
+    "yargs": "^11.0.0"
   }
 }
