@@ -11,10 +11,8 @@ import re from 'path-to-regexp'
 import _debug from 'debug'
 
 import router from './router'
-import intercept from './intercept'
 
 import {
-  __DEV__,
   resolve,
   runtimeRequire,
   serverHost,
@@ -60,9 +58,12 @@ const STATIC_PATTERN = ['/', '/articles', '/article/:id(\\d+)']
 app.use(async (ctx, next) => {
   await readyPromise
 
-  if (intercept(ctx, { logger: __DEV__ && debug })) {
-    await next()
-    return
+  if (
+    ctx.method !== 'GET' ||
+    ctx.url.lastIndexOf('.') > ctx.url.lastIndexOf('/') ||
+    !['*/*', 'text/html'].find(mimeType => ctx.get('Accept').includes(mimeType))
+  ) {
+    return next()
   }
 
   ctx.set(DEFAULT_HEADERS)
@@ -70,7 +71,7 @@ app.use(async (ctx, next) => {
   const { url } = ctx
 
   if (NON_SSR_PATTERN.find(pattern => re(pattern).exec(url))) {
-    if (__DEV__) {
+    if (process.env.NODE_ENV === 'development') {
       ctx.body = mfs.createReadStream(resolve('dist/' + INDEX_PAGE))
     } else {
       ctx.url = INDEX_PAGE
@@ -92,7 +93,7 @@ app.use(async (ctx, next) => {
       : resolve('dist/static/' + staticPath)
 
     if (mfs.existsSync(distPath)) {
-      if (__DEV__ || isNowSh) {
+      if (process.env.NODE_ENV === 'development' || isNowSh) {
         ctx.body = mfs.createReadStream(distPath)
       } else {
         ctx.url = staticPath
@@ -165,7 +166,7 @@ const createRenderer = (bundle, options) =>
     runInNewContext: false,
   })
 
-if (__DEV__) {
+if (process.env.NODE_ENV === 'development') {
   const { readyPromise: ready, webpackMiddleware } = require('./dev').default(
     ({ bundle, clientManifest, fs }) => {
       renderer = createRenderer(bundle, { clientManifest, template })

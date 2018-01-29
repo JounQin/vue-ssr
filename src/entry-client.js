@@ -78,6 +78,11 @@ __INITIAL_STATE__ ? router.onReady(ready) : ready()
 
 if (module.hot) module.hot.accept()
 
-location.protocol === 'https:' &&
-  navigator.serviceWorker &&
+if (
+  !__DEV__ &&
+  (location.protocol === 'https:' ||
+    ['127.0.0.1', 'localhost'].includes(location.hostname)) &&
+  navigator.serviceWorker
+) {
   navigator.serviceWorker.register('/service-worker.js')
+}
