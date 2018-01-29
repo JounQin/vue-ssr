@@ -1,4 +1,4 @@
-import {generateGetters} from 'utils'
+import { generateGetters } from 'utils'
 
 const RESET_ARTICLES = 'RESET_ARTICLES'
 const RESET_ARTICLE = 'RESET_ARTICLE'
@@ -6,18 +6,18 @@ const RESET_ARTICLE = 'RESET_ARTICLE'
 export default axios => {
   const state = {
     articles: [],
-    article: {}
+    article: {},
   }
 
   const getters = generateGetters(Object.keys(state))
 
   const actions = {
-    async fetchArticles({commit}) {
+    async fetchArticles({ commit }) {
       commit(RESET_ARTICLES, (await axios.get('/articles')).data)
     },
-    async fetchArticle({commit}, id) {
+    async fetchArticle({ commit }, id) {
       commit(RESET_ARTICLE, (await axios.get(`/article/${id}`)).data)
-    }
+    },
   }
 
   const mutations = {
@@ -26,13 +26,13 @@ export default axios => {
     },
     [RESET_ARTICLE](state, article) {
       state.article = article
-    }
+    },
   }
 
   return {
     state,
     getters,
     actions,
-    mutations
+    mutations,
   }
 }

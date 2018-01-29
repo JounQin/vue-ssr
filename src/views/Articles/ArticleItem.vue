@@ -6,22 +6,24 @@
     article(v-html="article.content")
 </template>
 <script>
-  import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
-  export default {
-    name: 'article-item',
-    title() {
-      return this.article.title
-    },
-    async asyncData({store, route}) {
-      await store.dispatch('fetchArticle', route.params.id)
-    },
-    computed: {
-      ...mapGetters(['article'])
-    }
-  }
+export default {
+  name: 'ArticleItem',
+  title() {
+    return this.article.title
+  },
+  async asyncData({ store, route }) {
+    await store.dispatch('fetchArticle', route.params.id)
+  },
+  computed: {
+    ...mapGetters(['article']),
+  },
+}
 </script>
-<style src="highlight.js/styles/github-gist.css"></style>
+<style src="highlight.js/styles/github-gist.css">
+
+</style>
 <style lang="stylus" module>
   .container
     padding 0 10px

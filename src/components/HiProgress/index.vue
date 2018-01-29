@@ -2,19 +2,19 @@
   div(:class="$style.hiProgress", :style="{width: progress + '%'}")
 </template>
 <script>
-  export default {
-    name: 'hi-progress',
-    props: {
-      className: {
-        type: String,
-        default: ''
-      },
-      progress: {
-        type: Number,
-        default: 0
-      }
-    }
-  }
+export default {
+  name: 'HiProgress',
+  props: {
+    className: {
+      type: String,
+      default: '',
+    },
+    progress: {
+      type: Number,
+      default: 0,
+    },
+  },
+}
 </script>
 <style lang="stylus" module>
   $progress-color = #39b983

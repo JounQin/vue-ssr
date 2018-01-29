@@ -9,25 +9,27 @@
       router-view(v-if="!keepAlive")
 </template>
 <script>
-  import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
-  import HiLoading from 'HiLoading'
-  import HiProgress from 'HiProgress'
+import HiLoading from 'components/HiLoading'
+import HiProgress from 'components/HiProgress'
 
-  export default {
-    name: 'app',
-    data: () => ({transition: 'slide-fade'}),
-    computed: {
-      ...mapGetters(['progress']),
-      keepAlive() {
-        const {$route} = this
-        const keepAlive = $route.meta.keepAlive
-        return keepAlive == null ? !Object.keys({...$route.params, ...$route.query}).length : keepAlive
-      }
+export default {
+  name: 'App',
+  components: {
+    HiLoading,
+    HiProgress,
+  },
+  data: () => ({ transition: 'slide-fade' }),
+  computed: {
+    ...mapGetters(['progress']),
+    keepAlive() {
+      const { $route } = this
+      const keepAlive = $route.meta.keepAlive
+      return keepAlive == null
+        ? !Object.keys({ ...$route.params, ...$route.query }).length
+        : keepAlive
     },
-    components: {
-      HiLoading,
-      HiProgress
-    }
-  }
+  },
+}
 </script>

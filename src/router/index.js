@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 const esModule = module => module.then(m => m.default)
 
 export default store => {
-  const {dispatch} = store
+  const { dispatch } = store
 
   const router = new VueRouter({
     mode: 'history',
@@ -14,24 +14,24 @@ export default store => {
     routes: [
       {
         path: '/',
-        redirect: '/articles'
+        redirect: '/articles',
       },
       {
         name: 'articles',
         path: '/articles',
-        component: () => import('views/Articles')
+        component: () => import('views/Articles'),
       },
       {
         name: 'article',
         path: '/article/:id(\\d+)',
-        component: () => import('views/Articles/ArticleItem')
+        component: () => import('views/Articles/ArticleItem'),
       },
       {
         name: 'test',
         path: '/test',
-        component: () => esModule(import('views/Test'))
-      }
-    ]
+        component: () => esModule(import('views/Test')),
+      },
+    ],
   })
 
   let first = true

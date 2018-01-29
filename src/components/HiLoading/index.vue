@@ -4,19 +4,19 @@
     slot
 </template>
 <script>
-  export default {
-    name: 'hi-loading',
-    props: {
-      className: {
-        type: String,
-        default: ''
-      },
-      theme: {
-        type: String,
-        default: 'snake'
-      }
-    }
-  }
+export default {
+  name: 'HiLoading',
+  props: {
+    className: {
+      type: String,
+      default: '',
+    },
+    theme: {
+      type: String,
+      default: 'snake',
+    },
+  },
+}
 </script>
 <style lang="stylus" module>
   .hi-loading

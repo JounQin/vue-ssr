@@ -1,5 +1,5 @@
 function getTitle(vm) {
-  let {title} = vm.$options
+  let { title } = vm.$options
   title = title && typeof title === 'function' ? title.call(vm) : title
   return title && `vue-ssr | ${title}`
 }
@@ -10,7 +10,7 @@ const serverTitleMixin = {
     if (title) {
       this.$ssrContext.title = title
     }
-  }
+  },
 }
 
 function changeTitle() {
@@ -22,7 +22,7 @@ function changeTitle() {
 
 const clientTitleMixin = {
   activated: changeTitle,
-  mounted: changeTitle
+  mounted: changeTitle,
 }
 
-export default __SERVER__ ? serverTitleMixin : clientTitleMixin
+export default (__SERVER__ ? serverTitleMixin : clientTitleMixin)

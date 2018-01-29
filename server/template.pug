@@ -18,6 +18,6 @@ html(lang="zh-cmn-Hans-CN")
   body
     //vue-ssr-outlet
     | {{{ renderState() }}}
-    if polyfill
+    if !__DEV__
       script(src="https://cdn.polyfill.io/v2/polyfill.min.js")
     | {{{ renderScripts() }}}

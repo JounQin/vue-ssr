@@ -7,18 +7,18 @@
         p {{ summary }}
 </template>
 <script>
-  import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
-  export default {
-    name: 'articles',
-    title: '文章列表页',
-    async asyncData({store}) {
-      await store.dispatch('fetchArticles')
-    },
-    computed: {
-      ...mapGetters(['articles'])
-    }
-  }
+export default {
+  name: 'Articles',
+  title: '文章列表页',
+  async asyncData({ store }) {
+    await store.dispatch('fetchArticles')
+  },
+  computed: {
+    ...mapGetters(['articles']),
+  },
+}
 </script>
 <style lang="stylus" module>
   .container
