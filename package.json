@@ -63,7 +63,7 @@
     "lru-cache": "^4.1.1",
     "markdown-it": "^8.4.0",
     "mkdirp": "^0.5.1",
-    "normalize.css": "^7.0.0",
+    "normalize.css": "^8.0.0",
     "path-to-regexp": "^2.1.0",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1",
