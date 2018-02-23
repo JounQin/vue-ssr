@@ -10,19 +10,20 @@ import serverConfig from '../build/vue-server.babel'
 
 const debug = _debug('hi:server:dev')
 
-export default cb => {
+export default after => {
   let _resolve
   let clientManifest
   let bundle
   let fs
 
+  // eslint-disable-next-line promise/param-names
   const readyPromise = new Promise(r => {
     _resolve = r
   })
 
   const ready = (...args) => {
     _resolve()
-    cb(...args)
+    after(...args)
   }
 
   const clientCompiler = webpack(clientConfig)

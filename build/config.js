@@ -15,6 +15,8 @@ export const innerServer = `http://localhost:${serverPort}/`
 export const resolve = (...args) => path.resolve(process.cwd(), ...args)
 
 export const runtimeRequire =
+  // eslint-disable-next-line camelcase
   typeof __non_webpack_require__ === 'undefined'
     ? require
-    : __non_webpack_require__
+    : // eslint-disable-next-line camelcase
+      __non_webpack_require__
