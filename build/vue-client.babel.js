@@ -29,6 +29,10 @@ const clientConfig = merge.smart(baseConfig, {
     splitChunks: {
       name: 'vendors',
       chunks: 'all',
+      cacheGroups: {
+        test: ({ context, request }) =>
+          /node_modules/.test(context) && !/\.css$/.test(request),
+      },
     },
     runtimeChunk: {
       name: 'manifest',
