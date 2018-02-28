@@ -22,7 +22,6 @@ export default {
 }
 </script>
 <style src="highlight.js/styles/github-gist.css">
-
 </style>
 <style lang="stylus" module>
   .container

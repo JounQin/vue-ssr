@@ -25,26 +25,20 @@ const clientConfig = merge.smart(baseConfig, {
   module: {
     rules: [babelLoader(), vueLoader()],
   },
+  optimization: {
+    splitChunks: {
+      name: 'vendors',
+      chunks: 'all',
+    },
+    runtimeChunk: {
+      name: 'manifest',
+    },
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
       SERVER_PREFIX: JSON.stringify('/'),
       __SERVER__: JSON.stringify(false),
-    }),
-    // extract vendor chunks for better caching
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendors',
-      minChunks: module =>
-        // a module is extracted into the vendors chunk
-        // if it's inside node_modules
-        /node_modules/.test(module.context) &&
-        // and not a CSS file (due to extract-text-webpack-plugin limitation)
-        !/\.css$/.test(module.request),
-    }),
-    // extract webpack runtime & manifest to avoid vendor chunk hash changing
-    // on every build.
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.pug',
@@ -61,7 +55,6 @@ if (!__DEV__) {
   debug(`Enable plugins for ${NODE_ENV} (UglifyJS, SWPrecache).`)
 
   clientConfig.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({ comments: false }),
     new SWPrecacheWebpackPlugin({
       cacheId: 'vue-ssr',
       directoryIndex: false,

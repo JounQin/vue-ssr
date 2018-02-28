@@ -2,7 +2,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
 import webpack from 'webpack'
 
-import { __DEV__, publicPath, resolve } from './config'
+import { __DEV__, NODE_ENV, publicPath, resolve } from './config'
 
 const minimize = !__DEV__
 const sourceMap = __DEV__
@@ -75,6 +75,7 @@ export const vueLoader = isServer => ({
 })
 
 export default {
+  mode: NODE_ENV,
   resolve: {
     alias: {
       lodash$: 'lodash-es',

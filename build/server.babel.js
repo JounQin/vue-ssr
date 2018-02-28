@@ -1,12 +1,12 @@
 import nodeExternals from 'webpack-node-externals'
 import merge from 'webpack-merge'
-import UglifyjsWebpackPlugin from 'uglifyjs-webpack-plugin'
 
-import { resolve } from './config'
+import { NODE_ENV, resolve } from './config'
 
 import baseConfig, { babelLoader } from './base'
 
 export default merge.smart(baseConfig, {
+  mode: NODE_ENV,
   entry: resolve('server/index.js'),
   target: 'node',
   output: {
@@ -18,5 +18,4 @@ export default merge.smart(baseConfig, {
   module: {
     rules: [babelLoader(true)],
   },
-  plugins: [new UglifyjsWebpackPlugin()],
 })

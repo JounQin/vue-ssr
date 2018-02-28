@@ -18,6 +18,6 @@ html(lang="zh-cmn-Hans-CN")
   body
     //vue-ssr-outlet
     | {{{ renderState() }}}
-    if !__DEV__
+    if process.env.NODE_ENV === 'production'
       script(src="https://cdn.polyfill.io/v2/polyfill.min.js")
     | {{{ renderScripts() }}}
