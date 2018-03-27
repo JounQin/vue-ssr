@@ -21,6 +21,8 @@ export default context =>
 
     if (fullPath !== url) return reject({ status: 302, url: fullPath })
 
+    store.dispatch('setAxios', axios)
+
     router.push(url)
 
     router.onReady(async () => {
@@ -41,6 +43,9 @@ export default context =>
 
       // eslint-disable-next-line no-console
       __DEV__ && console.log(`data pre-fetch: ${Date.now() - start}ms`)
+
+      store.dispatch('setAxios', null)
+
       context.state = store.state
       resolve(app)
     }, reject)
