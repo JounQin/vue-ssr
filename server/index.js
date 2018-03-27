@@ -82,7 +82,10 @@ app.use(async (ctx, next) => {
 
   let generateStatic, distPath
 
-  if (STATIC_PATTERN.find(pattern => re(pattern).exec(url))) {
+  if (
+    process.env.NODE_ENV !== 'development' &&
+    STATIC_PATTERN.find(pattern => re(pattern).exec(url))
+  ) {
     const staticFile = url.split('?')[0].replace(/^\//, '') || 'home'
     const staticPath = `${staticFile}.html`
 
@@ -93,7 +96,7 @@ app.use(async (ctx, next) => {
       : resolve('dist/static/' + staticPath)
 
     if (mfs.existsSync(distPath)) {
-      if (process.env.NODE_ENV === 'development' || isNowSh) {
+      if (isNowSh) {
         ctx.body = mfs.createReadStream(distPath)
       } else {
         ctx.url = staticPath
