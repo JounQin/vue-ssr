@@ -7,7 +7,7 @@ import merge from 'webpack-merge'
 
 import { NODE_ENV, __DEV__, resolve } from './config'
 
-import baseConfig, { babelLoader, vueLoader } from './base'
+import baseConfig, { babelLoader } from './base'
 
 const VUE_ENV = 'client'
 
@@ -23,15 +23,17 @@ const clientConfig = merge.smart(baseConfig, {
   },
   target: 'web',
   module: {
-    rules: [babelLoader(), vueLoader()],
+    rules: [babelLoader()],
   },
   optimization: {
     splitChunks: {
       name: 'vendors',
-      chunks: 'all',
+      chunks: 'initial',
       cacheGroups: {
-        test: ({ context, request }) =>
-          /node_modules/.test(context) && !/\.css$/.test(request),
+        vendors: {
+          test: ({ context, request }) =>
+            /node_modules/.test(context) && !/\.css$/.test(request),
+        },
       },
     },
     runtimeChunk: {
@@ -56,7 +58,7 @@ const clientConfig = merge.smart(baseConfig, {
 })
 
 if (!__DEV__) {
-  debug(`Enable plugins for ${NODE_ENV} (UglifyJS, SWPrecache).`)
+  debug(`Enable plugins for ${NODE_ENV} (SWPrecache).`)
 
   clientConfig.plugins.push(
     new SWPrecacheWebpackPlugin({

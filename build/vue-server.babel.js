@@ -6,7 +6,7 @@ import nodeExternals from 'webpack-node-externals'
 
 import { NODE_ENV, innerServer, resolve } from './config'
 
-import baseConfig, { babelLoader, vueLoader } from './base'
+import baseConfig, { babelLoader } from './base'
 
 const VUE_ENV = 'server'
 
@@ -28,7 +28,7 @@ export default merge.smart(baseConfig, {
     whitelist: [/\.css$/],
   }),
   module: {
-    rules: [babelLoader(true), vueLoader(true)],
+    rules: [babelLoader(true)],
   },
   plugins: [
     new webpack.DefinePlugin({

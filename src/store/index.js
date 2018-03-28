@@ -5,17 +5,17 @@ import modules from './modules'
 
 Vue.use(Vuex)
 
-const SET_AXIOS = 'SET_AXIOS'
+const SET_HTTP = 'SET_HTTP'
 
 const actions = {
-  setAxios({ commit }, axios) {
-    commit(SET_AXIOS, axios)
+  setHttp({ commit }, axios) {
+    commit(SET_HTTP, axios)
   },
 }
 
 const mutations = {
-  [SET_AXIOS](state, axios) {
-    state.axios = axios
+  [SET_HTTP](state, axios) {
+    state.http = axios
   },
 }
 
@@ -23,7 +23,7 @@ export default axios =>
   new Vuex.Store({
     strict: __DEV__,
     state: {
-      axios,
+      http: axios,
     },
     actions,
     mutations,

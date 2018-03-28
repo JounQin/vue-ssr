@@ -21,15 +21,19 @@ export default {
   },
 }
 </script>
-<style src="highlight.js/styles/github-gist.css">
+<style >
+@import '~highlight.js/styles/github-gist.css';
 </style>
 <style lang="stylus" module>
-  .container
-    padding 0 10px
+.container {
+  padding: 0 10px;
 
-    h1
-      margin-bottom 20px
+  h1 {
+    margin-bottom: 20px;
 
-      small
-        cursor pointer
+    small {
+      cursor: pointer;
+    }
+  }
+}
 </style>

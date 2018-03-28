@@ -22,7 +22,7 @@ const { __INITIAL_STATE__ } = window
 
 if (__INITIAL_STATE__) {
   store.replaceState(__INITIAL_STATE__)
-  store.dispatch('setAxios', axios)
+  store.dispatch('setHttp', axios)
   if (!__DEV__) {
     delete window.__INITIAL_STATE__
   }

@@ -12,10 +12,10 @@ const getters = generateGetters(['articles', 'article'])
 
 const actions = {
   async fetchArticles({ commit, rootState }) {
-    commit(RESET_ARTICLES, (await rootState.axios.get('/articles')).data)
+    commit(RESET_ARTICLES, (await rootState.http.get('/articles')).data)
   },
   async fetchArticle({ commit, rootState }, id) {
-    commit(RESET_ARTICLE, (await rootState.axios.get(`/article/${id}`)).data)
+    commit(RESET_ARTICLE, (await rootState.http.get(`/article/${id}`)).data)
   },
 }
 

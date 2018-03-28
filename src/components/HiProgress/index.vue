@@ -17,15 +17,16 @@ export default {
 }
 </script>
 <style lang="stylus" module>
-  $progress-color = #39b983
+$progress-color = #39b983;
 
-  .hi-progress
-    position fixed
-    z-index 100001
-    top 0
-    left 0
-    background-color $progress-color
-    width 100%
-    height 3px
-    transition width .5s ease
+.hi-progress {
+  position: fixed;
+  z-index: 100001;
+  top: 0;
+  left: 0;
+  background-color: $progress-color;
+  width: 100%;
+  height: 3px;
+  transition: width 0.5s ease;
+}
 </style>

@@ -1,5 +1,6 @@
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
+import MiniCssExractPlugin from 'mini-css-extract-plugin'
+import { VueLoaderPlugin } from 'vue-loader'
 import webpack from 'webpack'
 
 import { __DEV__, NODE_ENV, publicPath, resolve } from './config'
@@ -7,30 +8,38 @@ import { __DEV__, NODE_ENV, publicPath, resolve } from './config'
 const minimize = !__DEV__
 const sourceMap = __DEV__
 
-const STYLUS_LOADERS = ExtractTextPlugin.extract({
-  use: [
-    {
-      loader: 'css-loader',
-      options: {
-        minimize: minimize && {
-          discardComments: {
-            removeAll: true,
-          },
+const stylusLoaders = ({ modules, extract } = {}) => [
+  extract ? MiniCssExractPlugin.loader : 'vue-style-loader',
+  {
+    loader: 'css-loader',
+    options: {
+      minimize: minimize && {
+        discardComments: {
+          removeAll: true,
         },
-        sourceMap,
       },
+      sourceMap,
+      modules,
+      camelCase: true,
+      localIdentName: __DEV__
+        ? '[name]__[local]___[hash:base64:5]'
+        : '[hash:base64]',
     },
-    {
-      loader: 'postcss-loader',
-      options: { minimize, sourceMap },
+  },
+  {
+    loader: 'postcss-loader',
+    options: { minimize, sourceMap },
+  },
+  {
+    loader: 'stylus-loader',
+    options: {
+      minimize,
+      sourceMap,
+      import: resolve('src/styles/_variables.styl'),
+      paths: resolve('node_modules/bootstrap-styl'),
     },
-    {
-      loader: 'stylus-loader',
-      options: { minimize, sourceMap },
-    },
-  ],
-  fallback: 'vue-style-loader',
-})
+  },
+]
 
 export const babelLoader = isServer => ({
   test: /\.js$/,
@@ -57,23 +66,6 @@ export const babelLoader = isServer => ({
   },
 })
 
-export const vueLoader = isServer => ({
-  test: /\.vue$/,
-  loader: 'vue-loader',
-  options: {
-    cssModules: {
-      camelCase: true,
-      localIdentName: __DEV__
-        ? '[name]__[local]___[hash:base64:5]'
-        : '[hash:base64]',
-    },
-    loaders: {
-      js: babelLoader(isServer),
-      styl: STYLUS_LOADERS,
-    },
-  },
-})
-
 export default {
   mode: NODE_ENV,
   resolve: {
@@ -86,14 +78,25 @@ export default {
   output: {
     path: resolve('dist/static'),
     publicPath,
-    filename: `[name].[${__DEV__ ? 'hash' : 'chunkhash'}].js`,
+    filename: `[name].[${__DEV__ ? 'hash' : 'contenthash'}].js`,
   },
-  devtool: __DEV__ ? 'cheap-module-eval-source-map' : false,
   module: {
     rules: [
       {
-        test: /\.styl$/,
-        use: STYLUS_LOADERS,
+        test: /\.(css|styl(us)?)$/,
+        oneOf: [
+          {
+            resourceQuery: /module/,
+            use: stylusLoaders({ modules: true }),
+          },
+          {
+            resourceQuery: /^\?vue/,
+            use: stylusLoaders(),
+          },
+          {
+            use: stylusLoaders({ extract: true }),
+          },
+        ],
       },
       {
         test: /\.(eot|svg|ttf|woff2?)$/,
@@ -104,51 +107,41 @@ export default {
       },
       {
         test: /\.pug$/,
-        use: [
+        oneOf: [
           {
-            loader: 'html-loader',
-            options: {
-              minimize,
-            },
+            resourceQuery: /^\?vue/,
+            loader: 'pug-plain-loader',
           },
-          'apply-loader',
-          'pug-loader',
+          {
+            use: [
+              {
+                loader: 'html-loader',
+                options: {
+                  minimize,
+                },
+              },
+              'pug-plain-loader',
+            ],
+          },
         ],
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
       },
     ],
   },
   plugins: [
     new webpack.DefinePlugin({
-      ...Object.entries(process.env).reduce((result, [key, value]) => {
-        if (key !== 'VUE_ENV') {
-          result[`process.env.${key}`] = JSON.stringify(value)
-        }
-        return result
-      }, {}),
       __DEV__,
       API_PREFIX: JSON.stringify('/api'),
       NON_INDEX_REGEX: /^(?!.*[/\\](index)\.ts).*\.(ts|vue)$/.toString(),
       I18N_REGEX: /([\w-]*[\w]+)\.i18n\.json$/.toString(),
     }),
-    new webpack.LoaderOptionsPlugin({
-      minimize,
-      stylus: {
-        default: {
-          import: resolve('src/styles/_variables.styl'),
-          paths: resolve('node_modules/bootstrap-styl'),
-        },
-      },
+    new MiniCssExractPlugin({
+      filename: '[name].[chunkhash].css',
     }),
-    new ExtractTextPlugin({
-      filename: 'app.[chunkhash].css',
-      disable: __DEV__,
-    }),
-    ...(__DEV__
-      ? [
-          new webpack.NamedChunksPlugin(),
-          new webpack.NamedModulesPlugin(),
-          new FriendlyErrorsPlugin(),
-        ]
-      : [new webpack.optimize.ModuleConcatenationPlugin()]),
+    new VueLoaderPlugin(),
+    ...(__DEV__ ? [new FriendlyErrorsPlugin()] : []),
   ],
 }

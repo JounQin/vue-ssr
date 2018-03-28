@@ -21,9 +21,11 @@ export default {
 }
 </script>
 <style lang="stylus" module>
-  .container
-    padding 0 10px
+.container {
+  padding: 0 10px;
 
-    > ol > li
-      margin-bottom 20px
+  > ol > li {
+    margin-bottom: 20px;
+  }
+}
 </style>
