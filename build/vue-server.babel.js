@@ -25,7 +25,7 @@ export default merge.smart(baseConfig, {
   },
   externals: nodeExternals({
     // do not externalize CSS files in case we need to import it from a dep
-    whitelist: [/\.css$/],
+    whitelist: [/\.css$/, /\?vue&type=style/],
   }),
   module: {
     rules: [babelLoader(true)],

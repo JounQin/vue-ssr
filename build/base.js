@@ -3,7 +3,7 @@ import MiniCssExractPlugin from 'mini-css-extract-plugin'
 import { VueLoaderPlugin } from 'vue-loader'
 import webpack from 'webpack'
 
-import { __DEV__, NODE_ENV, publicPath, resolve } from './config'
+import { __DEV__, NODE_ENV, hashType, publicPath, resolve } from './config'
 
 const minimize = !__DEV__
 const sourceMap = __DEV__
@@ -78,7 +78,7 @@ export default {
   output: {
     path: resolve('dist/static'),
     publicPath,
-    filename: `[name].[${__DEV__ ? 'hash' : 'contenthash'}].js`,
+    filename: `[name].[${hashType}].js`,
   },
   module: {
     rules: [
@@ -139,7 +139,7 @@ export default {
       I18N_REGEX: /([\w-]*[\w]+)\.i18n\.json$/.toString(),
     }),
     new MiniCssExractPlugin({
-      filename: '[name].[chunkhash].css',
+      filename: `[name].[${hashType}].css`,
     }),
     new VueLoaderPlugin(),
     ...(__DEV__ ? [new FriendlyErrorsPlugin()] : []),
