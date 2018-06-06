@@ -23,7 +23,7 @@ const actions = {
     let logicWidth
     size.rem =
       (logicWidth = size.logicWidth = mode ? winWidth : baseWidth) / baseWidth
-    size.fontSize = logicWidth * state.baseFontSize / baseWidth
+    size.fontSize = (logicWidth * state.baseFontSize) / baseWidth
     size.appWidth = Math.min(1024, winWidth)
     commit(SET_SIZE, size)
   },

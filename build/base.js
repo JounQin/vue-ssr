@@ -59,7 +59,12 @@ export const babelLoader = isServer => ({
             ],
           },
         ],
-        '@babel/stage-0',
+        [
+          '@babel/stage-0',
+          {
+            decoratorsLegacy: true,
+          },
+        ],
       ],
       plugins: ['transform-vue-jsx'],
     },

@@ -170,15 +170,16 @@ const createRenderer = (bundle, options) =>
   })
 
 if (process.env.NODE_ENV === 'development') {
-  const { readyPromise: ready, webpackMiddleware } = require('./dev').default(
-    ({ bundle, clientManifest, fs }) => {
-      renderer = createRenderer(bundle, { clientManifest, template })
-      mfs = fs
-    },
-  )
+  const {
+    readyPromise: ready,
+    webpackMiddlewarePromise,
+  } = require('./dev').default(({ bundle, clientManifest, fs }) => {
+    renderer = createRenderer(bundle, { clientManifest, template })
+    mfs = fs
+  })
 
   readyPromise = ready
-  app.use(webpackMiddleware)
+  webpackMiddlewarePromise.then(webpackMiddleware => app.use(webpackMiddleware))
 } else {
   mfs = fs
   renderer = createRenderer(
