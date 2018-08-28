@@ -100,7 +100,7 @@
     "babel-plugin-transform-vue-jsx": "^3.7.0",
     "css-loader": "^0.28.11",
     "eslint": "^5.0.0",
-    "eslint-config-1stg": "^2.1.0",
+    "eslint-config-1stg": "^3.0.0",
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-loader": "^0.5.5",
