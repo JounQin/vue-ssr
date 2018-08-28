@@ -93,7 +93,7 @@
     "@babel/preset-env": "^7.0.0-beta.49",
     "@babel/preset-stage-0": "^7.0.0-beta.49",
     "@babel/register": "^7.0.0-beta.49",
-    "babel-eslint": "^8.2.3",
+    "babel-eslint": "^9.0.0",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-loader": "^8.0.0-beta.3",
     "babel-plugin-syntax-jsx": "^6.18.0",
