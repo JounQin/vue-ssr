@@ -5,7 +5,6 @@ import webpack from 'webpack'
 
 import { __DEV__, NODE_ENV, hashType, publicPath, resolve } from './config'
 
-const minimize = !__DEV__
 const sourceMap = __DEV__
 
 const stylusLoaders = ({ modules, extract } = {}) => [
@@ -13,11 +12,6 @@ const stylusLoaders = ({ modules, extract } = {}) => [
   {
     loader: 'css-loader',
     options: {
-      minimize: minimize && {
-        discardComments: {
-          removeAll: true,
-        },
-      },
       sourceMap,
       modules,
       camelCase: true,
@@ -28,12 +22,13 @@ const stylusLoaders = ({ modules, extract } = {}) => [
   },
   {
     loader: 'postcss-loader',
-    options: { minimize, sourceMap },
+    options: {
+      sourceMap,
+    },
   },
   {
     loader: 'stylus-loader',
     options: {
-      minimize,
       sourceMap,
       import: resolve('src/styles/_variables.styl'),
       paths: resolve('node_modules/bootstrap-styl'),
@@ -59,14 +54,8 @@ export const babelLoader = isServer => ({
             ],
           },
         ],
-        [
-          '@babel/stage-0',
-          {
-            decoratorsLegacy: true,
-          },
-        ],
       ],
-      plugins: ['transform-vue-jsx'],
+      plugins: ['@babel/syntax-dynamic-import', '@vue/transform-vue-jsx'],
     },
   },
 })
@@ -118,15 +107,7 @@ export default {
             loader: 'pug-plain-loader',
           },
           {
-            use: [
-              {
-                loader: 'html-loader',
-                options: {
-                  minimize,
-                },
-              },
-              'pug-plain-loader',
-            ],
+            use: ['html-loader', 'pug-plain-loader'],
           },
         ],
       },
@@ -143,10 +124,10 @@ export default {
       NON_INDEX_REGEX: /^(?!.*[/\\](index)\.ts).*\.(ts|vue)$/.toString(),
       I18N_REGEX: /([\w-]*[\w]+)\.i18n\.json$/.toString(),
     }),
+    new FriendlyErrorsPlugin(),
     new MiniCssExractPlugin({
       filename: `[name].[${hashType}].css`,
     }),
     new VueLoaderPlugin(),
-    ...(__DEV__ ? [new FriendlyErrorsPlugin()] : []),
   ],
 }

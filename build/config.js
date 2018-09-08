@@ -6,15 +6,15 @@ export const __DEV__ = NODE_ENV === 'development'
 
 export const hashType = __DEV__ ? 'hash' : 'contenthash'
 
-export const serverHost = 'localhost'
+export const serverHost = '0.0.0.0'
 
 export const serverPort = +process.env.PORT || 4000
 
-export const publicPath = __DEV__ ? `http://${serverHost}:${serverPort}/` : '/'
+export const publicPath = '/'
 
 export const innerServer = `http://localhost:${serverPort}/`
 
-export const resolve = (...args) => path.resolve(process.cwd(), ...args)
+export const { resolve } = path
 
 export const runtimeRequire =
   // eslint-disable-next-line camelcase

@@ -26,18 +26,17 @@ const clientConfig = merge.smart(baseConfig, {
     rules: [babelLoader()],
   },
   optimization: {
-    splitChunks: {
-      name: 'vendors',
-      chunks: 'initial',
-      cacheGroups: {
-        vendors: {
-          test: ({ context, request }) =>
-            /node_modules/.test(context) && !/\.css$/.test(request),
-        },
-      },
-    },
     runtimeChunk: {
       name: 'manifest',
+    },
+    splitChunks: {
+      cacheGroups: {
+        name: 'vendors',
+        chunks: 'initial',
+        vendors: {
+          test: /node_modules/,
+        },
+      },
     },
   },
   plugins: [

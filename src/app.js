@@ -1,3 +1,4 @@
+import 'normalize.css'
 import 'styles/app'
 
 import Vue from 'vue'
