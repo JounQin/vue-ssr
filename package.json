@@ -114,7 +114,7 @@
     "css-loader": "^1.0.0",
     "cssnano": "^4.1.0",
     "eslint": "^5.5.0",
-    "eslint-config-1stg": "^3.1.0",
+    "eslint-config-1stg": "^4.0.0",
     "file-loader": "^2.0.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-loader": "^0.5.5",
