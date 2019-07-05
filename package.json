@@ -100,7 +100,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "@babel/node": "^7.0.0",
+    "@babel/node": "^7.5.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-syntax-jsx": "^7.0.0",
     "@babel/polyfill": "^7.0.0",
