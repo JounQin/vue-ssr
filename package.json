@@ -94,7 +94,7 @@
     "normalize.css": "^8.0.0",
     "path-to-regexp": "^3.0.0",
     "vue": "^2.5.17",
-    "vue-router": "^3.0.1",
+    "vue-router": "^3.0.7",
     "vue-server-renderer": "^2.5.17",
     "vuex": "^3.0.1"
   },
