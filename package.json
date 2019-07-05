@@ -107,7 +107,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@vue/babel-helper-vue-jsx-merge-props": "^0.1.0",
-    "@vue/babel-plugin-transform-vue-jsx": "^0.1.0",
+    "@vue/babel-plugin-transform-vue-jsx": "^1.0.0",
     "autoprefixer": "^9.6.0",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.2",
